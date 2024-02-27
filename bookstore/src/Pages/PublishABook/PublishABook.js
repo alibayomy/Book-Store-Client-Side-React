@@ -305,7 +305,12 @@ function PublishABook(props) {
 
         if (finalBookCat.length == 0){
             setError({ ...error, categoryError: "Please choose book categories " })
-
+            setTrirger({ ...trigger, bookCategoriesTrigger: 1 })
+        }
+        else{
+            setError({ ...error, categoryError: "" })
+            setTrirger({ ...trigger, bookCategoriesTrigger: 0 })
+            console.log(trigger)
         }
         for (let value of Object.values(trigger)) {
             if (value === 1) {
@@ -319,7 +324,6 @@ function PublishABook(props) {
                 Error input please fill the form with no errors
             </div>)
             console.log(bookCategories)
-
         }
 
         else {
@@ -333,7 +337,7 @@ function PublishABook(props) {
                 "imageUrl": "https://logo.clearbit.com/example.com",
                 "description": input.discriptionInput
             }
-            axios.post(`https://retoolapi.dev/3l5SXI/data`, myObj).then((res) => console.log(res.data)).catch((err) => console.log(err))
+            // axios.post(`https://retoolapi.dev/3l5SXI/data`, myObj).then((res) => console.log(res.data)).catch((err) => console.log(err))
             setSubmitError(<div className="alert alert-success" role="alert">
                 Book will be validated by Admin, Thank you
             </div>)
