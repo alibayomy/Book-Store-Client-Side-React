@@ -1,38 +1,73 @@
-.App {
-  text-align: center;
+:root {
+  --primary: #4d3bc6;
+  --secondray: #5f4ecb;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.cool-text {
+  color: var(--primary);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.filled-button-disabled {
+  background-color: var(--primary);
+  opacity: 0.6;
+  cursor: not-allowed;
+  color: #fff;
+  padding: 8px 30px;
+  margin: 30px 0;
+  border-radius: 10px;
+  text-decoration: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.filled-button {
+  display: inline-block;
+  background-color: var(--primary);
+  color: #fff;
+  padding: 8px 30px;
+  margin: 10px 0;
+  border-radius: 10px;
+  text-decoration: none;
+  border: none;
+  transition: background-color 0.5s;
 }
 
-.App-link {
-  color: #61dafb;
+.filled-button:hover {
+  background-color: var(--secondray);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.outline-button {
+  display: inline-block;
+  border: var(--secondray);
+  border-style: solid;
+  border-width: 1px;
+  color: var(--secondray);
+  padding: 8px 30px;
+  margin: 30px 0;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: background-color 0.5s;
+}
+
+.outline-button:hover {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+.my-card {
+  transition: transform 0.5s;
+}
+
+.my-card:hover {
+  transform: translateY(-5px);
+}
+
+.viewbook-input {
+  width: 60px;
+  height: 40px;
+  font-size: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--secondray);
+}
+
+.viewbook-input:focus {
+  outline: none;
 }
