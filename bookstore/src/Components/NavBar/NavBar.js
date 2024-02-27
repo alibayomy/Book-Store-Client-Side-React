@@ -7,12 +7,6 @@ import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
 function NavBar() {
-  const [toggle, setToggle] = useState(true);
-
-  const handleClick = () => {
-    setToggle(!toggle);
-  };
-
   return (
     <nav
       className="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm"
@@ -56,16 +50,6 @@ function NavBar() {
                 Books
               </Link>
             </li>
-            {/* <li className="nav-item">
-              <Link className="nav-link" to="/cart">
-                Cart
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/">
-                About Author
-              </Link>
-            </li> */}
             <li className="nav-item">
               <Link className="nav-link" to="/">
                 Contact
@@ -83,38 +67,20 @@ function NavBar() {
             </li>
           </ul>
           <form className="d-flex ms-auto" role="search">
-            {/* {toggle && (
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-            )} */}
             <input
               className="form-control me-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
-              style={{
-                opacity: toggle ? "1" : "0",
-                visibility: toggle ? "visible" : "hidden",
-                transition: "opacity 0.5s ease, visibility 0.5s ease",
-                // display: toggle ? "block" : "none",
-                borderRadius: "0",
-              }}
             />
-            {/* <button className="btn btn-outline-success" type="submit">
-              Search
-            </button> */}
-            <span
-              onClick={handleClick}
+            <button
               className="input-group-text border-0"
               id="search-addon"
+              type="submit"
               style={{ cursor: "pointer" }}
             >
               <FontAwesomeIcon icon={faSearch} size="lg" />
-            </span>
+            </button>
           </form>
         </div>
       </div>
