@@ -37,7 +37,7 @@ const App = () => {
       
           <Route exact path="/" component={ViewBook} />
           <Route exact path={'/publisher/addbook'} component= {PublishABook}></Route>
-          <Route path="/" component={ViewBook} />
+         
          
           <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
