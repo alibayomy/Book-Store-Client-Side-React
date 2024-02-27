@@ -6,6 +6,7 @@ import book4 from '../../images/aedzekola.jpg'
 import publishlogo from '../../images/web-logo.jpg';
 import { Link } from "react-router-dom";
 import './dashboard.css'
+import MyCard from '../../Components/MyCard/MyCard';
 
 function Dashboard(){
 
@@ -22,40 +23,40 @@ function Dashboard(){
                         <img src={book1} className="card-img-top d-block mx-auto pt-2 " alt="..." style={{"width":"60%"}}/>
                         <div className="card-body">
                             <h3 className="card-title text-center">mzr3t el7eoan</h3>
-                            <p className="card-text">Some quick example text to build on the card</p>
+                            <p className="card-text text-center">Some quick example text to details</p>
                         </div>
                     </div>
                     
                     <div className="card col-lg-3 col-md-6 col-sm-12 mb-sm-3 book-img">
                         <img src={book2} className="card-img-top d-block mx-auto pt-2" alt="..." style={{"width":"60%"}}/>
                         <div className="card-body">
-                            <h3 className="card-title text-center">mzr3t el7eoan</h3>
-                            <p className="card-text">Some quick example text to build on the card</p>
+                            <h3 className="card-title text-center">Fy mmr elf2ran</h3>
+                            <p className="card-text text-center">Some quick example text to details</p>
                         </div>
                     </div>
                     
                     <div className="card col-lg-3 col-md-6 col-sm-12 mb-sm-3 book-img">
                         <img src={book3} className="card-img-top d-block mx-auto pt-2 0" alt="..." style={{"width":"60%"}}/>
                         <div className="card-body">
-                            <h3 className="card-title text-center">mzr3t el7eoan</h3>
-                            <p className="card-text">Some quick example text to build on the card</p>
+                            <h3 className="card-title text-center">Ln ynthy elb2s</h3>
+                            <p className="card-text text-center">Some quick example text to details</p>
                         </div>
                     </div>
                     
                 </div>
+                    
+                    {/* <MyCard imageUrl={book1} title='mzr3t el7eoan' /> */}
+                    {/* <MyCard imageUrl={book1} title='mzr3t el7eoan' /> */}
+                    {/* <MyCard imageUrl={book1} title='mzr3t el7eoan' /> */}
 
                 <div className='d-flex justify-content-center col-lg-3 col-md-12 col-sm-12 mt-sm-4 publisher-info'>
                     <div className="col-lg-11 col-md-11 col-sm-11 border p-2">
-                        <img src={publishlogo} className="card-img-top d-block mx-auto" alt="..." style={{"width":"100px"}}/>
+                        <img src={publishlogo} className="card-img-top d-block mx-auto" alt="..." style={{"width":"90%"}}/>
                         <div className="card-body">
-                            <h5 className="card-title text-center">3ser Kotb</h5>
-                            <p className="card-text text-center">Some quick example text</p>
+                            <h3 className="card-title text-center fs-3">3ser Kotb</h3>
+                            <p className="card-text text-center fs-4"  style={{"color":"#5f4ecb"}}>fkr tla8y ktabk</p>
                         </div>
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item">An item</li>
-                            <li className="list-group-item">A second item</li>
-                            <li className="list-group-item">A third item</li>
-                        </ul>
+                   
                     </div>
                 </div>
             </div>
@@ -159,18 +160,23 @@ function Dashboard(){
                                     </div>
                                 <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>65</h1>
                             </div>
-                            <p className='fs-4 text-dark text-start p-0 m-0'>Books</p>
+                            <div className='d-flex justify-content-around'>
+                                <p className='fs-4 text-dark text-start p-0 m-0'>Books</p>
+                                <Link to='#' className='text-decoration-none align-self-center fs-4' style={{"color":"#5f4ecb"}}>View All</Link>
+                            </div>
                         </div>
 
                         <div class="card-header bg-light p-1">
-                        <div className='d-flex justify-content-start'>
-                                <div className='p-3  col-lg-3 sol-md-3 col-sm-3'>
-
-                                <i class="bi bi-list-nested align-self-end fs-1" style={{"color":"#5f4ecb"}}></i>
-                                </div>
-                                <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>65</h1>
+                            <div className='d-flex justify-content-start'>
+                                    <div className='p-3 col-lg-3 sol-md-3 col-sm-3'>
+                                        <i class="bi bi-list-nested align-self-end fs-1" style={{"color":"#5f4ecb"}}></i>
+                                    </div>
+                                        <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>65</h1>
                             </div>
-                            <p className='fs-4 text-dark text-start p-0 m-0'>Category</p>
+                            <div className='d-flex justify-content-around'>
+                                <p className='fs-4 text-dark text-start p-0 m-0'>Category</p>
+                                <Link to='#' className='text-decoration-none align-self-center fs-4' style={{"color":"#5f4ecb"}}>View All</Link>
+                            </div>
                         </div>
                     
                         <div class="card-header bg-light p-1">
@@ -180,7 +186,10 @@ function Dashboard(){
                             </div>
                                     <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>65</h1>
                             </div>
-                                <p className='fs-4 text-dark text-start p-0 m-0'>Order</p>
+                            <div className='d-flex justify-content-around'>
+                                <p className='fs-4 text-dark text-start p-0 m-0'>Orders</p>
+                                <Link to='#' className='text-decoration-none align-self-center fs-4' style={{"color":"#5f4ecb"}}>View All</Link>
+                            </div>
                         </div>
                     
                     </div>
