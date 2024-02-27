@@ -6,12 +6,12 @@
 .book-img::after {
     content: "$45";
     position: absolute;
-    top: -2px;
-    right: -16px;
-    color: #469d1c;
+    top: 12.5%;
+    right: -2px;
+    color: #5f4ecb;
     background-color: #ffffff;
     padding: 5px;
-    width: 39%;
+    width: 25%;
     border-radius: 17px;
     text-align: start;
     font-size: 1.1rem;
@@ -24,6 +24,7 @@
 
 .book-arrow {
     right: 5px;
-    top: 45%;
+    top: 40%;
     cursor: pointer;
 }
+
