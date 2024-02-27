@@ -15,10 +15,11 @@ function Dashboard(){
         <>
         <div className="container-fluid mt-5 mx-auto">
             <div className="row">
-                <h1 className='text-secondary'>Popular Books</h1>
-                
+                    <div>
+                        <h1 className='text-secondary'>Popular Books</h1>
+                        <Link className='text-decoration-none align-self-center fs-5' to='#' style={{"color":"#5f4ecb"}}>ADD Book</Link> 
+                    </div>
                 <div className='container d-flex justify-content-evenly flex-wrap col-lg-7 col-md-11 col-sm-12 px-0 popular-books'>
-                    
                     <div className="card col-lg-3 col-md-6 col-sm-12 mb-sm-3 book-img  ">
                         <img src={book1} className="card-img-top d-block mx-auto pt-2 " alt="..." style={{"width":"60%"}}/>
                         <div className="card-body">
