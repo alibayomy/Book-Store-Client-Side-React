@@ -10,6 +10,7 @@ import Login from "./Pages/Login/Login";
 import ClientSelectComponent from "./Pages/ClientSelect/ClientSelectComponent";
 import RegitserComponent from "./Pages/Register/RegisterComponent";
 import PublisherOrderList from "./Pages/PublisherOrder/PunlisherOrderList";
+import PublishABook from "./Pages/PublishABook/PublishABook";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 
 
@@ -35,6 +36,9 @@ const App = () => {
          
       
           <Route exact path="/" component={ViewBook} />
+          <Route exact path={'/publisher/addbook'} component= {PublishABook}></Route>
+          <Route path="/" component={ViewBook} />
+         
           <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
       </div>
