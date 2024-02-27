@@ -9,6 +9,9 @@ import ViewBook from "./Pages/ViewBook/ViewBook";
 import Login from "./Pages/Login/Login";
 import ClientSelectComponent from "./Pages/ClientSelect/ClientSelectComponent";
 import RegitserComponent from "./Pages/Register/RegisterComponent";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+
+
 
 const App = () => {
   return (
@@ -27,7 +30,8 @@ const App = () => {
             path={"/register/:userType"}
             component={RegitserComponent}
           />
-          <Route path="/" component={ViewBook} />
+          <Route exact path="/" component={ViewBook} />
+          <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
       </div>
     </Router>
