@@ -7,8 +7,14 @@ import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { search } from "../../Store/Actions/CheckPriceAction";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 function NavBar() {
+  const history = useHistory();
+
+  const goBack = () => {
+    history.goBack(); // Go back to the previous page
+  };
   const dispatch=useDispatch()
   const [searchInputField,setSearchInputField] =useState("");
   const setSearchWord=()=>{
@@ -94,7 +100,7 @@ function NavBar() {
               id="search-addon"
               type="submit"
               style={{ cursor: "pointer" }}
-              onClick={setSearchWord}
+              onClick={searchInputField?setSearchWord:goBack}
             >
               <FontAwesomeIcon icon={faSearch} size="lg" />
             </button>
