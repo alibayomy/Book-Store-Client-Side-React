@@ -12,3 +12,11 @@ export const toPrice = (payload) => {
     payload
   };
 };
+
+
+export const search=(payload)=>{
+  return{
+      type:"setSearch",
+      payload
+  }
+}
