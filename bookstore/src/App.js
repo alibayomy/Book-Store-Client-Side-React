@@ -9,6 +9,7 @@ import ViewBook from "./Pages/ViewBook/ViewBook";
 import Login from "./Pages/Login/Login";
 import ClientSelectComponent from "./Pages/ClientSelect/ClientSelectComponent";
 import RegitserComponent from "./Pages/Register/RegisterComponent";
+import PublisherOrderList from "./Pages/PublisherOrder/PunlisherOrderList";
 
 const App = () => {
   return (
@@ -27,7 +28,9 @@ const App = () => {
             path={"/register/:userType"}
             component={RegitserComponent}
           />
+          <Route exact path={"/publisherorder"} component={PublisherOrderList} />
           <Route path="/" component={ViewBook} />
+      
         </Switch>
       </div>
     </Router>
