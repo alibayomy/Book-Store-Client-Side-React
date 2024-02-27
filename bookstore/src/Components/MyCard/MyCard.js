@@ -16,7 +16,7 @@ function MyCard(props) {
         <div className="card-body p-0 pt-1">
           <p className="card-text m-1 opacity-50">{props.category}</p>
           <h5 className="card-title">{props.title}</h5>
-          <span className="ms-1">{props.price}</span>
+          <span className="ms-1">EGP:{props.price}</span>
         </div>
       </div>
     </div>
