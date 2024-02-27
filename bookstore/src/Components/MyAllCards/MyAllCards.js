@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { Link } from 'react-router-dom';
 
 function MyAllCards(props) {
   const renderRatingStars = () => {
@@ -23,11 +24,14 @@ function MyAllCards(props) {
   return (
     <div key={props.id} className="col-lg-3 col-md-6 mt-3 mb-4">
       <div className="card my-card bg-body-tertiary h-100 rounded-0 border-0">
-        <img
-          src={props.imageUrl}
-          alt={props.title}
-          className="card-img-top rounded-0"
-        />
+
+        <Link to={props.path} className="text-decoration-none">
+          <img
+            src={props.imageUrl}
+            alt={props.title}
+            className="card-img-top rounded-0"
+          />
+        </Link>
         <div className="card-body p-0 pt-1">
           <p className="card-text m-1 opacity-50">{props.category}</p>
           <h5 className="card-title">{props.title}</h5>
@@ -39,7 +43,7 @@ function MyAllCards(props) {
           </div>
           <div className="d-flex justify-content-between">
             {/* Price */}
-            <span className="ms-1 mt-3 fs-5">{props.price}</span>
+            <span className="ms-1 mt-3 fs-5">EGP: {props.price}</span>
 
             {/* Add to Cart Button */}
             <button className="filled-button">Add to Cart</button>

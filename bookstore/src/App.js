@@ -9,6 +9,8 @@ import ViewBook from "./Pages/ViewBook/ViewBook";
 import Login from "./Pages/Login/Login";
 import ClientSelectComponent from "./Pages/ClientSelect/ClientSelectComponent";
 import RegitserComponent from "./Pages/Register/RegisterComponent";
+import FilterBooks from "./Pages/FilterPage/FilterPage";
+import FilterPrice from "./Pages/FilterPage/FilterPrice";
 import PublisherOrderList from "./Pages/PublisherOrder/PunlisherOrderList";
 import PublishABook from "./Pages/PublishABook/PublishABook";
 import Dashboard from "./Pages/Dashboard/Dashboard";
@@ -23,23 +25,14 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/books" component={Books} />
+          <Route exact path={"/filter"} component={FilterBooks} />
+          <Route exact path={"/filterPrice"} component={FilterPrice} />
           <Route path="/cart" component={Cart} />
-          <Route path="/viewbook" component={ViewBook} />
+          <Route path="/viewbook/:id" component={ViewBook} />
           <Route path="/login" component={Login} />
           <Route exact path={"/register"} component={ClientSelectComponent} />
-          <Route
-            exact
-            path={"/register/:userType"}
-            component={RegitserComponent}
-          />
-          <Route exact path={"/publisherorder"} component={PublisherOrderList} />
-         
-      
-          <Route exact path="/" component={ViewBook} />
-          <Route exact path={'/publisher/addbook'} component= {PublishABook}></Route>
-         
-         
-          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path={"/register/:userType"} component={RegitserComponent} />
+          {/* <Route path="/" component={ViewBook} /> */}
         </Switch>
       </div>
     </Router>
