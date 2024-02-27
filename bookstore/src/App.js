@@ -11,6 +11,11 @@ import ClientSelectComponent from "./Pages/ClientSelect/ClientSelectComponent";
 import RegitserComponent from "./Pages/Register/RegisterComponent";
 import FilterBooks from "./Pages/FilterPage/FilterPage";
 import FilterPrice from "./Pages/FilterPage/FilterPrice";
+import PublisherOrderList from "./Pages/PublisherOrder/PunlisherOrderList";
+import PublishABook from "./Pages/PublishABook/PublishABook";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+
+
 
 const App = () => {
   return (

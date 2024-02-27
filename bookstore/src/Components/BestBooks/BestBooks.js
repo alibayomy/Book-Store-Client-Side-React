@@ -78,6 +78,7 @@ function BestBooks() {
                   imageUrl={`https://image.tmdb.org/t/p/w500/${book.poster_path}`}
                   title={book.title}
                   category="Action"
+                  path={`viewbook/${book.id}`}
                   price={book.vote_count.toFixed(0)}
                 />
               ))
