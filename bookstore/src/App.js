@@ -21,11 +21,11 @@ const App = () => {
       <NavBar />
       <div className="container mt-4">
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/books" component={Books} />
-          <Route path="/cart" component={Cart} />
-          <Route path="/viewbook" component={ViewBook} />
-          <Route path="/login" component={Login} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/books" component={Books} />
+          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/viewbook/:id" component={ViewBook} />
+          <Route exact path="/login" component={Login} />
           <Route exact path={"/register"} component={ClientSelectComponent} />
           <Route
             exact
@@ -33,12 +33,7 @@ const App = () => {
             component={RegitserComponent}
           />
           <Route exact path={"/publisherorder"} component={PublisherOrderList} />
-         
-      
-          <Route exact path="/" component={ViewBook} />
-          <Route exact path={'/publisher/addbook'} component= {PublishABook}></Route>
-         
-         
+          <Route exact path={'/publisher/addbook'} component= {PublishABook}></Route> 
           <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
       </div>
