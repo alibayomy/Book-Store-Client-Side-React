@@ -1,0 +1,26 @@
+.myNav {
+    max-width: 18%;
+    overflow: hidden;
+}
+
+.mySmallText {
+    font-size: 15px;
+    color: rgb(164, 168, 168);
+}
+
+.mySmallCheckbox {
+    font-size: 15px;
+    background-color: rgb(164, 168, 168);
+    opacity: 90%;
+}
+
+.ToClearFilter {
+    font-size: 10px;
+}
+
+.MyPriceInput {
+    width: 35%;
+    height: 30px;
+    font-size: 15px;
+    border: none;
+}

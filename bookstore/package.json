@@ -15,8 +15,13 @@
     "react-bootstrap": "^2.10.1",
     "react-bootstrap-icons": "^1.11.3",
     "react-dom": "^18.2.0",
+    "react-redux": "^9.1.0",
     "react-router-dom": "^5.3.4",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "redux": "^5.0.1",
+    "redux-devtools-extension": "^2.13.9",
+    "react-scroll-up-button": "^1.6.4",
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -35,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
