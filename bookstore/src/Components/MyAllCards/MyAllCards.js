@@ -21,7 +21,7 @@ function MyAllCards(props) {
   };
 
   return (
-    <div key={props.id} className="col-lg-3 col-md-6 mt-3 mb-4">
+    <div key={props.id} className="col-xl-3 col-lg-4 col-md-6 mt-3 mb-4">
       <div className="card my-card bg-body-tertiary h-100 rounded-0 border-0">
         <img
           src={props.imageUrl}
