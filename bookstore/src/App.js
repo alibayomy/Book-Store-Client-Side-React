@@ -29,7 +29,7 @@ const App = () => {
             component={RegitserComponent}
           />
           <Route exact path={"/publisherorder"} component={PublisherOrderList} />
-          <Route path="/" component={ViewBook} />
+         
       
         </Switch>
       </div>
