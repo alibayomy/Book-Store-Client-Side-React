@@ -7,7 +7,7 @@ import book3 from '../../images/book.png';
 import book4 from '../../images/book5.jpg';
 import book5 from '../../images/book4.jpeg';
 import book6 from '../../images/book6.jpeg';
-import book7 from '../../images/book8.jpeg';
+
 
 function PublisherOrderList() {
   const orders = [
@@ -80,7 +80,7 @@ function PublisherOrderList() {
       },
       {
         id: 7,
-        image:book5,
+        image:book2,
         productName: 'Adventure Book',
         price: 120.0,
         quantity: 3,
@@ -89,105 +89,23 @@ function PublisherOrderList() {
         status: 'Processing',
        
       },
-      {
-        id: 8,
-        image:book7,
-        productName: 'Adventure Book',
-        price: 90.0,
-        quantity: 2,
-        totalPrice: 170.0,
-        orderDate: '2024-03-15',
-        status: 'Shipped',
-     
-      },
-      {
-        id: 9,
-        image:book1,
-        productName: 'Cookbook',
-        price: 120.0,
-        quantity: 1,
-        totalPrice: 120.0,
-        orderDate: '2024-03-20',
-        status: 'Delivered',
-     
-      },
-      {
-        id: 10,
-        image:book1,
-        productName: 'Business and Finance',
-        price: 120.0,
-        quantity: 2,
-        totalPrice: 240.0,
-        orderDate: '2024-03-25',
-        status: 'Processing',
-     
-      },
-      {
-        id: 11,
-        image:book1,
-        productName: 'Art and Photography',
-        price: 70.0,
-        quantity: 1,
-        totalPrice: 140.0,
-        orderDate: '2024-03-30',
-        status: 'Shipped',
-  
-      },
-      {
-        id: 12,
-        image:book1,
-        productName: 'Travel Guide',
-        price: 180.0,
-        quantity: 3,
-        totalPrice: 540.0,
-        orderDate: '2024-04-01',
-        status: 'Processing',
-      
-      },
-      {
-        id: 13,
-        image:book1,
-        productName: 'Science and Nature',
-        price: 30.0,
-        quantity: 2,
-        totalPrice: 60.0,
-        orderDate: '2024-04-05',
-        status: 'Delivered',
-    
-      },
-      {
-        id: 14,
-        image:book1,
-        productName: 'Children\'s Book',
-        price: 18.0,
-        quantity: 4,
-        totalPrice: 72.0,
-        orderDate: '2024-04-10',
-        status: 'Shipped',
-       
-      },
-      {
-        id: 15,
-        image:book1,
-        productName: 'Educational Textbook',
-        price: 25.0,
-        quantity: 1,
-        totalPrice: 25.0,
-        orderDate: '2024-06-1',
-        status: 'Processing',
-      
-      },
+
       
 
   ];
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-5 text-center">Publisher Orders</h2>
+      <h2 className="mb-5 ml-5 text-center">Publisher Orders</h2>
       <div>
+      <div className="mb-5  text-center">
+         
+          <input type="text" id="search" placeholder="Enter product name" />
+          <button className="search-button">Search</button>
+        </div>
         <table className="table table-striped table-bordered bg-white">
           <thead className="text-center">
-            <tr>
+            <tr >
               <th>ID</th>
               <th></th>
               <th>Product</th>
@@ -200,7 +118,7 @@ function PublisherOrderList() {
           </thead>
           <tbody className="text-center">
             {orders.map((order) => (
-              <tr >
+              <tr key={order.id}>
                 <td>{order.id}</td>
                 <td>
                   <img
@@ -222,8 +140,98 @@ function PublisherOrderList() {
       </div>
      
     </div>
+
+    
   );
 }
 
 export default PublisherOrderList;
 
+      // {
+      //   id: 8,
+      //   image:book1,
+      //   productName: 'Adventure Book',
+      //   price: 90.0,
+      //   quantity: 2,
+      //   totalPrice: 170.0,
+      //   orderDate: '2024-03-15',
+      //   status: 'Shipped',
+     
+      // },
+      // {
+      //   id: 9,
+      //   image:book1,
+      //   productName: 'Cookbook',
+      //   price: 120.0,
+      //   quantity: 1,
+      //   totalPrice: 120.0,
+      //   orderDate: '2024-03-20',
+      //   status: 'Delivered',
+     
+      // },
+      // {
+      //   id: 10,
+      //   image:book6,
+      //   productName: 'Business and Finance',
+      //   price: 120.0,
+      //   quantity: 2,
+      //   totalPrice: 240.0,
+      //   orderDate: '2024-03-25',
+      //   status: 'Processing',
+     
+      // },
+      // {
+      //   id: 11,
+      //   image:book4,
+      //   productName: 'Art and Photography',
+      //   price: 70.0,
+      //   quantity: 1,
+      //   totalPrice: 140.0,
+      //   orderDate: '2024-03-30',
+      //   status: 'Shipped',
+  
+      // },
+      // {
+      //   id: 12,
+      //   image:book4,
+      //   productName: 'Travel Guide',
+      //   price: 180.0,
+      //   quantity: 3,
+      //   totalPrice: 540.0,
+      //   orderDate: '2024-04-01',
+      //   status: 'Processing',
+      
+      // },
+      // {
+      //   id: 13,
+      //   image:book2,
+      //   productName: 'Science and Nature',
+      //   price: 30.0,
+      //   quantity: 2,
+      //   totalPrice: 60.0,
+      //   orderDate: '2024-04-05',
+      //   status: 'Delivered',
+    
+      // },
+      // {
+      //   id: 14,
+      //   image:book1,
+      //   productName: 'Children\'s Book',
+      //   price: 18.0,
+      //   quantity: 4,
+      //   totalPrice: 72.0,
+      //   orderDate: '2024-04-10',
+      //   status: 'Shipped',
+       
+      // },
+      // {
+      //   id: 15,
+      //   image:book4,
+      //   productName: 'Educational Textbook',
+      //   price: 25.0,
+      //   quantity: 1,
+      //   totalPrice: 25.0,
+      //   orderDate: '2024-06-1',
+      //   status: 'Processing',
+      
+      // },
