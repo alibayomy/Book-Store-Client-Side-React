@@ -22,27 +22,28 @@ const App = () => {
       <NavBar />
       <div className="container mt-4">
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/books" component={Books} />
-          <Route path="/viewbook/:id" component={ViewBook} />
-          <Route exact path={"/filter"} component={FilterBooks} />
-          <Route exact path={"/filterPrice"} component={FilterPrice} />
-          <Route path="/cart" component={Cart} />
-          <Route path="/login" component={Login} />
-          <Route exact path={"/register"} component={ClientSelectComponent} />
-          <Route
-            exact
-            path={"/register/:userType"}
-            component={RegitserComponent}
-          />
-          <Route
-            exact
-            path={"/publisher/addbook"}
-            component={PublishABook}
-          ></Route>
-          <Route exact path="/search" component={Search} />
-          <Route exact path='/dashboard' component={Dashboard} />
-          <React exact path='/publisher/order' component={PublisherOrderList} />
+            <Route path="/" exact component={Home} />
+            <Route path="/books" component={Books} />
+            <Route path="/viewbook/:id" component={ViewBook} />
+            <Route exact path={"/filter"} component={FilterBooks} />
+            <Route exact path={"/filterPrice"} component={FilterPrice} />
+            <Route path="/cart" component={Cart} />
+            <Route path="/login" component={Login} />
+            <Route exact path={"/register"} component={ClientSelectComponent} />
+            <Route
+              exact
+              path={"/register/:userType"}
+              component={RegitserComponent}
+            />
+            <Route
+              exact
+              path={"/publisher/addbook"}
+              component={PublishABook}
+            ></Route>
+            <Route exact path="/search" component={Search} />
+            <Route exact path={"/publisherorder"} component={PublisherOrderList} />
+            <Route exact path={'/publisher/addbook'} component= {PublishABook}></Route>
+            <Route exact path="/dashboard" component={Dashboard} />
         </Switch>
       </div>
     </Router>
