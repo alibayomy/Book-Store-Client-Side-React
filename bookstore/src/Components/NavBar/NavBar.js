@@ -1,12 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./NavBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faBasketShopping } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { search } from "../../Store/Actions/CheckPriceAction";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
 
 function NavBar() {
+  const history = useHistory();
+
+  const goBack = () => {
+    history.goBack(); // Go back to the previous page
+  };
+  const dispatch=useDispatch()
+  const [searchInputField,setSearchInputField] =useState("");
+  const setSearchWord=()=>{
+      dispatch(search(searchInputField)) 
+  }
+  useEffect(()=>{
+      if(!searchInputField){
+          setSearchWord()
+      }
+  },[searchInputField])
   return (
     <nav
       className="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm"
@@ -72,15 +90,21 @@ function NavBar() {
               type="search"
               placeholder="Search"
               aria-label="Search"
+              onChange={(e)=>{
+                                setSearchInputField(e.target.value)
+                            }} value={searchInputField}
             />
+            <Link to="/search">
             <button
               className="input-group-text border-0"
               id="search-addon"
               type="submit"
               style={{ cursor: "pointer" }}
+              onClick={searchInputField?setSearchWord:goBack}
             >
               <FontAwesomeIcon icon={faSearch} size="lg" />
             </button>
+            </Link>
           </form>
         </div>
       </div>

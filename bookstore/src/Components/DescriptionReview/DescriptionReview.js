@@ -14,8 +14,8 @@ function DescriptionReview(props) {
           }}
           className={
             section === "Description"
-              ? "col-lg-1 border-top border-black border-4 ps-0"
-              : "col-lg-1 ps-0"
+              ? "col-lg-1 col-md-2 col-sm-3 col-xs-3 border-top border-black border-4 ps-0"
+              : "col-lg-1 col-md-2 col-sm-3 col-xs-3 ps-0"
           }
         >
           Description
@@ -27,8 +27,8 @@ function DescriptionReview(props) {
           }}
           className={
             section !== "Description"
-              ? "col-lg-1 border-top border-black border-4 ps-0"
-              : "col-lg-1 ps-0"
+              ? "col-lg-1 col-md-2 col-sm-3 col-xs-3 border-top border-black border-4 ps-0"
+              : "col-lg-1 col-md-2 col-sm-3 col-xs-3 ps-0"
           }
         >
           Reviews<span className="ms-1">(0)</span>

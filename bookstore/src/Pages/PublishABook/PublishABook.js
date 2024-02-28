@@ -5,9 +5,10 @@ import MyCard from "../../Components/MyCard/MyCard";
 import axios from "axios";
 import reactSelect from "react-select";
 import Select from 'react-select';
+import PublishImgCard from "../../Components/PublishImgCard/PublishImgCard";
 function PublishABook(props) {
 
-    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
+    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’\-–`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
     const priceRegex = new RegExp(/^((\d+)((,\d+|\d+)*)(\s*|\.(\d{2}))$)/)
     var options = { day: 'numeric', month: 'numeric', year: 'numeric' };
 
@@ -16,7 +17,6 @@ function PublishABook(props) {
         authorNameTrigger: 1,
         titleTrigger: 1,
         discriptionTrigger: 1,
-        bookCategoriesTrigger: 1,
         ISBNTrigger: 1,
         languageTrigger: 0,
         publicationDateTrigger: 1,
@@ -39,7 +39,7 @@ function PublishABook(props) {
 
     const [frontBookImg, setFrontBookImg] = useState(null)
     const [backBookImg, setBackBookImg] = useState(null)
-    const [bookCategories, setBookCategories] = useState ([])
+    const [bookCategories, setBookCategories] = useState([])
 
     const [error, setError] = useState({
         authorNameError: "",
@@ -125,7 +125,7 @@ function PublishABook(props) {
         { "value": "Travel", "label": "Travel" },
         { "value": "Young adult", "label": "Young adult" }
     ]
-    
+
 
 
     function nameValidation(e) {
@@ -208,7 +208,7 @@ function PublishABook(props) {
     }
 
 
-    
+
     // function bookCategoriesValidation(event) {
     //     setBookCategories[...bookCategories, event[0].value]
     // }
@@ -301,42 +301,45 @@ function PublishABook(props) {
         const finalBookCat = []
         let formisvalid = true
         for (let value of Object.values(bookCategories))
-              finalBookCat.push(value['value'])
+            finalBookCat.push(value['value'])
 
-        if (finalBookCat.length == 0){
+        if (finalBookCat.length == 0) {
             setError({ ...error, categoryError: "Please choose book categories " })
-
-        }
-        for (let value of Object.values(trigger)) {
-            if (value === 1) {
-                formisvalid = false
-                console.log("here")
-            }
-        }
-        
-        if (!formisvalid) {
+            formisvalid = false
             setSubmitError(<div className="alert alert-danger" role="alert">
                 Error input please fill the form with no errors
             </div>)
-            console.log(bookCategories)
-
         }
-
         else {
-            var myObj = {
-                "ISBN": input.ISBNinput,
-                "price": input.priceInput,
-                "title": input.titleInput,
-                "author": input.authorNameInput,
-                "rating": 2,
-                "category": "",
-                "imageUrl": "https://logo.clearbit.com/example.com",
-                "description": input.discriptionInput
+            setError({ ...error, categoryError: "" })
+            formisvalid = true
+            for (let value of Object.values(trigger)) {
+                if (value === 1) {
+                    formisvalid = false
+                }
             }
-            axios.post(`https://retoolapi.dev/3l5SXI/data`, myObj).then((res) => console.log(res.data)).catch((err) => console.log(err))
-            setSubmitError(<div className="alert alert-success" role="alert">
-                Book will be validated by Admin, Thank you
-            </div>)
+            if (!formisvalid) {
+                setSubmitError(<div className="alert alert-danger" role="alert">
+                    Error input please fill the form with no errors
+                </div>)
+            }
+
+            else {
+                var myObj = {
+                    "ISBN": input.ISBNinput,
+                    "price": input.priceInput,
+                    "title": input.titleInput,
+                    "author": input.authorNameInput,
+                    "rating": 2,
+                    "category": finalBookCat,
+                    "imageUrl": "https://logo.clearbit.com/example.com",
+                    "description": input.discriptionInput
+                }
+                axios.post(`https://retoolapi.dev/3l5SXI/data`, myObj).then((res) => console.log(res.data)).catch((err) => console.log(err))
+                setSubmitError(<div className="alert alert-success" role="alert">
+                    Book will be validated by Admin, Thank you
+                </div>)
+            }
         }
 
 
@@ -416,7 +419,7 @@ function PublishABook(props) {
                             <div className="col-12 d-flex justify-content-around">
                                 {
                                     frontBookImg ?
-                                        <MyCard imageUrl={frontBookImg ? URL.createObjectURL(frontBookImg) : ""}></MyCard>
+                                        <PublishImgCard imageUrl={frontBookImg ? URL.createObjectURL(frontBookImg) : ""}></PublishImgCard>
                                         :
                                         <span></span>
 
@@ -424,7 +427,7 @@ function PublishABook(props) {
 
                                 {
                                     backBookImg ?
-                                        <MyCard imageUrl={backBookImg ? URL.createObjectURL(backBookImg) : ""}></MyCard>
+                                        <PublishImgCard imageUrl={backBookImg ? URL.createObjectURL(backBookImg) : ""}></PublishImgCard>
                                         :
                                         <span></span>
 

@@ -1,6 +1,7 @@
 const INITIAL_VALUE = {
     fromPrice: 0,
-    toPrice: 0
+    toPrice: 0,
+    search:""
 }
 
 export default function priceCheck(state = INITIAL_VALUE, action) {
@@ -19,6 +20,11 @@ export default function priceCheck(state = INITIAL_VALUE, action) {
                 toPrice: action.payload,
             };
 
+            case 'setSearch':
+                return{
+                    ...state,
+                    search:action.payload
+                }
         default:
             return state;
     }

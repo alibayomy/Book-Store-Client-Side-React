@@ -84,7 +84,7 @@ function Books() {
             Home
           </Link>
         </li>
-        <i class="bi bi-chevron-right mx-2"></i>
+        <i className="bi bi-chevron-right mx-2"></i>
         <li className="breadcrumb-item active " aria-current="page">
           <Link className="text-decoration-none text-light" to="/books">
             Books
@@ -93,16 +93,16 @@ function Books() {
       </ol>
 
       {/* dir={language === "ar" ? "rtl" : "ltr"} */}
-      <div class="container-fluid">
-        <div class="row flex-nowrap">
-          <div class="col-auto col-md-2 col-xl-2 px-sm-1 px-0 bg-dark myNav mt-4 m-1 rounded">
-            <div class=" align-items-center align-items-sm-start px-2 pt-2 text-white min-vh-100">
+      <div className="container-fluid">
+        <div className="row flex-nowrap">
+          <div className="col-auto col-md-2 col-xl-2 px-sm-1 px-0 bg-dark myNav mt-4 m-1 rounded">
+            <div className=" align-items-center align-items-sm-start px-2 pt-2 text-white min-vh-100">
               <a
                 href="/books"
-                class="d-flex align-items-center mb-md-0 me-md-auto text-white text-decoration-none"
+                className="d-flex align-items-center mb-md-0 me-md-auto text-white text-decoration-none"
               >
                 <span
-                  class="fs-5 d-none d-sm-inline"
+                  className="fs-5 d-none d-sm-inline"
                   data-toggle="tooltip"
                   data-placement="right"
                   title="Click To clear all filters"
@@ -119,18 +119,18 @@ function Books() {
                 className="my-1"
               />
               <ul
-                class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                 id="menu"
               >
                 <li>
                   <a
                     href="#submenu1"
                     data-bs-toggle="collapse"
-                    class="nav-link px-0 align-middle"
+                    className="nav-link px-0 align-middle"
                   >
-                    <i class="fs-5 bi-translate text-white"></i>
+                    <i className="fs-5 bi-translate text-white"></i>
                     <p
-                      class="ms-1  d-none d-sm-inline text-white "
+                      className="ms-1  d-none d-sm-inline text-white "
                       onClick={() => history.push("/filter")}
                     >
                       Books Language
@@ -138,13 +138,13 @@ function Books() {
                   </a>
 
                   <ul
-                    class="collapse show nav flex-column ms-1"
+                    className="collapse show nav flex-column ms-1"
                     id="submenu1"
                     data-bs-parent="#menu"
                   >
                     <li>
                       <input
-                        class="form-check-input mySmallCheckbox"
+                        className="form-check-input mySmallCheckbox"
                         value="Arabic"
                         onChange={(e) => handelChangeLang(e)}
                         type="radio"
@@ -152,7 +152,7 @@ function Books() {
                         id="flexRadioDefault1"
                       />
                       <label
-                        class="form-check-label d-sm-inline mySmallText ms-1 "
+                        className="form-check-label d-sm-inline mySmallText ms-1 "
                         for="flexRadioDefault1"
                       >
                         Arabic Books{" "}
@@ -161,7 +161,7 @@ function Books() {
 
                     <li>
                       <input
-                        class="form-check-input mySmallCheckbox"
+                        className="form-check-input mySmallCheckbox"
                         type="radio"
                         value="english"
                         onChange={(e) => handelChangeLang(e)}
@@ -170,7 +170,7 @@ function Books() {
                       />
 
                       <label
-                        class="form-check-label d-sm-inline mySmallText  ms-1"
+                        className="form-check-label d-sm-inline mySmallText  ms-1"
                         for="flexRadioDefault2"
                       >
                         English Books{" "}
@@ -178,7 +178,7 @@ function Books() {
                     </li>
                     <li>
                       <input
-                        class="form-check-input  mySmallCheckbox"
+                        className="form-check-input  mySmallCheckbox"
                         type="radio"
                         value="action"
                         onChange={(e) => handelChangeLang(e)}
@@ -186,7 +186,7 @@ function Books() {
                         id="flexRadioDefault3"
                       />
                       <label
-                        class="form-check-label ms-1 d-sm-inline mySmallText"
+                        className="form-check-label ms-1 d-sm-inline mySmallText"
                         for="flexRadioDefault3"
                       >
                         French Books{" "}
@@ -204,11 +204,11 @@ function Books() {
                   <a
                     href="#submenu3"
                     data-bs-toggle="collapse"
-                    class="nav-link px-0 align-middle"
+                    className="nav-link px-0 align-middle"
                   >
-                    <i class="fs-5 bi-tags-fill text-white"></i>{" "}
+                    <i className="fs-5 bi-tags-fill text-white"></i>{" "}
                     <span
-                      class="ms-1 d-none d-sm-inline text-white"
+                      className="ms-1 d-none d-sm-inline text-white"
                       onClick={() => history.push("/filter")}
                     >
                       Categories
@@ -216,13 +216,13 @@ function Books() {
                   </a>
 
                   <ul
-                    class="collapse nav flex-column ms-1"
+                    className="collapse nav flex-column ms-1"
                     id="submenu3"
                     data-bs-parent="#menu"
                   >
                     <li>
                       <input
-                        class="form-check-input rounded h-50 my-1 p-1 w-100"
+                        className="form-check-input rounded h-50 my-1 p-1 w-100"
                         type="search"
                         placeholder="search here"
                         onChange={(e) => handelChangeLang(e)}
@@ -230,16 +230,16 @@ function Books() {
                         id="flexRadioDefaul"
                       ></input>
                     </li>
-                    <li class="w-100">
-                      <div class="form-check">
+                    <li className="w-100">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault4"
                         >
                           Translated
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault4"
@@ -249,15 +249,15 @@ function Books() {
                       </div>
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault5"
                         >
                           Miscellaneous
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault5"
@@ -265,18 +265,18 @@ function Books() {
                           value="Miscellaneous"
                         />
                       </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a> */}
+                      {/* <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 2</a> */}
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault6"
                         >
                           Business
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault6"
@@ -284,18 +284,18 @@ function Books() {
                           value="Business"
                         />
                       </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a> */}
+                      {/* <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 3</a> */}
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault7"
                         >
                           History
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault7"
@@ -303,18 +303,18 @@ function Books() {
                           value="History"
                         />
                       </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a> */}
+                      {/* <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 4</a> */}
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault8"
                         >
                           Arabic Novels
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault8"
@@ -324,15 +324,15 @@ function Books() {
                       </div>
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault9"
                         >
                           Short Stories
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault9"
@@ -342,15 +342,15 @@ function Books() {
                       </div>
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault10"
                         >
                           Parenting
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault10"
@@ -360,15 +360,15 @@ function Books() {
                       </div>
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault11"
                         >
                           Comics
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault11"
@@ -389,11 +389,11 @@ function Books() {
                   <a
                     href="#submenu4"
                     data-bs-toggle="collapse"
-                    class="nav-link px-0 align-middle"
+                    className="nav-link px-0 align-middle"
                   >
-                    <i class="fs-5 bi-pencil-square text-white"></i>{" "}
+                    <i className="fs-5 bi-pencil-square text-white"></i>{" "}
                     <span
-                      class="ms-1 d-none d-sm-inline text-white"
+                      className="ms-1 d-none d-sm-inline text-white"
                       onClick={() => history.push("/filter")}
                     >
                       Publishers
@@ -401,13 +401,13 @@ function Books() {
                   </a>
 
                   <ul
-                    class="collapse nav flex-column ms-1"
+                    className="collapse nav flex-column ms-1"
                     id="submenu4"
                     data-bs-parent="#menu"
                   >
                     <li>
                       <input
-                        class="form-check-input rounded h-50 my-1 p-1 w-100"
+                        className="form-check-input rounded h-50 my-1 p-1 w-100"
                         type="search"
                         placeholder="search here"
                         onChange={(e) => handelChangeLang(e)}
@@ -417,15 +417,15 @@ function Books() {
                     </li>
 
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault113"
                         >
                           Book Juice
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault113"
@@ -435,15 +435,15 @@ function Books() {
                       </div>
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault13"
                         >
                           Bint Al-Zayat
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault13"
@@ -453,15 +453,15 @@ function Books() {
                       </div>
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault14"
                         >
                           Arab Foundation
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault14"
@@ -469,18 +469,18 @@ function Books() {
                           value="Foundation"
                         />
                       </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a> */}
+                      {/* <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 3</a> */}
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault15"
                         >
                           Drawing
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault15"
@@ -488,18 +488,18 @@ function Books() {
                           value="Drawing"
                         />
                       </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a> */}
+                      {/* <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 4</a> */}
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault16"
                         >
                           Stoicism
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault16"
@@ -509,15 +509,15 @@ function Books() {
                       </div>
                     </li>
                     <li>
-                      <div class="form-check">
+                      <div className="form-check">
                         <label
-                          class="form-check-label mySmallText"
+                          className="form-check-label mySmallText"
                           for="flexRadioDefault17"
                         >
                           Arabic literature
                         </label>
                         <input
-                          class="form-check-input mySmallCheckbox"
+                          className="form-check-input mySmallCheckbox"
                           type="radio"
                           name="flexRadioDefault"
                           id="flexRadioDefault17"
@@ -537,45 +537,45 @@ function Books() {
                   <a
                     href="#submenu5"
                     data-bs-toggle="collapse"
-                    class="nav-link px-0 align-middle"
+                    className="nav-link px-0 align-middle"
                   >
-                    <span class="text-white">(EGP)</span>{" "}
-                    <span class="ms-1 d-none d-sm-inline text-white">
+                    <span className="text-white">(EGP)</span>{" "}
+                    <span className="ms-1 d-none d-sm-inline text-white">
                       {" "}
                       Price
                     </span>{" "}
                   </a>
 
                   <ul
-                    class="collapse nav flex-column ms-1"
+                    className="collapse nav flex-column ms-1"
                     id="submenu5"
                     data-bs-parent="#menu"
                   >
-                    <li class="text-center ">
-                      <div class="text-center">
+                    <li className="text-center ">
+                      <div className="text-center">
                         <input
-                          class="MyPriceInput p-1"
+                          className="MyPriceInput p-1"
                           type="number"
                           id="flexRadioDefault111"
                           onChange={fromPriceing}
                           value={fromPrice}
                         />
 
-                        <label class=" mx-2" for="flexRadioDefault113">
+                        <label className=" mx-2" for="flexRadioDefault113">
                           To
                         </label>
 
                         <input
-                          class=" MyPriceInput p-1"
+                          className=" MyPriceInput p-1"
                           type="number"
                           onChange={toPriceing}
                           value={toPrice}
                           id="flexRadioDefault111"
                         />
                       </div>
-                      <div class="text-center">
+                      <div className="text-center">
                         <button
-                          class="form-check-label btn btn-outline-success mt-3"
+                          className="form-check-label btn btn-outline-success mt-3"
                           for="flexRadioDefault13"
                           onClick={() => history.push("/filterPrice")}
                         >
@@ -589,7 +589,7 @@ function Books() {
             </div>
           </div>
 
-          <div class="col py-3">
+          <div className="col py-3">
             <h2 className="section-heading mb-4">Your Filters</h2>
             <div className="row">
               {Movies.map((book) => {
@@ -614,7 +614,7 @@ function Books() {
         <ScrollUpButton />
       </div>
 
-      <ul class="pagination  justify-content-center m-3">
+      <ul className="pagination  justify-content-center m-3">
         {pageNumber > 1 ? (
           <li className="page-item">
             <button

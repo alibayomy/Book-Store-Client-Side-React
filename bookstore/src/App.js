@@ -14,6 +14,7 @@ import FilterPrice from "./Pages/FilterPage/FilterPrice";
 import PublisherOrderList from "./Pages/PublisherOrder/PunlisherOrderList";
 import PublishABook from "./Pages/PublishABook/PublishABook";
 import Dashboard from "./Pages/Dashboard/Dashboard";
+import Search from "./Pages/Search/Search";
 
 const App = () => {
   return (
@@ -34,6 +35,13 @@ const App = () => {
             path={"/register/:userType"}
             component={RegitserComponent}
           />
+          <Route
+            exact
+            path={"/publisher/addbook"}
+            component={PublishABook}
+          ></Route>
+          {/* <Route path="/" component={ViewBook} /> */}
+          <Route exact path="/search" component={Search} />
         </Switch>
       </div>
     </Router>
