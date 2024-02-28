@@ -169,7 +169,7 @@ function Dashboard(){
                                 </div>
                                 <div className='d-flex justify-content-around'>
                                     <p className='fs-4 text-dark text-start p-0 m-0'>Books</p>
-                                    <Link to='#' className='text-decoration-none align-self-center fs-4' style={{"color":"#5f4ecb"}}>View All</Link>
+                                    <Link to='/publisher/addbook' className='text-decoration-none align-self-center fs-4' style={{"color":"#5f4ecb"}}>ADD Book</Link>
                                 </div>
                             </div>
 
@@ -178,7 +178,7 @@ function Dashboard(){
                                         <div className='p-3 col-lg-3 sol-md-3 col-sm-3'>
                                             <i class="bi bi-list-nested align-self-end fs-1" style={{"color":"#5f4ecb"}}></i>
                                         </div>
-                                            <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>65</h1>
+                                            <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>25</h1>
                                 </div>
                                 <div className='d-flex justify-content-around'>
                                     <p className='fs-4 text-dark text-start p-0 m-0'>Category</p>
@@ -191,11 +191,11 @@ function Dashboard(){
                                 <div className='p-3  col-lg-3 sol-md-3 col-sm-3'>
                                         <i class="bi bi-basket3 align-self-end fs-1 col-lg-3 sol-md-3 col-sm-3" style={{"color":"#5f4ecb"}}></i>
                                 </div>
-                                        <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>65</h1>
+                                        <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>20</h1>
                                 </div>
                                 <div className='d-flex justify-content-around'>
                                     <p className='fs-4 text-dark text-start p-0 m-0'>Orders</p>
-                                    <Link to='#' className='text-decoration-none align-self-center fs-4' style={{"color":"#5f4ecb"}}>View All</Link>
+                                    <Link to='/publisherorder' className='text-decoration-none align-self-center fs-4' style={{"color":"#5f4ecb"}}>View All</Link>
                                 </div>
                             </div> 
                         </div>

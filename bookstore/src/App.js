@@ -30,16 +30,7 @@ const App = () => {
             <Route path="/cart" component={Cart} />
             <Route path="/login" component={Login} />
             <Route exact path={"/register"} component={ClientSelectComponent} />
-            <Route
-              exact
-              path={"/register/:userType"}
-              component={RegitserComponent}
-            />
-            <Route
-              exact
-              path={"/publisher/addbook"}
-              component={PublishABook}
-            ></Route>
+            <Route exact path={"/register/:userType"} component={RegitserComponent}/>
             <Route exact path="/search" component={Search} />
             <Route exact path={"/publisherorder"} component={PublisherOrderList} />
             <Route exact path={'/publisher/addbook'} component= {PublishABook}></Route>
