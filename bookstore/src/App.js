@@ -16,8 +16,6 @@ import PublishABook from "./Pages/PublishABook/PublishABook";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Search from "./Pages/Search/Search";
 
-
-
 const App = () => {
   return (
     <Router>
@@ -26,17 +24,26 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/books" component={Books} />
+          <Route path="/viewbook/:id" component={ViewBook} />
           <Route exact path={"/filter"} component={FilterBooks} />
           <Route exact path={"/filterPrice"} component={FilterPrice} />
           <Route path="/cart" component={Cart} />
-          <Route path="/viewbook/:id" component={ViewBook} />
           <Route path="/login" component={Login} />
           <Route exact path={"/register"} component={ClientSelectComponent} />
-          <Route exact path={"/register/:userType"} component={RegitserComponent} />
-          <Route exact path={'/publisher/addbook'} component={PublishABook}></Route>
-          <Route exact path={'/publisherorders'} component={PublisherOrderList}></Route>
+          <Route
+            exact
+            path={"/register/:userType"}
+            component={RegitserComponent}
+          />
+          <Route
+            exact
+            path={"/publisher/addbook"}
+            component={PublishABook}
+          ></Route>
           {/* <Route path="/" component={ViewBook} /> */}
           <Route exact path="/search" component={Search} />
+          <Route exact path="/publisherorders" component={PublisherOrderList} />
+
         </Switch>
       </div>
     </Router>

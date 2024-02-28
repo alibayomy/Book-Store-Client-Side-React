@@ -3,13 +3,13 @@ import "./ViewBook.css";
 import Footer from "../../Components/Footer/Footer";
 import ProductDetails from "../../Components/ProductDetails/ProductDetails";
 import RelatedProducts from "../../Components/RelatedProducts/RelatedProducts";
-import Review from "../../Components/Review/Review";
+import DescriptionReview from "../../Components/DescriptionReview/DescriptionReview";
 
 function ViewBook() {
   return (
     <div>
       <ProductDetails />
-      <Review />
+      <DescriptionReview />
       <RelatedProducts />
       <Footer />
     </div>

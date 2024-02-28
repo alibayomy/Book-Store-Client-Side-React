@@ -71,3 +71,7 @@
 .viewbook-input:focus {
   outline: none;
 }
+
+.review-input:focus {
+  outline: none;
+}

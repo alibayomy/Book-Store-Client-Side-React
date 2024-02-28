@@ -1,13 +1,14 @@
 import React from "react";
-import ReviewSection from "./ReviewSection";
 import { useState } from "react";
+import ReviewWrapper from "./ReviewWrapper";
 
-function Review() {
+function DescriptionReview(props) {
   const [section, setSection] = useState("Description");
   return (
     <div className="container border-top mt-5">
       <div className="row justify-content-start">
         <div
+          role="button"
           onClick={(e) => {
             setSection(e.target.innerText);
           }}
@@ -20,6 +21,7 @@ function Review() {
           Description
         </div>
         <div
+          role="button"
           onClick={(e) => {
             setSection(e.target.innerText);
           }}
@@ -34,7 +36,8 @@ function Review() {
       </div>
       <div className="row mt-3">
         {section === "Description" ? (
-          <div className="container">
+          <div>
+            {/* {props.description} */}
             Sed ut perspiciatis unde omnis iste natus error sit voluptatem
             accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
             quae ab illo inventore veritatis et quasi architecto beatae vitae
@@ -51,11 +54,11 @@ function Review() {
             pariatur?
           </div>
         ) : (
-          <ReviewSection />
+          <ReviewWrapper />
         )}
       </div>
     </div>
   );
 }
 
-export default Review;
+export default DescriptionReview;

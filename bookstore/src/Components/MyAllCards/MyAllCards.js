@@ -1,7 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { Link } from 'react-router-dom';
+import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
+import { Link } from "react-router-dom";
 
 function MyAllCards(props) {
   const renderRatingStars = () => {
@@ -12,7 +13,7 @@ function MyAllCards(props) {
       starIcons.push(
         <FontAwesomeIcon
           key={i}
-          icon={i <= rating ? faStar : "far fa-star"}
+          icon={i <= rating ? solidStar : regularStar}
           className="ms-1 mt-1 cool-text"
         />
       );
@@ -22,9 +23,8 @@ function MyAllCards(props) {
   };
 
   return (
-    <div key={props.id} className="col-lg-3 col-md-6 mt-3 mb-4">
+    <div key={props.id} className="col-xl-4 col-lg-4 col-md-6 mt-3 mb-4">
       <div className="card my-card bg-body-tertiary h-100 rounded-0 border-0">
-
         <Link to={props.path} className="text-decoration-none">
           <img
             src={props.imageUrl}

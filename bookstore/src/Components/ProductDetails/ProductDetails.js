@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios"
+import axios from "axios";
 import "./ProductDetails.css";
 import productImg from "../../images/author-book-store-book-cover-06.jpg";
 import { Link } from "react-router-dom";
@@ -8,29 +8,30 @@ import { faIndent } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
 
 function ProductDetails() {
-
   const product = {
     category: "Fantasy",
     title: "The Born of Aplex 2",
-    author: "Author Name",
+    author: "Mostafa Hassan",
     price: "$19.99",
     description:
       "Platea mauris in sit aliquam commodo ipsum, pharetra tempus proin diam metus eget quis lobortis commodo scelerisque etiam placerat amet, ipsum cursus euismod risus morbi ut.",
     imageUrl: `${productImg}`, // Replace with actual image URL
   };
 
-
   const movieId = useParams();
 
   const [movie, setMovie] = useState({});
 
   useEffect(() => {
-    axios.get(`https://api.themoviedb.org/3/movie/${movieId.id}?api_key=6883a4d02a15e877d54e507dbc703331`)
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/${movieId.id}?api_key=6883a4d02a15e877d54e507dbc703331`
+      )
       .then((res) => setMovie(res.data))
-      .catch((err) => console.log(err))
-  }, [])
+      .catch((err) => console.log(err));
+  }, []);
 
-const price=movie.vote_count;
+  const price = movie.vote_count;
   const [amount, setAmount] = useState(1);
 
   const handleAmountChange = (e) => {

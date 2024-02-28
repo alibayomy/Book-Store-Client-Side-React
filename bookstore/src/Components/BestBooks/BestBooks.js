@@ -6,28 +6,32 @@ import product2 from "../../images/author-book-store-book-cover-07.jpg";
 import product3 from "../../images/author-book-store-book-cover-08.jpg";
 import product4 from "../../images/author-book-store-book-img-01.jpg";
 import MyCard from "../MyCard/MyCard";
-import axios from "axios"
-import { useEffect, useState, useTransition } from "react"
+import axios from "axios";
+import { useEffect, useState, useTransition } from "react";
 
 function BestBooks() {
-
-
   const [pages, setPages] = useState({
-    results: []
-
-  })
+    results: [],
+  });
 
   useEffect(() => {
-    axios.get(`https://api.themoviedb.org/3/movie/popular?language=eng&api_key=da4e0d3bd6b4f860b5788aa43ae24d86`)
-      .then((res) => (setPages({
-        results: res.data.results
-      })))
-      .catch((err) => console.log(err))
-  }, [])
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/popular?language=eng&api_key=da4e0d3bd6b4f860b5788aa43ae24d86`
+      )
+      .then((res) =>
+        setPages({
+          results: res.data.results,
+        })
+      )
+      .catch((err) => console.log(err));
+  }, []);
 
-  const getMoviesToSort = [...pages.results]
-  const topFourMovies = (getMoviesToSort.sort((a, b) => b.vote_average - a.vote_average)).slice(0, 4)
-  const testMovies = pages.results.slice(0, 6)
+  const getMoviesToSort = [...pages.results];
+  const topFourMovies = getMoviesToSort
+    .sort((a, b) => b.vote_average - a.vote_average)
+    .slice(0, 4);
+  const testMovies = pages.results.slice(0, 6);
 
   // const bestSellingBooks = [
   //   // Replace with actual book data or fetch from an API
@@ -71,18 +75,16 @@ function BestBooks() {
             Best Selling Books
           </h2>
           <div className="row">
-            {
-              topFourMovies.map((book) => (
-                <MyCard
-                  key={book.id}
-                  imageUrl={`https://image.tmdb.org/t/p/w500/${book.poster_path}`}
-                  title={book.title}
-                  category="Action"
-                  path={`viewbook/${book.id}`}
-                  price={book.vote_count.toFixed(0)}
-                />
-              ))
-            }
+            {topFourMovies.map((book) => (
+              <MyCard
+                key={book.id}
+                imageUrl={`https://image.tmdb.org/t/p/w500/${book.poster_path}`}
+                title={book.title}
+                category="Action"
+                path={`viewbook/${book.id}`}
+                price={book.vote_count.toFixed(0)}
+              />
+            ))}
 
             <div className="text-center">
               <Link to="/books" className="filled-button">
