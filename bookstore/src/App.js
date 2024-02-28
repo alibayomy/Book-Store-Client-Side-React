@@ -41,6 +41,8 @@ const App = () => {
             component={PublishABook}
           ></Route>
           <Route exact path="/search" component={Search} />
+          <Route exact path='/dashboard' component={Dashboard} />
+          <React exact path='/publisher/order' component={PublisherOrderList} />
         </Switch>
       </div>
     </Router>
