@@ -5,9 +5,10 @@ import MyCard from "../../Components/MyCard/MyCard";
 import axios from "axios";
 import reactSelect from "react-select";
 import Select from 'react-select';
+import PublishImgCard from "../../Components/PublishImgCard/PublishImgCard";
 function PublishABook(props) {
 
-    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
+    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’\-–`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
     const priceRegex = new RegExp(/^((\d+)((,\d+|\d+)*)(\s*|\.(\d{2}))$)/)
     var options = { day: 'numeric', month: 'numeric', year: 'numeric' };
 
@@ -315,7 +316,6 @@ function PublishABook(props) {
         for (let value of Object.values(trigger)) {
             if (value === 1) {
                 formisvalid = false
-                console.log("here")
             }
         }
         
@@ -420,7 +420,7 @@ function PublishABook(props) {
                             <div className="col-12 d-flex justify-content-around">
                                 {
                                     frontBookImg ?
-                                        <MyCard imageUrl={frontBookImg ? URL.createObjectURL(frontBookImg) : ""}></MyCard>
+                                        <PublishImgCard imageUrl={frontBookImg ? URL.createObjectURL(frontBookImg) : ""}></PublishImgCard>
                                         :
                                         <span></span>
 
@@ -428,7 +428,7 @@ function PublishABook(props) {
 
                                 {
                                     backBookImg ?
-                                        <MyCard imageUrl={backBookImg ? URL.createObjectURL(backBookImg) : ""}></MyCard>
+                                        <PublishImgCard imageUrl={backBookImg ? URL.createObjectURL(backBookImg) : ""}></PublishImgCard>
                                         :
                                         <span></span>
 

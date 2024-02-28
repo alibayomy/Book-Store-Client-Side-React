@@ -32,6 +32,7 @@ const App = () => {
           <Route path="/login" component={Login} />
           <Route exact path={"/register"} component={ClientSelectComponent} />
           <Route exact path={"/register/:userType"} component={RegitserComponent} />
+          <Route exact path={'/publisher/addbook'} component={PublishABook}></Route>
           {/* <Route path="/" component={ViewBook} /> */}
         </Switch>
       </div>
