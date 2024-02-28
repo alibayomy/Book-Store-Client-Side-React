@@ -1,14 +1,19 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import person from "../../images/person.jpg";
 
-function ReviewCard(props) {
+function Review(props) {
   return (
-    <div className="container px-lg-5 px-md-2 px-sm-0 mb-4">
+    <div key={props.id} className="container px-lg-5 px-md-2 px-sm-0 mb-4">
+      <div className="mb-3 fs-3">Reviews</div>
       <div className="card w-100 border border-1 p-2 bg-light px-4">
         <div className="d-flex align-items-top">
           <img
             className="card-img rounded-circle border border-2 mt-3 me-3 p-1 border-success align-middle"
             style={{ height: "4rem", width: "4rem" }}
-            // src={require("../../Images/person-icon-1901x2048-a9h70k71.jpeg")}
+            src={person}
             alt="User"
           />
           <div className="d-inline-block my-lg-2 pt-1 mx-2">
@@ -16,6 +21,21 @@ function ReviewCard(props) {
             <div className="text-dark-emphasis fs-5 pt-0 mt-0">
               {props.date}
             </div>
+          </div>
+          <div className="ms-auto mt-3">
+            {/* <FontAwesomeIcon
+              className="me-3"
+              role="button"
+              icon={faPenToSquare}
+              size="lg"
+              onClick={props.editReview}
+            /> */}
+            <FontAwesomeIcon
+              role="button"
+              icon={faTrash}
+              size="lg"
+              onClick={props.deleteReview}
+            />
           </div>
         </div>
         <div>
@@ -42,15 +62,4 @@ function ReviewCard(props) {
   );
 }
 
-export default ReviewCard;
-
-{
-  /* <div class="card">
-<h5 class="card-header">Featured</h5>
-<div class="card-body">
-<h5 class="card-title">Special title treatment</h5>
-<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-<a href="#" class="btn btn-primary">Go somewhere</a>
-</div>
-</div> */
-}
+export default Review;

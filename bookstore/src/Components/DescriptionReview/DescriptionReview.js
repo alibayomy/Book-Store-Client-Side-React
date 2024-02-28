@@ -1,8 +1,8 @@
 import React from "react";
-import ReviewSection from "./ReviewSection";
 import { useState } from "react";
+import ReviewWrapper from "./ReviewWrapper";
 
-function Review(props) {
+function DescriptionReview(props) {
   const [section, setSection] = useState("Description");
   return (
     <div className="container border-top mt-5">
@@ -54,11 +54,11 @@ function Review(props) {
             pariatur?
           </div>
         ) : (
-          <ReviewSection />
+          <ReviewWrapper />
         )}
       </div>
     </div>
   );
 }
 
-export default Review;
+export default DescriptionReview;

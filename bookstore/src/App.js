@@ -15,8 +15,6 @@ import PublisherOrderList from "./Pages/PublisherOrder/PunlisherOrderList";
 import PublishABook from "./Pages/PublishABook/PublishABook";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 
-
-
 const App = () => {
   return (
     <Router>
@@ -25,14 +23,17 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/books" component={Books} />
+          <Route path="/viewbook/:id" component={ViewBook} />
           <Route exact path={"/filter"} component={FilterBooks} />
           <Route exact path={"/filterPrice"} component={FilterPrice} />
           <Route path="/cart" component={Cart} />
-          <Route path="/viewbook/:id" component={ViewBook} />
           <Route path="/login" component={Login} />
           <Route exact path={"/register"} component={ClientSelectComponent} />
-          <Route exact path={"/register/:userType"} component={RegitserComponent} />
-          {/* <Route path="/" component={ViewBook} /> */}
+          <Route
+            exact
+            path={"/register/:userType"}
+            component={RegitserComponent}
+          />
         </Switch>
       </div>
     </Router>
