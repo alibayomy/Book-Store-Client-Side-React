@@ -1,18 +1,59 @@
 
 .order-image {
-  width: 40px; 
+  width: 60px;
   height: auto;
 }
 
-
-
-
-
-th, td {
-  font-size: 23px; 
+th,
+td {
+  font-size: 24px;
 }
 
+.search-input-table,
+.search-button-table {
+  padding: 10px;
+  margin-right: 10px;
+}
 
+.approve-button,
+.disapprove-button {
+  display: inline-block;
+  margin: 10px 5px;
+  padding: 10px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  border: 2px solid transparent;
+}
 
+.disapprove-button {
+  background-color: rgb(168, 168, 168);
+  color: #fff;
+}
+
+.approve-button:hover,
+.disapprove-button:hover {
+  background-color: transparent;
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.page {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.movment {
+  color: #4d3bc6;
+  background-color: #fff;
+  border: 1px solid #4d3bc6;
+  padding: 8px 12px;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.page.active .movment {
+  background-color: #4d3bc6;
+  color: #fff;
+}
 
 
