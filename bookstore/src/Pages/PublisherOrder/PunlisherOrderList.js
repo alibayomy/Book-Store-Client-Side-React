@@ -81,13 +81,7 @@ function PublisherOrderList() {
     },
   ];
 
-  const handleApprove = (orderId) => {
-    console.log(`Order ${orderId} approved`);
-  };
 
-  const handleDisapprove = (orderId) => {
-    console.log(`Order ${orderId} disapproved`);
-  };
 
   return (
 
@@ -109,7 +103,7 @@ function PublisherOrderList() {
 
 
 
-  <div style={{width:"100%"}} className="container-fluid">
+  <div style={{width:"120%"}} className="container-fluid">
 <div className="row">
 <div className=" col-lg-12 col-md-6 col-sm-2 ">
     <table  className="table  table-striped table-bordered bg-white col-lg-12 col-md-6 col-sm-1 ">
@@ -146,15 +140,17 @@ function PublisherOrderList() {
                 <td>
                   <button
                     className="approve-button   filled-button  "
-                    onClick={() => handleApprove(order.id)}
+                 
                   >
-                    Approve
+                    Approve 
+                    {   order.id}
                   </button>
                   <button
                     className="disapprove-button "
-                    onClick={() => handleDisapprove(order.id)}
+                   
                   >
-                    Disapprove
+                    Disapprove  {   order.id}
+                    
                   </button>
                 </td>
           </tr>
@@ -183,8 +179,8 @@ function PublisherOrderList() {
 
 
 
-  <div style={{ marginTop: '120px' }} className="pagination-container ">
-  <div style={{marginTop:'120px'}}    className="pagination-container ">
+  <div  className="pagination-container mt-5 ">
+  <div   >
           <ul className="pagination justify-content-center">
             <li className="page">
               <button className="movment" >
