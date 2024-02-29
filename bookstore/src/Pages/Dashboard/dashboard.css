@@ -10,7 +10,7 @@
     right: -2px;
     color: #5f4ecb;
     background-color: #ffffff;
-    padding: 5px;
+    padding: 2px;
     width: 25%;
     border-radius: 17px;
     text-align: start;
@@ -28,3 +28,7 @@
     cursor: pointer;
 }
 
+
+ul {
+    list-style: none;
+}

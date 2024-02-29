@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import MessageErrorComponent from "../../Components/MessageErrorcomponent/MessageErrorcomponent";
 // import book1 from '../../Images/stack-of-books.png'
 
-function RegitserComponent() {
+function RegitserComponent(props) {
   const [registerFormData, setRegisterFormData] = useState({
     firstName: "",
     lastName: "",
@@ -28,7 +28,7 @@ function RegitserComponent() {
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
   //   const [submitAttempted, setSubmitAttempted] = useState(false);
-
+  const history = useHistory(); 
   const userType = useParams();
   // console.log('userType---- ',userType.userType)
 
@@ -164,6 +164,7 @@ function RegitserComponent() {
       registerFormErrors.passwordError2 == null
     ) {
       console.log("Register Successfully");
+      history.push('/dashboard');
     } else {
       console.log("Enter vaild data");
     }
