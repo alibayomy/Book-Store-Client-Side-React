@@ -18,11 +18,11 @@
     "react-redux": "^9.1.0",
     "react-router-dom": "^5.3.4",
     "react-scripts": "5.0.1",
+    "react-scroll-up-button": "^1.6.4",
+    "react-select": "^5.8.0",
     "redux": "^5.0.1",
     "redux-devtools-extension": "^2.13.9",
-    "react-scroll-up-button": "^1.6.4",
-    "web-vitals": "^2.1.4",
-    "react-select": "^5.8.0"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",

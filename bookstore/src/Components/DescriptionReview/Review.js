@@ -2,6 +2,8 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import person from "../../images/person.jpg";
 
 function Review(props) {
@@ -47,8 +49,8 @@ function Review(props) {
                   <i
                     className={
                       currentRating <= props.rate
-                        ? "mb-1 bi bi-star-fill"
-                        : "bi bi-star mb-1 "
+                        ? "mb-1 bi bi-star-fill cool-text"
+                        : "bi bi-star mb-1 cool-text"
                     }
                   ></i>
                 );
