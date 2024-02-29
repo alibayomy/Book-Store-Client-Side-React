@@ -37,6 +37,8 @@ td {
   color: var(--primary);
 }
 
+/* pagination */
+
 .page {
   display: inline-block;
   margin: 0 10px;

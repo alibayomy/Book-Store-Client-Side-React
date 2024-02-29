@@ -95,32 +95,45 @@ function PublisherOrderList() {
   ];
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-5 ml-5 text-center">Publisher Orders</h2>
-      <div>
-      <div className="mb-5  text-center">
-         
-          <input type="text" id="search" placeholder="Enter product name" />
-          <button className="search-button">Search</button>
-        </div>
-        <table className="table table-striped table-bordered bg-white">
-          <thead className="text-center">
-            <tr >
-              <th>ID</th>
-              <th></th>
-              <th>Product</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Total Price</th>
-              <th>Order Date</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody className="text-center">
-            {orders.map((order) => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>
+    <>
+    <div  className="container-p ml-5 mt-5">
+<h2 className="mb-5 text-center">Publisher Orders</h2>
+<div className="mb-5 text-center Search-container">
+  <input
+            className="search-input-table"
+            type="text"
+            id="search"
+            placeholder="Enter product name"
+          />
+          <button className="search-button-table filled-button filled-button:hover outline-button:hover">
+            Search
+          </button>
+  </div>
+
+
+
+  <div style={{width:"100%"}} className="container-fluid">
+<div className="row">
+<div className=" col-lg-12 col-md-6 col-sm-2 ">
+    <table  className="table  table-striped table-bordered bg-white col-lg-12 col-md-6 col-sm-1 ">
+      <thead className="text-center col-lg-12 col-md-6 col-sm-1">
+        <tr className=" col-lg-12 col-md-6 col-sm-12 ">
+          <th>ID</th>
+          <th></th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
+          <th>Order Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody className="text-center col-lg-12 col-md-6 col-sm-1">
+        {orders.map((order) => (
+          <tr className=" col-lg-12 col-md-6 col-sm-4 " key={order.id}>
+           <td>{order.id}</td>
+           <td>
                   <img
                     src={order.image}
                     alt={order.productName}
@@ -133,105 +146,68 @@ function PublisherOrderList() {
                 <td>${order.totalPrice}</td>
                 <td>{order.orderDate}</td>
                 <td>{order.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-     
-    </div>
+                <td>
+                  <button
+                    className="approve-button   filled-button  "
+                    onClick={() => handleApprove(order.id)}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className="disapprove-button "
+                    onClick={() => handleDisapprove(order.id)}
+                  >
+                    Disapprove
+                  </button>
+                </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
 
-    
-  );
+
+
+{/* pagination style */}
+<div style={{ marginTop: '120px' }} className="pagination-container ">
+<div style={{marginTop:'120px'}}    className="pagination-container ">
+        <ul className="pagination justify-content-center">
+          <li className="page">
+            <button className="movment" >
+              Previous
+            </button>
+          </li>
+          <li className="page active">
+            <button className="movment">
+              1
+            </button>
+          </li>
+          <li className="page">
+            <button className="movment" >
+              2
+            </button>
+          </li>
+          <li className="page">
+            <button className="movment" >
+              3
+            </button>
+          </li>
+          <li className="page">
+            <button className="movment" >
+              Next
+            </button>
+          </li>
+        </ul>
+      </div>
+</div>
+</div>
+ </>
+ );
 }
 
 export default PublisherOrderList;
 
-      // {
-      //   id: 8,
-      //   image:book1,
-      //   productName: 'Adventure Book',
-      //   price: 90.0,
-      //   quantity: 2,
-      //   totalPrice: 170.0,
-      //   orderDate: '2024-03-15',
-      //   status: 'Shipped',
-     
-      // },
-      // {
-      //   id: 9,
-      //   image:book1,
-      //   productName: 'Cookbook',
-      //   price: 120.0,
-      //   quantity: 1,
-      //   totalPrice: 120.0,
-      //   orderDate: '2024-03-20',
-      //   status: 'Delivered',
-     
-      // },
-      // {
-      //   id: 10,
-      //   image:book6,
-      //   productName: 'Business and Finance',
-      //   price: 120.0,
-      //   quantity: 2,
-      //   totalPrice: 240.0,
-      //   orderDate: '2024-03-25',
-      //   status: 'Processing',
-     
-      // },
-      // {
-      //   id: 11,
-      //   image:book4,
-      //   productName: 'Art and Photography',
-      //   price: 70.0,
-      //   quantity: 1,
-      //   totalPrice: 140.0,
-      //   orderDate: '2024-03-30',
-      //   status: 'Shipped',
-  
-      // },
-      // {
-      //   id: 12,
-      //   image:book4,
-      //   productName: 'Travel Guide',
-      //   price: 180.0,
-      //   quantity: 3,
-      //   totalPrice: 540.0,
-      //   orderDate: '2024-04-01',
-      //   status: 'Processing',
-      
-      // },
-      // {
-      //   id: 13,
-      //   image:book2,
-      //   productName: 'Science and Nature',
-      //   price: 30.0,
-      //   quantity: 2,
-      //   totalPrice: 60.0,
-      //   orderDate: '2024-04-05',
-      //   status: 'Delivered',
+
     
-      // },
-      // {
-      //   id: 14,
-      //   image:book1,
-      //   productName: 'Children\'s Book',
-      //   price: 18.0,
-      //   quantity: 4,
-      //   totalPrice: 72.0,
-      //   orderDate: '2024-04-10',
-      //   status: 'Shipped',
-       
-      // },
-      // {
-      //   id: 15,
-      //   image:book4,
-      //   productName: 'Educational Textbook',
-      //   price: 25.0,
-      //   quantity: 1,
-      //   totalPrice: 25.0,
-      //   orderDate: '2024-06-1',
-      //   status: 'Processing',
-      
-      // },
