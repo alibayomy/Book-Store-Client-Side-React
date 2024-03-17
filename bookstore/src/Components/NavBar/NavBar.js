@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./NavBar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -8,10 +8,12 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { search } from "../../Store/Actions/CheckPriceAction";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
 
 function NavBar() {
   const history = useHistory();
 
+  const {user} = useContext(AuthContext)
   const goBack = () => {
     history.goBack(); // Go back to the previous page
   };
@@ -25,6 +27,7 @@ function NavBar() {
           setSearchWord()
       }
   },[searchInputField])
+  let myName = useContext(AuthContext)
   return (
     <nav
       className="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm"
@@ -83,6 +86,9 @@ function NavBar() {
                 Register
               </Link>
             </li>
+            <Link className="nav-link" to="/test">
+                test
+              </Link>
           </ul>
           <form className="d-flex ms-auto" role="search">
             <input
