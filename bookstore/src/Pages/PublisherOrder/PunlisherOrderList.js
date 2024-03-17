@@ -17,7 +17,7 @@ function PublisherOrderList() {
         .catch((err) => console.log(err))
     },[])
  
-    const getStatusClass = (status) => {
+    const getStatusColor = (status) => {
       if (status === 'pending') {
         return 'text-warning'; 
       } else if (status === 'completed') {
@@ -67,7 +67,7 @@ function PublisherOrderList() {
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody className="text-center ">
+      <tbody className="text-center col-lg-12 ">
         {orders.map((order) => (
           <tr className=" col-lg-12 " key={order.id}>
            <td>{order.id}</td>
@@ -83,7 +83,7 @@ function PublisherOrderList() {
                 <td>{order.quantity}</td>
                 <td>${order.total_price}</td>
                 <td>{order.order_date}</td>
-                <td className={getStatusClass(order.status)} >{order.status}</td>
+                <td className={getStatusColor(order.status)} >{order.status}</td>
                 <td>
                   <button
                     className="approve-button   filled-button  "

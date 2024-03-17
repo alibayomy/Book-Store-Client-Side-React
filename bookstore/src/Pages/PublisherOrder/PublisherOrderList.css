@@ -1,13 +1,10 @@
 
 .order-image {
-  width: 60px;
+  width: 50px;
   height: auto;
 }
 
-th,
-td {
-  font-size: 24px;
-}
+
 
 .search-input-table,
 .search-button-table {
@@ -18,10 +15,10 @@ td {
 .approve-button,
 .disapprove-button {
   display: inline-block;
-  margin: 10px 5px;
+  margin: 10px ;
   padding: 10px 30px;
-  border-radius: 30px;
-  text-decoration: none;
+  border-radius: 20px;
+ 
   border: 2px solid transparent;
 }
 
