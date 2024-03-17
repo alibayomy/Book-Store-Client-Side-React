@@ -1,86 +1,33 @@
 import React from 'react';
 import './PublisherOrderList.css';
-import book1 from "../../images/book-01.png";
-import book2 from '../../images/book-02.png';
-import book3 from '../../images/book.png';
-import book4 from '../../images/book5.jpg';
-import book5 from '../../images/book4.jpeg';
-import book6 from '../../images/book6.jpeg';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 function PublisherOrderList() {
-  const orders = [
-    {
-      id: 1,
-      image: book1,
-      productName: 'Adventure Book',
-      price: 70.0,
-      quantity: 3,
-      totalPrice: 210.0,
-      orderDate: '2024-02-10',
-      status: 'Processing',
-    },
-    {
-      id: 2,
-      image: book5,
-      productName: 'Science Fiction Novel',
-      price: 50.0,
-      quantity: 2,
-      totalPrice: 100.0,
-      orderDate: '2024-02-15',
-      status: 'Delivered',
-    },
-    {
-      id: 3,
-      image: book2,
-      productName: 'Adventure Book',
-      price: 150.0,
-      quantity: 1,
-      totalPrice: 150.0,
-      orderDate: '2024-02-20',
-      status: 'Shipped',
-    },
-    {
-      id: 4,
-      image: book4,
-      productName: 'Historical Fiction',
-      price: 200.0,
-      quantity: 4,
-      totalPrice: 800.0,
-      orderDate: '2024-02-25',
-      status: 'Processing',
-    },
-    {
-      id: 5,
-      image: book3,
-      productName: 'Adventure Book',
-      price: 80.0,
-      quantity: 2,
-      totalPrice: 160.0,
-      orderDate: '2024-03-01',
-      status: 'Shipped',
-    },
-    {
-      id: 6,
-      image: book6,
-      productName: 'Biography',
-      price: 150.0,
-      quantity: 1,
-      totalPrice: 300.0,
-      orderDate: '2024-03-05',
-      status: 'Delivered',
-    },
-    {
-      id: 7,
-      image: book2,
-      productName: 'Adventure Book',
-      price: 120.0,
-      quantity: 3,
-      totalPrice: 360.0,
-      orderDate: '2024-03-10',
-      status: 'Processing',
-    },
-  ];
 
+  const [orders, setOrders] = useState([]);
+  
+    useEffect(() => {
+       
+        axios.get("http://127.0.0.1:8000/orderlist/")
+      
+         .then((res) => setOrders(res.data.results))
+        //  console.log(res))
+        
+        .catch((err) => console.log(err))
+    },[])
+ 
+    const getStatusClass = (status) => {
+      if (status === 'pending') {
+        return 'text-warning'; 
+      } else if (status === 'completed') {
+        return 'text-success'; 
+      } else if (status === 'cancelled') {
+        return 'text-danger'; 
+      }
+     
+    };
+  
 
 
   return (
@@ -103,12 +50,12 @@ function PublisherOrderList() {
 
 
 
-  <div style={{width:"120%"}} className="container-fluid">
+  <div style={{width:"100%"}} className="container-fluid">
 <div className="row">
-<div className=" col-lg-12 col-md-6 col-sm-2 ">
-    <table  className="table  table-striped table-bordered bg-white col-lg-12 col-md-6 col-sm-1 ">
-      <thead className="text-center col-lg-12 col-md-6 col-sm-1">
-        <tr className=" col-lg-12 col-md-6 col-sm-12 ">
+<div className=" col-lg-12 ">
+    <table  className="table  table-striped table-bordered bg-white col-lg-12  ">
+      <thead className="text-center col-lg-12 ">
+        <tr className=" col-lg-12 ">
           <th>ID</th>
           <th></th>
           <th>Product</th>
@@ -120,23 +67,23 @@ function PublisherOrderList() {
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody className="text-center col-lg-12 col-md-6 col-sm-1">
+      <tbody className="text-center ">
         {orders.map((order) => (
-          <tr className=" col-lg-12 col-md-6 col-sm-4 " key={order.id}>
+          <tr className=" col-lg-12 " key={order.id}>
            <td>{order.id}</td>
                 <td>
                   <img
                     src={order.image}
-                    alt={order.productName}
+                    alt={order.book_name}
                     className="order-image "
                   />
                 </td>
-                <td>{order.productName}</td>
+                <td>{order.book_name}</td>
                 <td>${order.price}</td>
                 <td>{order.quantity}</td>
-                <td>${order.totalPrice}</td>
-                <td>{order.orderDate}</td>
-                <td>{order.status}</td>
+                <td>${order.total_price}</td>
+                <td>{order.order_date}</td>
+                <td className={getStatusClass(order.status)} >{order.status}</td>
                 <td>
                   <button
                     className="approve-button   filled-button  "
@@ -216,4 +163,5 @@ function PublisherOrderList() {
 }
 
 export default PublisherOrderList;
+
 
