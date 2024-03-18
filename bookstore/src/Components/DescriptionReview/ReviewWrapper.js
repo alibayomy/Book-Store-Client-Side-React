@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 
 function ReviewWrapper(props) {
-  const [reviews, setReviews] = useState([]);
+  // const [reviews, setReviews] = useState([]);
   const localhost='http://localhost:8000'
   // const book_name= useParams();
   // console.log(book_name);
@@ -15,11 +15,11 @@ function ReviewWrapper(props) {
   //   console.log(reviews);
   // }, [reviews]);
 
-    useEffect(() =>{
-     axios.get(`${localhost}/rate/get-book-rates/${props.id}`)
-    .then((res) => (console.log(res.data),setReviews(res.data)))
-    .catch((err) => console.log(err));
-  }, []);
+  //   useEffect(() =>{
+  //    axios.get(`${localhost}/rate/get-all-rates/${props.book_id}`)
+  //   .then((res) => (console.log(res.data.data),setReviews(res.data.data)))
+  //   .catch((err) => console.log(err));
+  // }, []);
 
   const addReview = (rate, comment, name, email) => {
     console.log("rate: ",rate," comment: ",comment,"book id: ",props.book_id)
@@ -72,17 +72,17 @@ function ReviewWrapper(props) {
     <div>
       <ReviewForm addReview={addReview} />
       <div className="mb-3 fs-3">Reviews</div>
-      {/* {reviews.map((review, index) => (
+      {props.reviews.map((review, index) => (
         <Review
           key={review.id}
           date={review.creation_date.replaceAll("-"," ")}
           rate={review.rate}
           user={review.user}
-          review={review.comment}
+          review={review.review}
           deleteReview={() => deleteReview(review.id)}
           editReview={() => editReview(review.id)}
         />
-      ))} */}
+      ))}
     </div>
   );
 }

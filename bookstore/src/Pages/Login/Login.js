@@ -165,7 +165,7 @@ function Login() {
                       <span style={{ fontSize: "1.2em", marginRight: "8px" }}>
                         Create a new account?
                       </span>
-                      <Link to="/register" className="filled-button">
+                      <Link to="/register" style={{"color":"#5f4ecb"}}>
                         Sign up
                       </Link>
                     </p>
