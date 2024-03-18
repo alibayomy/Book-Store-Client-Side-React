@@ -5,9 +5,8 @@ import productImg from "../../images/author-book-store-book-cover-06.jpg";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndent } from "@fortawesome/free-solid-svg-icons";
-import { useParams } from "react-router-dom";
 
-function ProductDetails() {
+function ProductDetails(props) {
   const product = {
     category: "Fantasy",
     title: "The Born of Aplex 2",
@@ -18,21 +17,20 @@ function ProductDetails() {
     imageUrl: `${productImg}`, // Replace with actual image URL
   };
 
-  const movieId = useParams();
-
   const [movie, setMovie] = useState({});
-
-  useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${movieId.id}?api_key=6883a4d02a15e877d54e507dbc703331`
-      )
-      .then((res) => setMovie(res.data))
-      .catch((err) => console.log(err));
-  }, []);
-
-  const price = movie.vote_count;
+  // const [book,setBook]=useState({})
+  // const [price,setPrice] = useState(0);
   const [amount, setAmount] = useState(1);
+  // const localhost='http://localhost:8000'
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       `${localhost}/${book_slug}-book/details`
+  //     )
+  //     .then((res) =>(setPrice(res.data.book.price),setBook(res.data.book)))
+  //     .catch((err) => console.log(err));
+  // }, []);
+
 
   const handleAmountChange = (e) => {
     // Ensure the value is a positive number
@@ -48,8 +46,8 @@ function ProductDetails() {
           <div className="row justify-content-center">
             <div className="col-12 col-md-6 col-lg-6 text-center">
               <img
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-                alt={movie.title}
+                src={props.book.img}
+                alt={props.book.name}
                 className="img-fluid"
               />
             </div>
@@ -61,17 +59,17 @@ function ProductDetails() {
                       Home
                     </Link>
                   </li>
-                  <li className="breadcrumb-item">{product.category}</li>
+                  <li className="breadcrumb-item">{props.book.category_name}</li>
                   <li className="breadcrumb-item active" aria-current="page">
-                    {movie.title}
+                    {props.book.name}
                   </li>
                 </ol>
               </nav>
-              <p>{product.category}</p>
-              <h2>{movie.title}</h2>
-              <p className="text-muted">by {product.author}</p>
+              <p>{props.book.category_name}</p>
+              <h2>{props.book.name}</h2>
+              <p className="text-muted">by {props.book.author_name}</p>
               <h3>
-                EGP: {price}
+                EGP: {props.book.price}
                 <span className="fs-6 cool-text"> + Free Shipping</span>
               </h3>
               <div className="mt-4">
@@ -99,7 +97,7 @@ function ProductDetails() {
               </div>
               <hr />
               <div>
-                <span>Category: {product.category}</span>
+                <span>Category: {props.book.category_name}</span>
                 <span className="ms-3">Tags: fiction, sci-fi, science</span>
               </div>
             </div>
