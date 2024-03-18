@@ -9,25 +9,27 @@ import { useDispatch } from "react-redux";
 import { search } from "../../Store/Actions/CheckPriceAction";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
+import DropdownButton from "../DropdownButton/DropdownButton";
 
 function NavBar() {
   const history = useHistory();
 
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
+
   const goBack = () => {
     history.goBack(); // Go back to the previous page
   };
-  const dispatch=useDispatch()
-  const [searchInputField,setSearchInputField] =useState("");
-  const setSearchWord=()=>{
-      dispatch(search(searchInputField)) 
-  }
-  useEffect(()=>{
-      if(!searchInputField){
-          setSearchWord()
-      }
-  },[searchInputField])
-  let myName = useContext(AuthContext)
+  const dispatch = useDispatch();
+  const [searchInputField, setSearchInputField] = useState("");
+  const setSearchWord = () => {
+    dispatch(search(searchInputField));
+  };
+  useEffect(() => {
+    if (!searchInputField) {
+      setSearchWord();
+    }
+  }, [searchInputField]);
+  let myName = useContext(AuthContext);
   return (
     <nav
       className="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm"
@@ -42,8 +44,24 @@ function NavBar() {
           id="basket-shopping"
           style={{ cursor: "pointer" }}
         >
-          <span className="me-3">$0.00</span>
-          <FontAwesomeIcon icon={faBasketShopping} size="lg" />
+          {user ? (
+            <div className="d-flex align-items-center">
+              <span className="me-4">
+                <span className="me-3">$0.00</span>
+                <FontAwesomeIcon icon={faBasketShopping} size="lg" />
+              </span>
+              <DropdownButton />
+            </div>
+          ) : (
+            <div className="d-flex align-items-center">
+              <Link className="nav-link me-3 text-dark" to="/login">
+                Login
+              </Link>
+              <Link className="nav-link outline-button-nav" to="/register">
+                Register
+              </Link>
+            </div>
+          )}
         </span>
         <span
           className="navbar-toggler border-0"
@@ -76,19 +94,9 @@ function NavBar() {
                 Contact
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/register">
-                Register
-              </Link>
-            </li>
             <Link className="nav-link" to="/publisher/addbook">
-                test
-              </Link>
+              addbook
+            </Link>
           </ul>
           <form className="d-flex ms-auto" role="search">
             <input
@@ -96,20 +104,21 @@ function NavBar() {
               type="search"
               placeholder="Search"
               aria-label="Search"
-              onChange={(e)=>{
-                                setSearchInputField(e.target.value)
-                            }} value={searchInputField}
+              onChange={(e) => {
+                setSearchInputField(e.target.value);
+              }}
+              value={searchInputField}
             />
             <Link to="/search">
-            <button
-              className="input-group-text border-0"
-              id="search-addon"
-              type="submit"
-              style={{ cursor: "pointer" }}
-              onClick={searchInputField?setSearchWord:goBack}
-            >
-              <FontAwesomeIcon icon={faSearch} size="lg" />
-            </button>
+              <button
+                className="input-group-text border-0"
+                id="search-addon"
+                type="submit"
+                style={{ cursor: "pointer" }}
+                onClick={searchInputField ? setSearchWord : goBack}
+              >
+                <FontAwesomeIcon icon={faSearch} size="lg" />
+              </button>
             </Link>
           </form>
         </div>

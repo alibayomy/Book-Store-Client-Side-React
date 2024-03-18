@@ -72,89 +72,58 @@ function PublishABook(props) {
     })
 
     const [submitError, setSubmitError] = useState((""))
-    const selectOptions = [
-        { "value": "Fiction", "label": "Fiction" },
-        { "value": "Nonfiction", "label": "Nonfiction" },
-        { "value": "Action and adventure", "label": "Action and adventure" },
-        { "value": "Art/architecture", "label": "Art/architecture" },
-        { "value": "Alternate history", "label": "Alternate history" },
-        { "value": "Autobiography", "label": "Autobiography" },
-        { "value": "Anthology", "label": "Anthology" },
-        { "value": "Biography", "label": "Biography" },
-        { "value": "Chick lit", "label": "Chick lit" },
-        { "value": "Business/economics", "label": "Business/economics" },
-        { "value": "Children's", "label": "Children's" },
-        { "value": "Crafts/hobbies", "label": "Crafts/hobbies" },
-        { "value": "Classic", "label": "Classic" },
-        { "value": "Cookbook", "label": "Cookbook" },
-        { "value": "Comic book", "label": "Comic book" },
-        { "value": "Diary", "label": "Diary" },
-        { "value": "Coming-of-age", "label": "Coming-of-age" },
-        { "value": "Dictionary", "label": "Dictionary" },
-        { "value": "Crime", "label": "Crime" },
-        { "value": "Encyclopedia", "label": "Encyclopedia" },
-        { "value": "Drama", "label": "Drama" },
-        { "value": "Guide", "label": "Guide" },
-        { "value": "Fairytale", "label": "Fairytale" },
-        { "value": "Health/fitness", "label": "Health/fitness" },
-        { "value": "Fantasy", "label": "Fantasy" },
-        { "value": "History", "label": "History" },
-        { "value": "Graphic novel", "label": "Graphic novel" },
-        { "value": "Home and garden", "label": "Home and garden" },
-        { "value": "Historical fiction", "label": "Historical fiction" },
-        { "value": "Humor", "label": "Humor" },
-        { "value": "Horror", "label": "Horror" },
-        { "value": "Journal", "label": "Journal" },
-        { "value": "Mystery", "label": "Mystery" },
-        { "value": "Math", "label": "Math" },
-        { "value": "Paranormal romance", "label": "Paranormal romance" },
-        { "value": "Memoir", "label": "Memoir" },
-        { "value": "Picture book", "label": "Picture book" },
-        { "value": "Philosophy", "label": "Philosophy" },
-        { "value": "Poetry", "label": "Poetry" },
-        { "value": "Prayer", "label": "Prayer" },
-        { "value": "Political thriller", "label": "Political thriller" },
-        { "value": "Religion, spirituality, and new age", "label": "Religion, spirituality, and new age" },
-        { "value": "Romance", "label": "Romance" },
-        { "value": "Textbook", "label": "Textbook" },
-        { "value": "Satire", "label": "Satire" },
-        { "value": "True crime", "label": "True crime" },
-        { "value": "Science fiction", "label": "Science fiction" },
-        { "value": "Review", "label": "Review" },
-        { "value": "Short story", "label": "Short story" },
-        { "value": "Science", "label": "Science" },
-        { "value": "Suspense", "label": "Suspense" },
-        { "value": "Self help", "label": "Self help" },
-        { "value": "Thriller", "label": "Thriller" },
-        { "value": "Sports and leisure", "label": "Sports and leisure" },
-        { "value": "Western", "label": "Western" },
-        { "value": "Travel", "label": "Travel" },
-        { "value": "Young adult", "label": "Young adult" }
-    ]
+   
     const [categories, setCategoris] = useState({})
     const [authors, setAuthors] = useState({})
 
-    useEffect(() => {
-        api.get('/list-cateory/')
+    async function fetchData(){
+
+        await api.get('/list-cateory/')
             .then((res) => {
                 setCategoris(res.data.results)
                 console.log(res.data.results)
             })
             .catch((err) => console.log(err))
+        await api.get('/account/authors-all/')
+        .then((response) => {
+            const transformedAuthors = response.data.results.map(author => ({
+                value: author.id,
+                label: `${author.f_name} ${author.l_name}`
+              }));
+              console.log(transformedAuthors)
+              setAuthors(transformedAuthors);
+        })
+        .catch((err) => console.log(err))
+    }
+
+    useEffect(() =>  {
+      fetchData()
       
     }, [])
-    function nameValidation(e) {
+    // function nameValidation(e) {
 
-        setInput({ ...input, authorNameInput: e.target.value })
-        if (!e.target.value) {
-            setError({ ...error, authorNameError: "Required" })
-            setErrorClass({ ...errorClass, authorNameErrorClass: "is-invalid" })
-            setTrirger({ ...trigger, authorNameTrigger: 1 })
+    //     setInput({ ...input, authorNameInput: e.target.value })
+    //     if (!e.target.value) {
+    //         setError({ ...error, authorNameError: "Required" })
+    //         setErrorClass({ ...errorClass, authorNameErrorClass: "is-invalid" })
+    //         setTrirger({ ...trigger, authorNameTrigger: 1 })
+    //     }
+    //     else {
+    //         setError({ ...error, authorNameError: "" })
+    //         setErrorClass({ ...error, authorNameErrorClass: "is-valid" })
+    //         setTrirger({ ...trigger, authorNameTrigger: 0 })
+
+    //     }
+    // }
+    function authorValidation(value){
+        if (value) {
+            setAuthors(value)
+            setTrirger({...trigger, authorNameTrigger: 0})
+            setError({...error, authorNameError:""})
         }
-        else {
-            setError({ ...error, authorNameError: "" })
-            setErrorClass({ ...error, authorNameErrorClass: "is-valid" })
-            setTrirger({ ...trigger, authorNameTrigger: 0 })
+        else{
+            setError({...error, authorNameError:"Required"})
+            setTrirger({ ...trigger, authorNameTrigger: 1 })
 
         }
     }
@@ -221,7 +190,7 @@ function PublishABook(props) {
         }
 
     }
-
+    console.log(authors)
 
 
     // function bookCategoriesValidation(event) {
@@ -315,18 +284,29 @@ function PublishABook(props) {
         e.preventDefault()
         const finalBookCat = []
         let formisvalid = true
+        if (lstAuthors.value){
+            setTrirger({...trigger,  authorNameTrigger:0})
+        }
+        else{
+            setTrirger({...trigger,  authorNameTrigger:1})
+            setError({...error, authorNameError:"Required"})
+
+        }
+
         for (let value of Object.values(bookCategories))
             finalBookCat.push(value['value'])
 
         if (finalBookCat.length == 0) {
             setError({ ...error, categoryError: "Please choose book categories " })
+
             formisvalid = false
             setSubmitError(<div className="alert alert-danger" role="alert">
                 Error input please fill the form with no errors
             </div>)
         }
         else {
-            console.log(finalBookCat)
+            console.log(trigger)
+
             setError({ ...error, categoryError: "" })
             formisvalid = true
             for (let value of Object.values(trigger)) {
@@ -341,9 +321,7 @@ function PublishABook(props) {
             }
 
             else {
-                console.log(finalBookCat[0])
-                console.log(bookCategories)
-                console.log(bookCategories.value)
+                console.log(lstAuthors)
                 var myObj = {
                     "name": input.titleInput,
                     "ISBN": input.ISBNinput,
@@ -353,7 +331,7 @@ function PublishABook(props) {
                     "price": input.priceInput,
                     "language": input.languageInput,
                     "year_of_publication": input.publicationDate,
-                    "author": input.authorNameInput,
+                    "author": authors[0].value,
                     "category": bookCategories.value,
 
                 }
@@ -372,7 +350,7 @@ function PublishABook(props) {
                     .catch((err) => {
                         console.log(err)
                         setSubmitError(<div className="alert alert-danger" role="alert">
-                        {err.message}
+                        {err.response.request.responseText}
                     </div>)
                     })
              
@@ -389,12 +367,9 @@ function PublishABook(props) {
                     <div className="row">
                         <div className="col-12 d-flex justify-content-between">
                             <div className="col-6 me-2">
-                                <PublishInputComponent labelFor="name" labelContent="Author Name"
-                                    type="input" className={errorClass.authorNameErrorClass} name="name"
-                                    value={input.authorNameInput}
-                                    changeFunction={(e) => nameValidation(e)} errorMess={error.authorNameError}></PublishInputComponent>
-                                {/* <Select options={authors} isMulti={false} onChange={setLstAuthors}></Select>
-                                <p className="error text-danger">{error.authorNameError}</p> */}
+                                <label htmlFor="authors" className=" form-label ">Author</label>
+                                <Select options={authors} isMulti={false} onChange={setLstAuthors} name="authors"></Select>
+                                <p className="error text-danger">{error.authorNameError}</p>
                             </div>
 
                             <div className="col-6 ms-2">

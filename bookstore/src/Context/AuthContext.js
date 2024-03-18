@@ -7,22 +7,20 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 export const AuthContext = React.createContext()
 
 export const AuthProvider = ({children}) => {
-    console.log("CONTEXT CALLLED")
 
-    const [authTokens, setAuthTokens] = useState(() => {
+    const [authTokens, setAuthTokens] = useState(() => 
         localStorage.getItem("authTokens")
         ? JSON.parse(localStorage.getItem("authTokens"))
         : null
-    })
+    )
 
-    const [user, setUser] = useState(() => {
+    const [user, setUser] = useState(() => 
         localStorage.getItem("authTokens")
             ? jwtDecode(JSON.parse(localStorage.getItem("authTokens")).access)
             : null
-    })
+    )
     
     const [loading, setLoading] = useState(true)
-
     const history = useHistory()
 
     // const loginUser = async (username, password) => {
@@ -57,7 +55,7 @@ export const AuthProvider = ({children}) => {
         setAuthTokens(null)
         setUser(null)
         localStorage.removeItem("authTokens")
-        history.push('/login')
+        // history.push('/login')
     }
 
     const contextData = {
@@ -76,8 +74,6 @@ export const AuthProvider = ({children}) => {
             setUser(jwtDecode(authTokens.access))
         }
         setLoading(false)
-
-        console.log("Context data from AuthContext", contextData)
     }, [authTokens, loading])
 
     return (

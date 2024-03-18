@@ -12,7 +12,7 @@ console.log("Authtokens", authTokens)
 const baseURL = "http://127.0.0.1:8000"
 const useAxios = () => {
 
-    const {  setAuthTokens, setUser, loading, setLoading, user } = useContext(AuthContext)
+    const {  authTokens, setAuthTokens, setUser, loading, setLoading, user } = useContext(AuthContext)
     const axiosInstance = axios.create({
         baseURL,
         headers: { Authorization: `Bearer ${authTokens?.access}` }
@@ -21,6 +21,7 @@ const useAxios = () => {
     axiosInstance.interceptors.request.use(async function (req) {
         // Any status code that lie within the range of 2xx cause this function to trigger
         // Do something with response data
+        console.log(authTokens)
         const user = jwtDecode(authTokens.access)
         const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
 
