@@ -6,13 +6,13 @@ import { AuthContext } from "../Context/AuthContext";
 
 
 
-// let authToknes = localStorage.getItem('authToken') ? JSON.parse(localStorage.getItem('authToken')) : null
+let authTokens = localStorage.getItem('authTokens') ? JSON.parse(localStorage.getItem('authTokens')) : null
 
-
+console.log("Authtokens", authTokens)
 const baseURL = "http://127.0.0.1:8000"
 const useAxios = () => {
 
-    const { authTokens, setAuthTokens, setUser, loading, setLoading, user } = useContext(AuthContext)
+    const {  setAuthTokens, setUser, loading, setLoading, user } = useContext(AuthContext)
     const axiosInstance = axios.create({
         baseURL,
         headers: { Authorization: `Bearer ${authTokens?.access}` }

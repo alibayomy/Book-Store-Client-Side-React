@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import PublishInputComponent from "../../Components/PublishABookComponents/PublishInputComponent";
 import PublishButtonComponent from "../../Components/PublishABookComponents/PublishButtonComponent";
 import MyCard from "../../Components/MyCard/MyCard";
@@ -6,12 +6,18 @@ import axios from "axios";
 import reactSelect from "react-select";
 import Select from 'react-select';
 import PublishImgCard from "../../Components/PublishImgCard/PublishImgCard";
+import useAxios from "../../Network/AxiosInstance";
+
+
+
+
 function PublishABook(props) {
 
     const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’\-–`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
     const priceRegex = new RegExp(/^((\d+)((,\d+|\d+)*)(\s*|\.(\d{2}))$)/)
     var options = { day: 'numeric', month: 'numeric', year: 'numeric' };
 
+    let api = useAxios()
 
     const [trigger, setTrirger] = useState({
         authorNameTrigger: 1,
@@ -40,7 +46,7 @@ function PublishABook(props) {
     const [frontBookImg, setFrontBookImg] = useState(null)
     const [backBookImg, setBackBookImg] = useState(null)
     const [bookCategories, setBookCategories] = useState([])
-
+    const[lstAuthors, setLstAuthors] = useState([])
     const [error, setError] = useState({
         authorNameError: "",
         titleError: "",
@@ -125,9 +131,18 @@ function PublishABook(props) {
         { "value": "Travel", "label": "Travel" },
         { "value": "Young adult", "label": "Young adult" }
     ]
+    const [categories, setCategoris] = useState({})
+    const [authors, setAuthors] = useState({})
 
-
-
+    useEffect(() => {
+        api.get('/list-cateory/')
+            .then((res) => {
+                setCategoris(res.data.results)
+                console.log(res.data.results)
+            })
+            .catch((err) => console.log(err))
+      
+    }, [])
     function nameValidation(e) {
 
         setInput({ ...input, authorNameInput: e.target.value })
@@ -311,6 +326,7 @@ function PublishABook(props) {
             </div>)
         }
         else {
+            console.log(finalBookCat)
             setError({ ...error, categoryError: "" })
             formisvalid = true
             for (let value of Object.values(trigger)) {
@@ -325,17 +341,28 @@ function PublishABook(props) {
             }
 
             else {
+                console.log(finalBookCat[0])
+                console.log(bookCategories)
                 var myObj = {
+                    "name": input.titleInput,
                     "ISBN": input.ISBNinput,
+                    "front_img": frontBookImg,
+                    "back_img": backBookImg,
+                    "description": input.discriptionInput,
                     "price": input.priceInput,
-                    "title": input.titleInput,
+                    "language": input.languageInput,
+                    "year_of_publication": input.publicationDate,
                     "author": input.authorNameInput,
-                    "rating": 2,
-                    "category": finalBookCat,
-                    "imageUrl": "https://logo.clearbit.com/example.com",
-                    "description": input.discriptionInput
+                    "category": bookCategories.id,
+
                 }
-                axios.post(`https://retoolapi.dev/3l5SXI/data`, myObj).then((res) => console.log(res.data)).catch((err) => console.log(err))
+                const config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+                console.log(myObj)
+                api.post('add-book/', (myObj), config).then((res) => console.log(res.data)).catch((err) => console.log(err))
                 setSubmitError(<div className="alert alert-success" role="alert">
                     Book will be validated by Admin, Thank you
                 </div>)
@@ -356,6 +383,8 @@ function PublishABook(props) {
                                     type="input" className={errorClass.authorNameErrorClass} name="name"
                                     value={input.authorNameInput}
                                     changeFunction={(e) => nameValidation(e)} errorMess={error.authorNameError}></PublishInputComponent>
+                                {/* <Select options={authors} isMulti={false} onChange={setLstAuthors}></Select>
+                                <p className="error text-danger">{error.authorNameError}</p> */}
                             </div>
 
                             <div className="col-6 ms-2">
@@ -386,7 +415,7 @@ function PublishABook(props) {
                             <p className="error text-danger">{error.discriptionError}</p>
                         </div>
                         <div className="col-12 mb-1 ">
-                            <Select options={selectOptions} isMulti="true" onChange={setBookCategories}></Select>
+                            <Select options={categories} isMulti={false} onChange={setBookCategories}></Select>
                             <p className="error text-danger">{error.categoryError}</p>
                         </div>
                         <div className="col-12 d-flex justify-content-between">

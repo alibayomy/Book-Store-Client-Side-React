@@ -31,7 +31,7 @@ const App = () => {
         <NavBar />
         <div className="container mt-4">
           <Switch>
-            <PrivateRoute exact component={PublishABook} path={'/publisher/addbook'}></PrivateRoute>
+            {/* <PrivateRoute exact component={PublishABook} path={'/publisher/addbook'}></PrivateRoute> */}
             <PrivateRoute exact component={test} path={'/test'} ></PrivateRoute>
             <Route path="/" exact component={Home} />
             <Route path="/books" component={Books} />
