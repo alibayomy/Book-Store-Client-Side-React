@@ -9,7 +9,7 @@ import person from "../../images/person.jpg";
 function Review(props) {
   return (
     <div key={props.id} className="container px-lg-5 px-md-2 px-sm-0 mb-4">
-      <div className="mb-3 fs-3">Reviews</div>
+      {/* <div className="mb-3 fs-3">Reviews</div> */}
       <div className="card w-100 border border-1 p-2 bg-light px-4">
         <div className="d-flex align-items-top">
           <img
