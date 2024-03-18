@@ -46,7 +46,7 @@ function ProductDetails(props) {
           <div className="row justify-content-center">
             <div className="col-12 col-md-6 col-lg-6 text-center">
               <img
-                src={props.book.img}
+                src={props.book.front_img}
                 alt={props.book.name}
                 className="img-fluid"
               />

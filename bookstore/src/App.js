@@ -39,7 +39,7 @@ const App = () => {
             <Route path="/" exact component={Home} />
             <Route path="/profile" exact component={Profile} />
             <Route path="/books" component={Books} />
-            <Route path="/viewbook/:id" component={ViewBook} />
+            <Route path="/viewbook/:book_slug" component={ViewBook} />
             <Route exact path={"/filter"} component={FilterBooks} />
             <Route exact path={"/filterPrice"} component={FilterPrice} />
             <Route path="/cart" component={Cart} />

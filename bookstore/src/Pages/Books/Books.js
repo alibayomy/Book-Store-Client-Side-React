@@ -677,7 +677,7 @@ function Books() {
               {books.map((book)=>(
                 <MyAllCards
                 key={book.id}
-                imageUrl={book.img}
+                imageUrl={book.front_img}
                 title={book.name}
                 category={book.category_name}
                 path={`viewbook/${book.name.replaceAll(" ", "-")}`}

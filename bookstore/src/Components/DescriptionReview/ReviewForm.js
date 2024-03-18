@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
 function ReviewForm({ addReview }) {
+  const current_user=(useContext(AuthContext).user)!==null?(useContext(AuthContext).user.user_id):0
+  const history = useHistory();
   const [rate, setRate] = useState(null);
   const [hover, setHover] = useState(null);
 
@@ -15,12 +19,16 @@ function ReviewForm({ addReview }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    if (!current_user){
+    history.push("/login");
+    }
+    else{
     addReview(rate, comment, name, email);
     setRate(null);
     setComment("");
     setName("");
     setEmail("");
+    }
   };
 
   return (
