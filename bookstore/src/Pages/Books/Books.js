@@ -18,6 +18,7 @@ function Books() {
   const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
   const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
 
+  const localhost='http://localhost:8000'
   const history = useHistory();
 
   const [language, setLanguage] = useState("en");
@@ -26,13 +27,20 @@ function Books() {
   const [pageNumber, setPageNumber] = useState(1);
 
   const [Movies, setMovie] = useState([]);
+  const [books,setBooks]=useState([])
 
   useEffect(() => {
     axios
       .get(
         `${BaseMainUrl}?api_key=${BaseAPI}&page=${pageNumber}&language=${language}`
       )
-      .then((res) => setMovie(res.data.results))
+      .then((res) => {console.log(res.data.results),setMovie(res.data.results)})
+      .catch((err) => console.log(err));
+      axios
+      .get(
+        `${localhost}/list-book/`
+      )
+      .then((res) => {console.log(res.data.results),setBooks(res.data.results),console.log(books)})
       .catch((err) => console.log(err));
   }, [pageNumber, skipItem, language]);
 
@@ -666,7 +674,18 @@ function Books() {
             </div>
 
             <div className="row">
-              {Movies.map((book) => (
+              {books.map((book)=>(
+                <MyAllCards
+                key={book.id}
+                imageUrl={book.img}
+                title={book.name}
+                category={book.category_name}
+                path={`viewbook/${book.name.replaceAll(" ", "-")}`}
+                rating="3"
+                price={book.price}
+              />
+              ))}
+              {/* {Movies.map((book) => (
                 <MyAllCards
                   key={book.id}
                   imageUrl={`https://image.tmdb.org/t/p/w500/${book.poster_path}`}
@@ -676,7 +695,7 @@ function Books() {
                   rating={book.vote_average.toFixed(2) - 3}
                   price={book.vote_count.toFixed(0)}
                 />
-              ))}
+              ))} */}
             </div>
           </div>
         </div>
