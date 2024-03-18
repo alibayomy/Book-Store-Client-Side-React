@@ -18,13 +18,12 @@ import Search from "./Pages/Search/Search";
 import { AuthContext, AuthProvider } from "./Context/AuthContext";
 import PrivateRoute from "./Network/PrivateRoute";
 import test from "./Pages/Test/test";
+import Profile from "./Pages/Profile/Profile";
 
 
 const App = () => {
-
   // JWT Authen
-  const [contextAuth, setContextAuth] = useState(null)
-
+  const [contextAuth, setContextAuth] = useState(null);
 
   return (
     <AuthProvider>
@@ -32,9 +31,14 @@ const App = () => {
         <NavBar />
         <div className="container mt-4">
           <Switch>
-            <PrivateRoute exact component={PublishABook} path={'/publisher/addbook'}></PrivateRoute>
-            <PrivateRoute exact component={test} path={'/test'} ></PrivateRoute>
+            <PrivateRoute
+              exact
+              component={PublishABook}
+              path={"/publisher/addbook"}
+            ></PrivateRoute>
+            <PrivateRoute exact component={test} path={"/test"}></PrivateRoute>
             <Route path="/" exact component={Home} />
+            <Route path="/profile" exact component={Profile} />
             <Route path="/books" component={Books} />
             <Route path="/viewbook/:book_slug" component={ViewBook} />
             <Route exact path={"/filter"} component={FilterBooks} />
@@ -42,10 +46,22 @@ const App = () => {
             <Route path="/cart" component={Cart} />
             <Route path="/login" component={Login} />
             <Route exact path={"/register"} component={ClientSelectComponent} />
-            <Route exact path={"/register/:userType"} component={RegitserComponent} />
+            <Route
+              exact
+              path={"/register/:userType"}
+              component={RegitserComponent}
+            />
             <Route exact path="/search" component={Search} />
-            <Route exact path={"/publisherorder"} component={PublisherOrderList} />
-            <Route exact path={'/publisher/addbook'} component={PublishABook}></Route>
+            <Route
+              exact
+              path={"/publisherorder"}
+              component={PublisherOrderList}
+            />
+            <Route
+              exact
+              path={"/publisher/addbook"}
+              component={PublishABook}
+            ></Route>
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/test" component={test}></Route>
           </Switch>
