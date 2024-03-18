@@ -1,8 +1,11 @@
 import React from "react";
+import axios from "axios";
 import { useState } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import MessageErrorComponent from "../../Components/MessageErrorcomponent/MessageErrorcomponent";
 // import book1 from '../../Images/stack-of-books.png'
+import book1 from "../../images/book-01.png";
+
 
 function RegitserComponent(props) {
   const [registerFormData, setRegisterFormData] = useState({
@@ -12,6 +15,9 @@ function RegitserComponent(props) {
     password: "",
     // mobileNumber : "",
     // certificate : ""
+  });
+  const [certificate, setcertificate] = useState({
+    certificate : ""
   });
 
   const [registerFormErrors, setRegisterFormErrors] = useState({
@@ -30,7 +36,7 @@ function RegitserComponent(props) {
   //   const [submitAttempted, setSubmitAttempted] = useState(false);
   const history = useHistory(); 
   const userType = useParams();
-  // console.log('userType---- ',userType.userType)
+  console.log('userType---- ',userType.userType)
 
   const changeFormData = (e) => {
     if (e.target.name === "firstName") {
@@ -103,6 +109,12 @@ function RegitserComponent(props) {
             ? "password don't match"
             : null,
       });
+    }else if (e.target.name === "certificate"){
+      const file = e.target.files[0]; 
+      setcertificate({
+        ...certificate,
+        certificate: file,
+      });
     }
   };
   const togglePasswordVisibility = () => {
@@ -117,9 +129,9 @@ function RegitserComponent(props) {
       : setConfirmPasswordType("password");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     let formIsValid = true;
     // Check if any field is empty
     Object.values(registerFormData).forEach((value) => {
@@ -128,7 +140,7 @@ function RegitserComponent(props) {
         console.log("when check all field is empty", formIsValid);
       }
     });
-
+  
     if (!formIsValid) {
       setRegisterFormErrors({
         firstNameError:
@@ -152,29 +164,55 @@ function RegitserComponent(props) {
             ? "Password Field Is Required"
             : null,
       });
+  
       console.log("after showing error ", formIsValid);
       console.log(registerFormErrors.passwordError1);
       console.log(registerFormErrors.passwordError2);
-    } else if (
-      formIsValid &&
-      registerFormErrors.firstNameError == null &&
-      registerFormErrors.lastNameError == null &&
-      registerFormErrors.emailError == null &&
-      registerFormErrors.passwordError1 == null &&
-      registerFormErrors.passwordError2 == null
-    ) {
-      console.log("Register Successfully");
-      history.push('/dashboard');
     } else {
-      console.log("Enter vaild data");
+      try {
+        if (userType.userType === "publisher") {
+            const formData = new FormData();
+            formData.append('first_name', registerFormData.firstName);
+            formData.append('last_name', registerFormData.lastName);
+            formData.append('email', registerFormData.email);
+            formData.append('password', registerFormData.password);
+            formData.append('certificate', certificate.certificate)  
+            const response = await axios.post('http://127.0.0.1:8000/users/create-publisher/', formData);
+            console.log('Publisher registration successful:', response.data);
+            history.push('/dashboard');
+        } else {
+          const formData = new FormData();
+            formData.append('first_name', registerFormData.firstName);
+            formData.append('last_name', registerFormData.lastName);
+            formData.append('email', registerFormData.email);
+            formData.append('password', registerFormData.password);
+          const response = await axios.post('http://127.0.0.1:8000/users/create/', formData);
+          console.log('User registration successful:', response.data);
+          history.push('/');
+
+        }      
+      } catch (error) {
+        // console.log(typeof certificate.certificate)
+        console.error('Registration failed:', error.response.data);
+      }
     }
   };
-
+  
+  
   return (
     <div>
       {/* <div className="mt-4 mb-5 mx-auto"  style={{"width":"150px"}}>
       <img src={book1} style={{"width":"100%","height":"150px"}} className="d-block"/>
     </div> */}
+    <div className="mt-2 mb-3 mx-auto" style={{ width: "150px" }}>
+        <img
+          src={book1}
+          style={{ width: "100%", height: "150px" }}
+          className="d-block"
+          alt="books"
+        />
+      </div>
+
       <div className="container mb-5">
         <div className="col-lg-6 col-md-10 col-sm-10 p-4 mt-2 mx-auto border bg-white rounded shadow">
           <form onSubmit={handleSubmit}>
