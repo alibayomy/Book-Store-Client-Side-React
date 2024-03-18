@@ -54,7 +54,7 @@ function DescriptionReview(props) {
             pariatur?
           </div>
         ) : (
-          <ReviewWrapper />
+          <ReviewWrapper book_id={props.book_id}/>
         )}
       </div>
     </div>
