@@ -86,7 +86,7 @@ function NavBar() {
                 Register
               </Link>
             </li>
-            <Link className="nav-link" to="/test">
+            <Link className="nav-link" to="/publisher/addbook">
                 test
               </Link>
           </ul>

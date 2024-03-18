@@ -13,7 +13,7 @@ import useAxios from "../../Network/AxiosInstance";
 
 function PublishABook(props) {
 
-    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’\-–`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
+    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’‘\-–`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
     const priceRegex = new RegExp(/^((\d+)((,\d+|\d+)*)(\s*|\.(\d{2}))$)/)
     var options = { day: 'numeric', month: 'numeric', year: 'numeric' };
 
@@ -343,6 +343,7 @@ function PublishABook(props) {
             else {
                 console.log(finalBookCat[0])
                 console.log(bookCategories)
+                console.log(bookCategories.value)
                 var myObj = {
                     "name": input.titleInput,
                     "ISBN": input.ISBNinput,
@@ -353,7 +354,7 @@ function PublishABook(props) {
                     "language": input.languageInput,
                     "year_of_publication": input.publicationDate,
                     "author": input.authorNameInput,
-                    "category": bookCategories.id,
+                    "category": bookCategories.value,
 
                 }
                 const config = {
@@ -362,10 +363,19 @@ function PublishABook(props) {
                     }
                 }
                 console.log(myObj)
-                api.post('add-book/', (myObj), config).then((res) => console.log(res.data)).catch((err) => console.log(err))
-                setSubmitError(<div className="alert alert-success" role="alert">
-                    Book will be validated by Admin, Thank you
-                </div>)
+                api.post('add-book/', (myObj), config).then((res) =>{
+                     console.log(res.data)
+                     setSubmitError(<div className="alert alert-success" role="alert">
+                     Book will be validated by Admin, Thank you
+                 </div>)
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        setSubmitError(<div className="alert alert-danger" role="alert">
+                        {err.message}
+                    </div>)
+                    })
+             
             }
         }
 

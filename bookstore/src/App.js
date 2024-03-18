@@ -19,7 +19,6 @@ import { AuthContext, AuthProvider } from "./Context/AuthContext";
 import PrivateRoute from "./Network/PrivateRoute";
 import test from "./Pages/Test/test";
 
-
 const App = () => {
 
   // JWT Authen
@@ -32,11 +31,11 @@ const App = () => {
         <NavBar />
         <div className="container mt-4">
           <Switch>
-            {/* <PrivateRoute exact component={PublishABook} path={'/publisher/addbook'}></PrivateRoute> */}
+            <PrivateRoute exact component={PublishABook} path={'/publisher/addbook'}></PrivateRoute>
             <PrivateRoute exact component={test} path={'/test'} ></PrivateRoute>
             <Route path="/" exact component={Home} />
             <Route path="/books" component={Books} />
-            <Route path="/viewbook/:book_slug" component={ViewBook} />
+            <Route path="/viewbook/:id" component={ViewBook} />
             <Route exact path={"/filter"} component={FilterBooks} />
             <Route exact path={"/filterPrice"} component={FilterPrice} />
             <Route path="/cart" component={Cart} />
