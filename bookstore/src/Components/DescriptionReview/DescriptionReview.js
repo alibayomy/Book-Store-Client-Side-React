@@ -31,7 +31,7 @@ function DescriptionReview(props) {
               : "col-lg-1 col-md-2 col-sm-3 col-xs-3 ps-0"
           }
         >
-          Reviews<span className="ms-1">(0)</span>
+          Reviews<span className="ms-1">({props.reviews.length})</span>
         </div>
       </div>
       <div className="row mt-3">
@@ -54,7 +54,7 @@ function DescriptionReview(props) {
             pariatur?
           </div>
         ) : (
-          <ReviewWrapper book_id={props.book_id}/>
+          <ReviewWrapper book_id={props.book_id} reviews={props.reviews}/>
         )}
       </div>
     </div>
