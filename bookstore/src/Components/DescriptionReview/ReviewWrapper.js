@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import ReviewForm from "./ReviewForm";
 import { v4 as uuidv4 } from "uuid";
 import Review from "./Review";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-
+import { AuthContext } from "../../Context/AuthContext";
+// import React, { useContext } from "react";
 
 function ReviewWrapper(props) {
   // const [reviews, setReviews] = useState([]);
   const localhost='http://localhost:8000'
+  const current_user=(useContext(AuthContext).user)!==null?(useContext(AuthContext).user.user_id):0
   // const book_name= useParams();
   // console.log(book_name);
   // useEffect(() => {
@@ -28,7 +30,7 @@ function ReviewWrapper(props) {
     axios.post(`${localhost}/rate/create-rate/`, {
       review :comment,
       rate :rate,
-      user:1,
+      user:current_user,
       book:props.book_id},
       {
         headers: {
