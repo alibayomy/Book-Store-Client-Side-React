@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import person from "../../images/person.jpg";
 import { AuthContext } from "../../Context/AuthContext";
+import { useState } from "react";
 
 
 function Review(props) {
+
   const current_user=(useContext(AuthContext).user)!==null?(useContext(AuthContext).user.user_id):0
   return (
     <div key={props.id} className="container px-lg-5 px-md-2 px-sm-0 mb-4">
@@ -28,14 +30,14 @@ function Review(props) {
             </div>
           </div>
           <div className="ms-auto mt-3">
-            {/* <FontAwesomeIcon
+          {props.user_id===current_user&&<FontAwesomeIcon
               className="me-3"
               role="button"
               icon={faPenToSquare}
               size="lg"
-              onClick={props.editReview}
-            /> */}
-            {props.user===current_user&&<FontAwesomeIcon
+              onClick={props.updateReviewForm}
+            />}
+            {props.user_id===current_user&&<FontAwesomeIcon
               role="button"
               icon={faTrash}
               size="lg"

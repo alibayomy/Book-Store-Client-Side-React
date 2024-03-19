@@ -8,9 +8,20 @@ import { AuthContext } from "../../Context/AuthContext";
 // import React, { useContext } from "react";
 
 function ReviewWrapper(props) {
-  // const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState([]);
   const localhost='http://localhost:8000'
   const current_user=(useContext(AuthContext).user)!==null?(useContext(AuthContext).user.user_id):0
+  const [rate, setRate] = useState(null);
+  const getAllRates=(id,localhost='http://localhost:8000')=>{  
+    axios.get(`${localhost}/rate/get-all-rates/${id}`)
+  .then((res) => (console.log(res.data.data),setReviews(res.data.data),props.getNumOfReviews(res.data.data.length)))
+  .catch((err) => console.log(err));}
+  const [comment, setComment] = useState("");
+  const [id,setId]=useState(0);
+
+  // const [hover, setHover] = useState(null);
+  // const [name, setName] = useState("");
+  // const [email, setEmail] = useState("");
   // const book_name= useParams();
   // console.log(book_name);
   // useEffect(() => {
@@ -37,7 +48,7 @@ function ReviewWrapper(props) {
           'Content-Type': 'multipart/form-data'
         }
       })
-    .then((res) => console.log(res.data))
+    .then((res) => (console.log(res.data),getAllRates(props.book_id)))
     .catch((err) => console.log(err));
     // setReviews((prevReviews) => [
     //   ...prevReviews,
@@ -56,33 +67,47 @@ function ReviewWrapper(props) {
     // http://127.0.0.1:8000/rate/delete-rate/7
     // setReviews(reviews.filter((review) => review.id !== id));
     axios.delete(`${localhost}/rate/delete-rate/${id}`)
-    .then((res) => console.log(`${id} review has been deleted successfuly`))
+    .then((res) => (console.log(`${id} review has been deleted successfuly`),getAllRates(props.book_id)))
     .catch((err) => console.log(err));
   };
 
-  const editReview = (id) => {
+  const editReview = (id,rate, comment) => {
     // edit review function
     console.log(`Editing review with id ${id}`);
     axios.patch(`${localhost}/rate/update-rate/${id}`, {
-  name: 'John Doe',
-  username: 'johndoe',
-  email: 'johndoe@example.com'
-})
+      review :comment,
+      rate :rate,
+      user:current_user,
+      book:props.book_id})
+      .then((res) => (console.log(`${id} review has been deleted successfuly`),getAllRates(props.book_id)))
+      .catch((err) => console.log(err));
+      setId(0)
+      setRate(0)
+      setComment("")
   };
-
+  const updateReviewForm=(id,rate, comment)=>{
+    setId(id)
+    setRate(rate)
+    setComment(comment)
+    console.log(id)
+  }
+  useEffect(()=>{
+    getAllRates(props.book_id)
+  },[])
   return (
     <div>
-      <ReviewForm addReview={addReview} />
+      {id?<ReviewForm addReview={addReview} editReview={editReview} id={id} coming_rate={rate} coming_comment={comment}/>:<ReviewForm addReview={addReview} editReview={editReview} id={0} coming_rate={0} coming_comment={""}/>}
       <div className="mb-3 fs-3">Reviews</div>
-      {props.reviews.map((review, index) => (
+      {reviews.map((review, index) => (
         <Review
           key={review.id}
           date={review.creation_date.replaceAll("-"," ")}
           rate={review.rate}
-          user={review.user}
+          user={review.full_name}
+          user_id={review.user}
           review={review.review}
           deleteReview={() => deleteReview(review.id)}
-          editReview={() => editReview(review.id)}
+          updateReviewForm={() => updateReviewForm(review.id,review.rate,review.review)}
         />
       ))}
     </div>
