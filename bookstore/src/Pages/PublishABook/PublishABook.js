@@ -7,6 +7,7 @@ import reactSelect from "react-select";
 import Select from 'react-select';
 import PublishImgCard from "../../Components/PublishImgCard/PublishImgCard";
 import useAxios from "../../Network/AxiosInstance";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 
 
@@ -17,6 +18,7 @@ function PublishABook(props) {
     const priceRegex = new RegExp(/^((\d+)((,\d+|\d+)*)(\s*|\.(\d{2}))$)/)
     var options = { day: 'numeric', month: 'numeric', year: 'numeric' };
     const quantityRegex = new RegExp(/^[+]?\d+([.]\d+)?$/)
+    const history = useHistory()
 
     let api = useAxios()
 
@@ -336,8 +338,9 @@ function PublishABook(props) {
                 }
                 api.post('add-book/', (myObj), config).then((res) => {
                     setSubmitError(<div className="alert alert-success" role="alert">
-                        Book will be validated by Admin, Thank you
+                        Book Published
                     </div>)
+                    history.push('/dashboard')
                 })
                     .catch((err) => {
                         console.log(err)

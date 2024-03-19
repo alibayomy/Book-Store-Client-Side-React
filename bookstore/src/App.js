@@ -19,6 +19,7 @@ import { AuthContext, AuthProvider } from "./Context/AuthContext";
 import PrivateRoute from "./Network/PrivateRoute";
 import test from "./Pages/Test/test";
 import Profile from "./Pages/Profile/Profile";
+import PublisherPrivateRoute from "./Network/PublisherPriavteRoute";
 
 const App = () => {
   // JWT Authen
@@ -61,7 +62,7 @@ const App = () => {
               path={"/publisher/addbook"}
               component={PublishABook}
             ></Route>
-            <Route exact path="/dashboard" component={Dashboard} />
+            <PublisherPrivateRoute exact path="/dashboard" component={Dashboard} />
             <Route exact path="/test" component={test}></Route>
           </Switch>
         </div>
