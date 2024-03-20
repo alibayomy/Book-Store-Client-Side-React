@@ -90,7 +90,7 @@ function Login() {
           setAuthTokens(response.data)
           setUser(jwtDecode(response.data.access))
           localStorage.setItem("authTokens", JSON.stringify(response.data))
-          history.push('/')
+          history.goBack()
       }).catch(err => {
           console.log(err, err.status)
           setSuccessMessage(err.message)
@@ -165,7 +165,7 @@ function Login() {
                       <span style={{ fontSize: "1.2em", marginRight: "8px" }}>
                         Create a new account?
                       </span>
-                      <Link to="/register" className="filled-button">
+                      <Link to="/register" style={{"color":"#5f4ecb"}}>
                         Sign up
                       </Link>
                     </p>

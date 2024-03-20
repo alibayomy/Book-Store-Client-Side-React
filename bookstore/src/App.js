@@ -5,6 +5,7 @@ import NavBar from "./Components/NavBar/NavBar";
 import Home from "./Pages/Home/Home";
 import Books from "./Pages/Books/Books";
 import Cart from "./Pages/Cart/Cart";
+import Checkout from "./Pages/Checkout/Checkout";
 import ViewBook from "./Pages/ViewBook/ViewBook";
 import Login from "./Pages/Login/Login";
 import ClientSelectComponent from "./Pages/ClientSelect/ClientSelectComponent";
@@ -19,7 +20,7 @@ import { AuthContext, AuthProvider } from "./Context/AuthContext";
 import PrivateRoute from "./Network/PrivateRoute";
 import test from "./Pages/Test/test";
 import Profile from "./Pages/Profile/Profile";
-
+import PublisherPrivateRoute from "./Network/PublisherPriavteRoute";
 
 const App = () => {
   // JWT Authen
@@ -44,6 +45,7 @@ const App = () => {
             <Route exact path={"/filter"} component={FilterBooks} />
             <Route exact path={"/filterPrice"} component={FilterPrice} />
             <Route path="/cart" component={Cart} />
+            <Route path="/checkout" component={Checkout} />
             <Route path="/login" component={Login} />
             <Route exact path={"/register"} component={ClientSelectComponent} />
             <Route
@@ -62,7 +64,7 @@ const App = () => {
               path={"/publisher/addbook"}
               component={PublishABook}
             ></Route>
-            <Route exact path="/dashboard" component={Dashboard} />
+            <PublisherPrivateRoute exact path="/dashboard" component={Dashboard} />
             <Route exact path="/test" component={test}></Route>
           </Switch>
         </div>

@@ -1,26 +1,37 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { AuthContext } from "../../Context/AuthContext";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import axios from "axios";
+import { useHistory } from 'react-router-dom';
 
-function ReviewForm({ addReview }) {
-  const [rate, setRate] = useState(null);
+function ReviewForm(props) {
+  const current_user=(useContext(AuthContext).user)!==null?(useContext(AuthContext).user.user_id):0
+  const history = useHistory();
+  const [rate, setRate] = useState(0);
   const [hover, setHover] = useState(null);
 
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState(props.coming_comment);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-
+useEffect(()=>{
+  setRate(props.coming_rate)
+  setComment(props.coming_comment)
+},[props])
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    addReview(rate, comment, name, email);
+    if (!current_user){
+    history.push("/login");
+    }
+    else{
+    props.id?props.editReview(props.id,rate, comment):props.addReview(rate, comment, name, email);
     setRate(null);
     setComment("");
     setName("");
     setEmail("");
+    }
   };
 
   return (
@@ -72,7 +83,7 @@ function ReviewForm({ addReview }) {
             onChange={(e) => setComment(e.target.value)}
           ></textarea>
         </div>
-        <div className="row mt-3">
+        {/* <div className="row mt-3">
           <div className="col-lg-6">
             Name *
             <input
@@ -101,10 +112,11 @@ function ReviewForm({ addReview }) {
               onChange={(e) => setEmail(e.target.value)}
             ></input>
           </div>
-        </div>
+        </div> */}
         <button className="outline-button mt-3" type="submit">
-          Submit
+        {props.id!==0?"Update":"Submit"}
         </button>
+        
       </form>
     </div>
   );

@@ -57,6 +57,7 @@ function DropdownButton({ title, links }) {
         <Link
           className="nav-link dropdown-item d-block drop-items"
           onClick={logoutUser}
+          to="/login"
         >
           <FontAwesomeIcon className="me-2" icon={faSignOut} size="sm" />
           <span>Logout</span>

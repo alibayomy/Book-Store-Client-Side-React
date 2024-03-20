@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import ReviewWrapper from "./ReviewWrapper";
+import axios from "axios";
 
 function DescriptionReview(props) {
+  const [noOfReviews, setNoOfReviews] = useState(0);
+  const getAllRates=(id,localhost='http://localhost:8000')=>{  
+    axios.get(`${localhost}/rate/get-all-rates/${id}`)
+  .then((res) => (console.log(res.data.data),setNoOfReviews(res.data.data.length)))
+  .catch((err) => console.log(err));}
+  const getNumOfReviews=(number)=>{
+setNoOfReviews(number)
+  }
+
+  console.log(props.book_id)
+  getAllRates(props.book_id)
+  // useEffect(()=>{
+  //   getNumOfReviews(props.noOfReviews)
+  //   console.log(props.noOfReviews)
+  // },[])
   const [section, setSection] = useState("Description");
   return (
     <div className="container border-top mt-5">
@@ -31,7 +47,7 @@ function DescriptionReview(props) {
               : "col-lg-1 col-md-2 col-sm-3 col-xs-3 ps-0"
           }
         >
-          Reviews<span className="ms-1">(0)</span>
+          Reviews<span className="ms-1">({noOfReviews})</span>
         </div>
       </div>
       <div className="row mt-3">
@@ -54,7 +70,7 @@ function DescriptionReview(props) {
             pariatur?
           </div>
         ) : (
-          <ReviewWrapper book_id={props.book_id}/>
+          <ReviewWrapper book_id={props.book_id} getNumOfReviews={getNumOfReviews}/>
         )}
       </div>
     </div>
