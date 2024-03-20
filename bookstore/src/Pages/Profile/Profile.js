@@ -155,7 +155,7 @@ function Profile() {
                         <input type="file" className="form-control" />
                       </div>
                       <div className="text-right mt-4">
-                        <button type="button" className="btn btn-primary">
+                        <button type="button" className="filled-button">
                           Save changes
                         </button>
                         &nbsp;
@@ -175,11 +175,11 @@ function Profile() {
               >
                 {/* Change password content */}
                 <div className="card-body pb-2">
-                  <div className="form-group">
+                  <div className="form-group mb-3">
                     <label className="form-label">Current password</label>
                     <input type="password" className="form-control" />
                   </div>
-                  <div className="form-group">
+                  <div className="form-group mb-3">
                     <label className="form-label">New password</label>
                     <input type="password" className="form-control" />
                   </div>
@@ -188,7 +188,7 @@ function Profile() {
                     <input type="password" className="form-control" />
                   </div>
                   <div className="text-right mt-4">
-                    <button type="button" className="btn btn-primary">
+                    <button type="button" className="filled-button">
                       Save changes
                     </button>
                     &nbsp;

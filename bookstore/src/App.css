@@ -7,6 +7,10 @@
   color: var(--primary);
 }
 
+.list-group-item.active {
+  background-color: var(--secondray);
+}
+
 .filled-button-disabled {
   background-color: var(--primary);
   opacity: 0.6;
