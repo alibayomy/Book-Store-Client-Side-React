@@ -7,10 +7,23 @@ import publishlogo from '../../images/web-logo.jpg';
 import { Link } from "react-router-dom";
 import './dashboard.css'
 import MyCard from '../../Components/MyCard/MyCard';
+import { useEffect } from 'react';
+import useAxios from '../../Network/AxiosInstance';
+import { useState } from 'react';
+import PopularBooks from '../../Components/PublisherDashboard/PopularBooks';
 
 function Dashboard(){
 
+    const [books, setBooks] = useState([])
+    let api = useAxios()
+    useEffect(() => {
+        api.get('get-publisher-books/')
+        .then((res)=> {
+            console.log(res)
+            setBooks(res.data.results)})
+        .catch((err)=> console.log(err))
 
+    }, [])
     return (
         <>
         <div className="container-fluid mt-5 mx-auto">
@@ -21,7 +34,14 @@ function Dashboard(){
                 </div>
                     
                 <div className='container d-flex justify-content-evenly flex-wrap col-lg-7 col-md-11 col-sm-12 px-0 popular-books'>
-                    <div className="card col-lg-3 col-md-7 col-sm-12 mb-sm-3 book-img  ">
+                    {
+                        books.map((book, index)=> {
+                            return(
+                                <PopularBooks title={book.name} discr={book.description.slice(0,30) + "..."} img={book.front_img}></PopularBooks>
+                            )
+                        })
+                    }
+                    {/* <div className="card col-lg-3 col-md-7 col-sm-12 mb-sm-3 book-img  ">
                         <img src={book1} className="card-img-top d-block mx-auto pt-2 " alt="..." style={{"width":"85%"}}/>
                         <div className="card-body">
                             <h3 className="card-title text-center">mzr3t el7eoan</h3>
@@ -43,7 +63,7 @@ function Dashboard(){
                             <h3 className="card-title text-center">Ln ynthy elb2s</h3>
                             <p className="card-text text-center">Some quick example text to details</p>
                         </div>
-                    </div>
+                    </div> */}
                     
                 </div>
                 {/* end Popular Books section  */}

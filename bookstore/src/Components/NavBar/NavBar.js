@@ -9,30 +9,102 @@ import { useDispatch } from "react-redux";
 import { search } from "../../Store/Actions/CheckPriceAction";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
+import DropdownButton from "../DropdownButton/DropdownButton";
+import { ShoppingCart } from "../ShoppingCart/ShoppingCart";
+import { Offcanvas, Stack } from "react-bootstrap"
+import axios from "axios";
 
 function NavBar() {
   const history = useHistory();
 
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
+
   const goBack = () => {
     history.goBack(); // Go back to the previous page
   };
-  const dispatch=useDispatch()
-  const [searchInputField,setSearchInputField] =useState("");
-  const setSearchWord=()=>{
-      dispatch(search(searchInputField)) 
-  }
-  useEffect(()=>{
-      if(!searchInputField){
-          setSearchWord()
-      }
-  },[searchInputField])
-  let myName = useContext(AuthContext)
+  const dispatch = useDispatch();
+  const [searchInputField, setSearchInputField] = useState("");
+  const setSearchWord = () => {
+    dispatch(search(searchInputField));
+  };
+  useEffect(() => {
+    if (!searchInputField) {
+      setSearchWord();
+    }
+  }, [searchInputField]);
+  let myName = useContext(AuthContext);
+
+  // for Cart
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
+  const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
+  const [Movies, setMovie] = useState([]);
+  const total = 0
+  useEffect(() => {
+    axios
+      .get(
+        `${BaseMainUrl}?api_key=${BaseAPI}`
+      )
+      .then((res) => { console.log(res.data.results), setMovie(res.data.results) })
+      .catch((err) => console.log(err));
+
+  }, []);
+
   return (
     <nav
       className="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm"
       style={{ height: "80px" }}
     >
+
+      {/* for Cart */}
+      <Offcanvas placement="end" show={show} onHide={handleClose} >
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Shopping Cart</Offcanvas.Title>
+        </Offcanvas.Header>
+        <hr
+          style={{ borderWidth: "2px", width: "100%" }}
+          className="my-1"
+        />
+        <Offcanvas.Body>
+          <Stack gap={1} >
+            {Movies.map((book) => (
+              <ShoppingCart
+                imageUrl={`https://image.tmdb.org/t/p/w500/${book.poster_path}`}
+                title={book.title}
+                price={book.vote_count.toFixed(0)}
+              />
+            ))}
+            <div className="my-4 fw-bold fs-5 ">
+              Subtotal:
+            </div>
+
+            <button className=" btn btn-outline-success w-100 books-sorting"
+              onClick={() => {
+                history.push("/cart")
+                setShow(false)
+              }}
+            >
+              <h5 >
+                View Cart
+              </h5>
+            </button>
+
+            <button className="my-1 btn btn-outline-success w-100 books-sorting"
+              onClick={() => {
+                history.push("/checkout")
+                setShow(false)
+              }}>
+              <h5>
+                Checkout
+              </h5>
+            </button>
+          </Stack>
+        </Offcanvas.Body>
+      </Offcanvas>
+
       <div className="container">
         <Link className="navbar-brand" to="/">
           BookStore
@@ -42,8 +114,24 @@ function NavBar() {
           id="basket-shopping"
           style={{ cursor: "pointer" }}
         >
-          <span className="me-3">$0.00</span>
-          <FontAwesomeIcon icon={faBasketShopping} size="lg" />
+          {user ? (
+            <div className="d-flex align-items-center">
+              <span className="me-4" onClick={handleShow}>
+                <span className="me-3">$0.00</span>
+                <FontAwesomeIcon icon={faBasketShopping} size="lg" />
+              </span>
+              <DropdownButton />
+            </div>
+          ) : (
+            <div className="d-flex align-items-center">
+              <Link className="nav-link me-3 text-dark" to="/login">
+                Login
+              </Link>
+              <Link className="nav-link outline-button-nav" to="/register">
+                Register
+              </Link>
+            </div>
+          )}
         </span>
         <span
           className="navbar-toggler border-0"
@@ -76,19 +164,9 @@ function NavBar() {
                 Contact
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/register">
-                Register
-              </Link>
-            </li>
-            <Link className="nav-link" to="/test">
-                test
-              </Link>
+            <Link className="nav-link" to="/publisher/addbook">
+              addbook
+            </Link>
           </ul>
           <form className="d-flex ms-auto" role="search">
             <input
@@ -96,20 +174,21 @@ function NavBar() {
               type="search"
               placeholder="Search"
               aria-label="Search"
-              onChange={(e)=>{
-                                setSearchInputField(e.target.value)
-                            }} value={searchInputField}
+              onChange={(e) => {
+                setSearchInputField(e.target.value);
+              }}
+              value={searchInputField}
             />
             <Link to="/search">
-            <button
-              className="input-group-text border-0"
-              id="search-addon"
-              type="submit"
-              style={{ cursor: "pointer" }}
-              onClick={searchInputField?setSearchWord:goBack}
-            >
-              <FontAwesomeIcon icon={faSearch} size="lg" />
-            </button>
+              <button
+                className="input-group-text border-0"
+                id="search-addon"
+                type="submit"
+                style={{ cursor: "pointer" }}
+                onClick={searchInputField ? setSearchWord : goBack}
+              >
+                <FontAwesomeIcon icon={faSearch} size="lg" />
+              </button>
             </Link>
           </form>
         </div>

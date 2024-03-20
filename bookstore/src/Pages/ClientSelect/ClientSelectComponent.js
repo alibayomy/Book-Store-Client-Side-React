@@ -24,7 +24,7 @@ function ClientSelectComponent() {
       <div className="container">
         <div className="row justify-content-center mt-3 text-center">
           <div
-            className={`form-check col-lg-4 col-md-5 col-sm-10 me-lg-3 me-md-3 mt-sm-3 user-type ${
+            className={`form-check col-lg-4 col-md-5 col-sm-10 me-lg-3 me-md-3 mt-sm-3 fs-4 rounded user-type ${
               userType === "client" ? "checked" : ""
             }`}
             onClick={(e) => handleRadioSelect(e)}
@@ -40,7 +40,7 @@ function ClientSelectComponent() {
           </div>
 
           <div
-            className={`form-check col-lg-4 col-md-5 col-sm-10 me-lg-3 me-md-3 mt-sm-3 user-type ${
+            className={`form-check col-lg-4 col-md-5 col-sm-10 me-lg-3 me-md-3 mt-sm-3 fs-4 rounded user-type ${
               userType === "publisher" ? "checked" : ""
             }`}
             onClick={(e) => handleRadioSelect(e)}

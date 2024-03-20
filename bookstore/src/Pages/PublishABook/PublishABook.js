@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import PublishInputComponent from "../../Components/PublishABookComponents/PublishInputComponent";
 import PublishButtonComponent from "../../Components/PublishABookComponents/PublishButtonComponent";
 import MyCard from "../../Components/MyCard/MyCard";
@@ -6,21 +6,32 @@ import axios from "axios";
 import reactSelect from "react-select";
 import Select from 'react-select';
 import PublishImgCard from "../../Components/PublishImgCard/PublishImgCard";
+import useAxios from "../../Network/AxiosInstance";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+
+
+
+
 function PublishABook(props) {
 
-    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’\-–`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
+    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’‘\-–`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
     const priceRegex = new RegExp(/^((\d+)((,\d+|\d+)*)(\s*|\.(\d{2}))$)/)
     var options = { day: 'numeric', month: 'numeric', year: 'numeric' };
+    const quantityRegex = new RegExp(/^[+]?\d+([.]\d+)?$/)
+    const history = useHistory()
 
+    let api = useAxios()
 
     const [trigger, setTrirger] = useState({
-        authorNameTrigger: 1,
+        authorNameTrigger: 0,
         titleTrigger: 1,
         discriptionTrigger: 1,
         ISBNTrigger: 1,
         languageTrigger: 0,
         publicationDateTrigger: 1,
         priceTrigger: 1,
+        quantityTrigger:1,
+        numOfPagesTrigger:1,
         frontImgTrigger: 1,
         backImgTrigger: 1
 
@@ -33,14 +44,16 @@ function PublishABook(props) {
         languageInput: "English",
         publicationDate: new Date().toLocaleString('en-GB', options) + '',
         priceInput: "",
+        quantityInput:"",
+        numOfPagesInput:"",
         frontIMG: null,
         backIMG: null
     })
 
     const [frontBookImg, setFrontBookImg] = useState(null)
     const [backBookImg, setBackBookImg] = useState(null)
-    const [bookCategories, setBookCategories] = useState([])
-
+    const [bookCategories, setBookCategories] = useState(null)
+    const[lstAuthors, setLstAuthors] = useState(null)
     const [error, setError] = useState({
         authorNameError: "",
         titleError: "",
@@ -50,6 +63,8 @@ function PublishABook(props) {
         languageError: "",
         publicationDateError: "",
         priceError: "",
+        quantityError:"",
+        numOfPagesError:"",
         frontImgError: "",
         backImgError: ""
     })
@@ -61,88 +76,44 @@ function PublishABook(props) {
         languageErrorClass: "",
         publicationDateErrorClass: "",
         priceErrorClass: "",
+        quantityErrorClass:"",
+        numOfPagesErrorClass:"",
         frontImgErrorClass: "",
         backImgErrorClass: ""
     })
 
     const [submitError, setSubmitError] = useState((""))
-    const selectOptions = [
-        { "value": "Fiction", "label": "Fiction" },
-        { "value": "Nonfiction", "label": "Nonfiction" },
-        { "value": "Action and adventure", "label": "Action and adventure" },
-        { "value": "Art/architecture", "label": "Art/architecture" },
-        { "value": "Alternate history", "label": "Alternate history" },
-        { "value": "Autobiography", "label": "Autobiography" },
-        { "value": "Anthology", "label": "Anthology" },
-        { "value": "Biography", "label": "Biography" },
-        { "value": "Chick lit", "label": "Chick lit" },
-        { "value": "Business/economics", "label": "Business/economics" },
-        { "value": "Children's", "label": "Children's" },
-        { "value": "Crafts/hobbies", "label": "Crafts/hobbies" },
-        { "value": "Classic", "label": "Classic" },
-        { "value": "Cookbook", "label": "Cookbook" },
-        { "value": "Comic book", "label": "Comic book" },
-        { "value": "Diary", "label": "Diary" },
-        { "value": "Coming-of-age", "label": "Coming-of-age" },
-        { "value": "Dictionary", "label": "Dictionary" },
-        { "value": "Crime", "label": "Crime" },
-        { "value": "Encyclopedia", "label": "Encyclopedia" },
-        { "value": "Drama", "label": "Drama" },
-        { "value": "Guide", "label": "Guide" },
-        { "value": "Fairytale", "label": "Fairytale" },
-        { "value": "Health/fitness", "label": "Health/fitness" },
-        { "value": "Fantasy", "label": "Fantasy" },
-        { "value": "History", "label": "History" },
-        { "value": "Graphic novel", "label": "Graphic novel" },
-        { "value": "Home and garden", "label": "Home and garden" },
-        { "value": "Historical fiction", "label": "Historical fiction" },
-        { "value": "Humor", "label": "Humor" },
-        { "value": "Horror", "label": "Horror" },
-        { "value": "Journal", "label": "Journal" },
-        { "value": "Mystery", "label": "Mystery" },
-        { "value": "Math", "label": "Math" },
-        { "value": "Paranormal romance", "label": "Paranormal romance" },
-        { "value": "Memoir", "label": "Memoir" },
-        { "value": "Picture book", "label": "Picture book" },
-        { "value": "Philosophy", "label": "Philosophy" },
-        { "value": "Poetry", "label": "Poetry" },
-        { "value": "Prayer", "label": "Prayer" },
-        { "value": "Political thriller", "label": "Political thriller" },
-        { "value": "Religion, spirituality, and new age", "label": "Religion, spirituality, and new age" },
-        { "value": "Romance", "label": "Romance" },
-        { "value": "Textbook", "label": "Textbook" },
-        { "value": "Satire", "label": "Satire" },
-        { "value": "True crime", "label": "True crime" },
-        { "value": "Science fiction", "label": "Science fiction" },
-        { "value": "Review", "label": "Review" },
-        { "value": "Short story", "label": "Short story" },
-        { "value": "Science", "label": "Science" },
-        { "value": "Suspense", "label": "Suspense" },
-        { "value": "Self help", "label": "Self help" },
-        { "value": "Thriller", "label": "Thriller" },
-        { "value": "Sports and leisure", "label": "Sports and leisure" },
-        { "value": "Western", "label": "Western" },
-        { "value": "Travel", "label": "Travel" },
-        { "value": "Young adult", "label": "Young adult" }
-    ]
+    const [categories, setCategoris] = useState({})
+    const [authors, setAuthors] = useState({})
 
+    async function fetchData(){
 
-
-    function nameValidation(e) {
-
-        setInput({ ...input, authorNameInput: e.target.value })
-        if (!e.target.value) {
-            setError({ ...error, authorNameError: "Required" })
-            setErrorClass({ ...errorClass, authorNameErrorClass: "is-invalid" })
-            setTrirger({ ...trigger, authorNameTrigger: 1 })
-        }
-        else {
-            setError({ ...error, authorNameError: "" })
-            setErrorClass({ ...error, authorNameErrorClass: "is-valid" })
-            setTrirger({ ...trigger, authorNameTrigger: 0 })
-
-        }
+        await api.get('/list-cateory/')
+            .then((res) => {
+                setCategoris(res.data.results)
+                console.log(res.data.results)
+            })
+            .then( api.get('/account/authors-all/')
+            .then((response) => {
+                const transformedAuthors = response.data.results.map(author => ({
+                    value: author.id,
+                    label: `${author.f_name} ${author.l_name}`
+                  }));
+                  console.log(transformedAuthors)
+                  setAuthors(transformedAuthors);
+            })
+            .catch((err) => {console.log(err)
+            setAuthors([])}))
+            .catch((err) => {
+                console.log(err)
+                setCategoris([])})
     }
+
+    useEffect(() =>  {
+      fetchData()
+      
+    }, [])
+ 
 
 
     function titleValidation(e) {
@@ -208,14 +179,6 @@ function PublishABook(props) {
     }
 
 
-
-    // function bookCategoriesValidation(event) {
-    //     setBookCategories[...bookCategories, event[0].value]
-    // }
-
-
-
-
     function publicationDateValidation(e) {
         setInput({ ...input, publicationDate: e.target.value })
         let inputDate = new Date(e.target.value)
@@ -253,6 +216,37 @@ function PublishABook(props) {
 
         }
 
+    }
+
+    function quantityValidation(e){
+        setInput({...input, quantityInput: e.target.value})
+        console.log(quantityRegex.test(e.target.value))
+        if (!quantityRegex.test(e.target.value)) {
+            setError({ ...error, quantityError: "Invalid quantity number " })
+            setErrorClass({ ...errorClass, quantityErrorClass: "is-invalid" })
+            setTrirger({ ...trigger, quantityTrigger: 1 })
+        }
+        else {
+            setError({ ...error, quantityError: "" })
+            setErrorClass({ ...errorClass, quantityErrorClass: "is-valid" })
+            setTrirger({ ...trigger, quantityTrigger: 0 })
+        }
+
+    }
+
+
+    function numOfPagesValidation(e){
+        setInput({...input, numOfPagesInput: e.target.value})
+        if (!quantityRegex.test(e.target.value)) {
+            setError({ ...error, numOfPagesError: "Invalid  number of pages " })
+            setErrorClass({ ...errorClass, numOfPagesErrorClass: "is-invalid" })
+            setTrirger({ ...trigger, numOfPagesTrigger: 1 })
+        }
+        else {
+            setError({ ...error, numOfPagesError:"" })
+            setErrorClass({ ...errorClass, numOfPagesErrorClass: "is-valid" })
+            setTrirger({ ...trigger, numOfPagesTrigger: 0 })
+        }
     }
     function frontBookCoverValidation(e) {
         let imgType = e.target.files[0]?.type.split("/")
@@ -296,21 +290,18 @@ function PublishABook(props) {
 
         }
     }
+
     function checkSubmission(e) {
         e.preventDefault()
-        const finalBookCat = []
         let formisvalid = true
-        for (let value of Object.values(bookCategories))
-            finalBookCat.push(value['value'])
-
-        if (finalBookCat.length == 0) {
-            setError({ ...error, categoryError: "Please choose book categories " })
+        if (!lstAuthors || !bookCategories){
             formisvalid = false
-            setSubmitError(<div className="alert alert-danger" role="alert">
-                Error input please fill the form with no errors
+            setSubmitError(<div className="alert alert-danger fw-bold" role="alert">
+            Error input please make sure you fill all the form with no errors
             </div>)
         }
-        else {
+        else 
+        {
             setError({ ...error, categoryError: "" })
             formisvalid = true
             for (let value of Object.values(trigger)) {
@@ -319,26 +310,45 @@ function PublishABook(props) {
                 }
             }
             if (!formisvalid) {
-                setSubmitError(<div className="alert alert-danger" role="alert">
+                setSubmitError(<div className="alert alert-danger " role="alert" >
                     Error input please fill the form with no errors
                 </div>)
             }
 
             else {
                 var myObj = {
+                    "name": input.titleInput,
                     "ISBN": input.ISBNinput,
+                    "front_img": frontBookImg,
+                    "back_img": backBookImg,
+                    "description": input.discriptionInput,
                     "price": input.priceInput,
-                    "title": input.titleInput,
-                    "author": input.authorNameInput,
-                    "rating": 2,
-                    "category": finalBookCat,
-                    "imageUrl": "https://logo.clearbit.com/example.com",
-                    "description": input.discriptionInput
+                    "language": input.languageInput,
+                    "year_of_publication": input.publicationDate,
+                    "author": lstAuthors.value,
+                    "category": bookCategories.value,
+                    "total_number_of_book": input.quantityInput,
+                    "no_of_page": input.numOfPagesInput
+
                 }
-                axios.post(`https://retoolapi.dev/3l5SXI/data`, myObj).then((res) => console.log(res.data)).catch((err) => console.log(err))
-                setSubmitError(<div className="alert alert-success" role="alert">
-                    Book will be validated by Admin, Thank you
-                </div>)
+                const config = {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+                api.post('add-book/', (myObj), config).then((res) => {
+                    setSubmitError(<div className="alert alert-success" role="alert">
+                        Book Published
+                    </div>)
+                    history.push('/dashboard')
+                })
+                    .catch((err) => {
+                        console.log(err)
+                        setSubmitError(<div className="alert alert-danger" role="alert">
+                            {err.response.request.responseText}
+                        </div>)
+                    })
+
             }
         }
 
@@ -352,10 +362,9 @@ function PublishABook(props) {
                     <div className="row">
                         <div className="col-12 d-flex justify-content-between">
                             <div className="col-6 me-2">
-                                <PublishInputComponent labelFor="name" labelContent="Author Name"
-                                    type="input" className={errorClass.authorNameErrorClass} name="name"
-                                    value={input.authorNameInput}
-                                    changeFunction={(e) => nameValidation(e)} errorMess={error.authorNameError}></PublishInputComponent>
+                                <label htmlFor="authors" className=" form-label ">Author</label>
+                                <Select options={authors} isMulti={false} onChange={setLstAuthors} name="authors"></Select>
+                                <p className="error text-danger">{error.authorNameError}</p>
                             </div>
 
                             <div className="col-6 ms-2">
@@ -386,7 +395,7 @@ function PublishABook(props) {
                             <p className="error text-danger">{error.discriptionError}</p>
                         </div>
                         <div className="col-12 mb-1 ">
-                            <Select options={selectOptions} isMulti="true" onChange={setBookCategories}></Select>
+                            <Select options={categories} isMulti={false} onChange={setBookCategories}></Select>
                             <p className="error text-danger">{error.categoryError}</p>
                         </div>
                         <div className="col-12 d-flex justify-content-between">
@@ -402,6 +411,18 @@ function PublishABook(props) {
 
                                     value={input.priceInput}
                                     changeFunction={(e) => priceValidation(e)} errorMess={error.priceError}></PublishInputComponent>
+                            </div>
+                        </div>
+                        <div className="col-12 d-flex justify-content-between">
+                            <div className="col-6 me-2">
+                                <PublishInputComponent min = {0} labelFor="quantity" labelContent="Quantity"
+                                    type="number" className={`mb-3 ${errorClass.quantityErrorClass}`} name="quantity"
+                                    changeFunction={(e) => quantityValidation(e)} errorMess={error.quantityError}></PublishInputComponent>
+                            </div>
+                            <div className="col-6 ms-2">
+                                <PublishInputComponent min = {0} labelFor="numOfPages" labelContent="Number Of Pages"
+                                    type="number" className={`mb-3 ${errorClass.numOfPagesErrorClass}`} name="numOfPages"
+                                    changeFunction={(e) => numOfPagesValidation(e)} errorMess={error.numOfPagesError}></PublishInputComponent>
                             </div>
                         </div>
                         <div className="mb-3">
