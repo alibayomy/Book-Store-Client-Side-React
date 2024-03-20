@@ -20,6 +20,7 @@ import PrivateRoute from "./Network/PrivateRoute";
 import test from "./Pages/Test/test";
 import Profile from "./Pages/Profile/Profile";
 import PublisherPrivateRoute from "./Network/PublisherPriavteRoute";
+import UpdateABook from "./Pages/UpdateABook/UpdateABook";
 
 const App = () => {
   // JWT Authen
@@ -63,6 +64,7 @@ const App = () => {
               component={PublishABook}
             ></Route>
             <PublisherPrivateRoute exact path="/dashboard" component={Dashboard} />
+            <PublisherPrivateRoute exact path={"/bookdetails/:id"} component={UpdateABook}/>
             <Route exact path="/test" component={test}></Route>
           </Switch>
         </div>
