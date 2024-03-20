@@ -69,8 +69,8 @@ function UpdateABook(){
         ISBNinput: "",
         languageInput: "English",
         publicationDate: new Date().toLocaleString('en-GB', options) + '',
-        priceInput: "",
-        quantityInput:"",
+        priceInput: book.pirce,
+        quantityInput:book.total_number_of_book,
         numOfPagesInput:"",
         frontIMG: null,
         backIMG: null
@@ -114,7 +114,6 @@ function UpdateABook(){
         console.log(input.titleInput)
     }
     function discriptionValidation(e) {
-        console.log("disc changing")
         if (!e.target.value) {
             setInput({ ...input, discriptionInput: book.description})
         }
@@ -137,6 +136,49 @@ function UpdateABook(){
 
     }
 
+    function priceValidation(e) {
+        console.log(input.priceInput)
+        if (!e.target.value){
+            setInput({ ...input, priceInput: book.pirce })
+        } 
+        else{
+            setInput({ ...input, priceInput: e.target.value })
+        }
+        if (!priceRegex.test(e.target.value)) {
+            setError({ ...error, priceError: "Invalid Price " })
+            setErrorClass({ ...errorClass, priceErrorClass: "is-invalid" })
+            setTrirger({ ...trigger, priceTrigger: 1 })
+        }
+        else {
+            setError({ ...error, priceError: "" })
+            setErrorClass({ ...error, priceErrorClass: "is-valid" })
+            setTrirger({ ...trigger, priceTrigger: 0 })
+
+
+        }
+
+    }
+    function quantityValidation(e){
+        setInput({...input, quantityInput: e.target.value})
+        if (!quantityRegex.test(e.target.value)) {
+            setError({ ...error, quantityError: "Invalid quantity number " })
+            setErrorClass({ ...errorClass, quantityErrorClass: "is-invalid" })
+            setTrirger({ ...trigger, quantityTrigger: 1 })
+        }
+        else {
+            setError({ ...error, quantityError: "" })
+            setErrorClass({ ...errorClass, quantityErrorClass: "is-valid" })
+            setTrirger({ ...trigger, quantityTrigger: 0 })
+        }
+
+    }
+
+
+
+    function checkSubmission(e) {
+        e.preventDefault()
+        console.log(input)
+        }
     return (
         <>
             <div className="container col-lg-6 col-md-6 col-sm-12 mt-3 border p-5 registerContainer">
@@ -189,15 +231,14 @@ function UpdateABook(){
                         <div className="col-12 d-flex justify-content-between">
                             <div className="col-6 me-2">
                                 <PublishInputComponent labelFor="publicationdate" labelContent="Publication Date"
-                                    type="date" className={`mb-3 ${errorClass.publicationDateErrorClass}`} name="publicationdate"
-                                    defaultValue={book.year_of_publication}
-                                    changeFunction={(e) => publicationDateValidation(e)} errorMess={error.publicationDateError}></PublishInputComponent>
+                                    type="input"  name="publicationdate"
+                                    value={book.year_of_publication}
+                                    disabled="disabled"></PublishInputComponent>
                             </div>
                             <div className="col-6 ms-2">
                                 <PublishInputComponent labelFor="bookPrice" labelContent="Price(egp)"
                                     type="TEXT" className={`mb-3 ${errorClass.priceErrorClass}`} name="bookPrice"
-
-                                    value={input.priceInput}
+                                    value={input.priceInput ? input.priceInput : book.price}
                                     changeFunction={(e) => priceValidation(e)} errorMess={error.priceError}></PublishInputComponent>
                             </div>
                         </div>
@@ -205,6 +246,7 @@ function UpdateABook(){
                             <div className="col-6 me-2">
                                 <PublishInputComponent min = {0} labelFor="quantity" labelContent="Quantity"
                                     type="number" className={`mb-3 ${errorClass.quantityErrorClass}`} name="quantity"
+                                    value={input.quantityInput? input.quantityInput: book.total_number_of_book}
                                     changeFunction={(e) => quantityValidation(e)} errorMess={error.quantityError}></PublishInputComponent>
                             </div>
                             <div className="col-6 ms-2">

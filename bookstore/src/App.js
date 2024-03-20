@@ -42,7 +42,7 @@ const App = () => {
             <Route path="/" exact component={Home} />
             <Route path="/profile" exact component={Profile} />
             <Route path="/books" component={Books} />
-            <Route path="/viewbook/:book_slug" component={ViewBook} />
+            <Route path="/viewbook/:id" component={ViewBook} />
             <Route exact path={"/filter"} component={FilterBooks} />
             <Route exact path={"/filterPrice"} component={FilterPrice} />
             <Route path="/cart" component={Cart} />
@@ -66,7 +66,7 @@ const App = () => {
               component={PublishABook}
             ></Route>
             <PublisherPrivateRoute exact path="/dashboard" component={Dashboard} />
-            <PublisherPrivateRoute exact path={"/bookdetails/:id"} component={UpdateABook}/>
+            <PublisherPrivateRoute exact path={"/publisher/updatebook/:id"} component={UpdateABook}/>
             <Route exact path="/test" component={test}></Route>
           </Switch>
         </div>

@@ -680,7 +680,7 @@ function Books() {
                 imageUrl={book.front_img}
                 title={book.name}
                 category={book.category_name}
-                path={`viewbook/${book.name.replaceAll(" ", "-")}`}
+                path={`viewbook/${book.id}`}
                 rating="3"
                 price={book.price}
               />
