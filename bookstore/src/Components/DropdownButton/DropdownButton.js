@@ -49,6 +49,7 @@ function DropdownButton({ title, links }) {
         <Link
           className="nav-link dropdown-item d-block mb-3 drop-items"
           to="/profile"
+          onClick={handleItemClick}
         >
           <FontAwesomeIcon className="me-2" icon={faUser} size="sm" />
           <span>My Profile</span>
