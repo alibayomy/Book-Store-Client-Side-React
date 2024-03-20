@@ -20,6 +20,7 @@ setNoOfReviews(number)
   //   console.log(props.noOfReviews)
   // },[])
   const [section, setSection] = useState("Description");
+  console.log(props.description)
   return (
     <div className="container border-top mt-5">
       <div className="row justify-content-start">
@@ -53,8 +54,8 @@ setNoOfReviews(number)
       <div className="row mt-3">
         {section === "Description" ? (
           <div>
-            {/* {props.description} */}
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            {props.disc}
+            {/* Sed ut perspiciatis unde omnis iste natus error sit voluptatem
             accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
             quae ab illo inventore veritatis et quasi architecto beatae vitae
             dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
@@ -67,7 +68,7 @@ setNoOfReviews(number)
             aliquid ex ea commodi consequatur? Quis autem vel eum iure
             reprehenderit qui in ea voluptate velit esse quam nihil molestiae
             consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla
-            pariatur?
+            pariatur? */}
           </div>
         ) : (
           <ReviewWrapper book_id={props.book_id} getNumOfReviews={getNumOfReviews}/>
