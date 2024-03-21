@@ -381,8 +381,8 @@ function PublishABook(props) {
                                     value={input.ISBNinput}
                                     changeFunction={(e) => ISBNValidation(e)} errorMess={error.ISBNError}></PublishInputComponent>
                             </div>
-                            <div className="col-6 ms-2 mt-2">
-                                <label htmlFor="language">Language</label>
+                            <div className="col-6 ms-2 ">
+                                <label htmlFor="language" className="mb-2">Language</label>
                                 <select className="form-select" name="language" onChange={(e) => setBookLanguage(e)}>
                                     <option defaultValue="English" value="English">English</option>
                                     <option value="Arabic">Arabic</option>
@@ -395,6 +395,7 @@ function PublishABook(props) {
                             <p className="error text-danger">{error.discriptionError}</p>
                         </div>
                         <div className="col-12 mb-1 ">
+                            <label htmlFor="categories" className="mb-2">Choose book category</label>
                             <Select options={categories} isMulti={false} onChange={setBookCategories}></Select>
                             <p className="error text-danger">{error.categoryError}</p>
                         </div>
