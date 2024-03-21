@@ -1,10 +1,62 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Profile.css";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import useAxios from "../../Network/AxiosInstance";
 
 function Profile() {
   // State to track the active tab
   const [activeTab, setActiveTab] = useState("general");
+  const user_id=useParams().user_id;
+  const [user,setUser]=useState({})
+  const [first_name,setFirstName]=useState("")
+  const [last_name,setLastName]=useState(null)
+  const [phone,setPhone]=useState(null)
+  const [profile_image,setProfileImage]=useState(null)
+  let api= useAxios(); 
+  useEffect(()=>{
+    api.get(`http://127.0.0.1:8000/users/${user_id}/`)
+    .then((res)=>(setUser(res.data),setFirstName(res.data.first_name),setLastName(res.data.last_name),console.log(Number(res.data.phone)),setPhone(res.data.phone)))
+    .catch((err)=>console.log(err))
+  },[])
 
+  const setUserData=(e)=>{
+    e.preventDefault();
+    // if (!first_name){
+    //   setErrors({
+    //     ...errors,
+    //     first_name_err:"this field is required"
+    //   })
+    //   return 0;
+    // }
+    // if (!last_name){
+    //   setErrors({
+    //     ...errors,
+    //     last_name_err:"this field is required"
+    //   })
+    //   return 0;
+    // }
+    // if (!first_name){
+    //   setErrors({
+    //     ...errors,
+    //     first_name_err:"this field is required"
+    //   })
+    //   return 0;
+    // }
+    console.log(profile_image)
+    api.patch(`http://127.0.0.1:8000/users/${user_id}/update/`, {
+      email:user.email,
+      first_name:first_name,
+      last_name:last_name,
+      phone:phone,
+      Profile_Pic:profile_image},
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+      .then((res) => (setUser(res.data),setFirstName(res.data.first_name),setLastName(res.data.last_name),console.log(res.data.phone),setPhone(res.data.phone)))
+      .catch((err) => console.log(err));
+  }
   // Function to handle tab change
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -59,7 +111,7 @@ function Profile() {
                   <div className="row">
                     <div className="col-4">
                       <img
-                        src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                        src={user.Profile_Pic?user.Profile_Pic:"https://bootdey.com/img/Content/avatar/avatar1.png"}
                         alt=""
                         className="rounded w-75"
                       />
@@ -71,7 +123,7 @@ function Profile() {
                           <input
                             type="text"
                             className="form-control mb-1"
-                            defaultValue="Mohamed"
+                            defaultValue={user.first_name}                            
                             readOnly
                           />
                         </div>
@@ -80,7 +132,7 @@ function Profile() {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="Nasser"
+                            defaultValue={user.last_name}
                             readOnly
                           />
                         </div>
@@ -90,7 +142,7 @@ function Profile() {
                         <input
                           type="text"
                           className="form-control mb-1"
-                          defaultValue="nasser@gmail.com"
+                          defaultValue={user.email}
                           readOnly
                         />
                       </div>
@@ -109,11 +161,12 @@ function Profile() {
                   <div className="row">
                     <div className="col-4">
                       <img
-                        src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                        src={user.Profile_Pic?user.Profile_Pic:"https://bootdey.com/img/Content/avatar/avatar1.png"}
                         alt=""
                         className="rounded w-75"
                       />
                     </div>
+                    <form onSubmit={e => { setUserData(e) }} enctype='multipart/form-data'>
                     <div className="col-8">
                       <div className="row mb-2">
                         <div className="form-group col-6">
@@ -121,7 +174,9 @@ function Profile() {
                           <input
                             type="text"
                             className="form-control mb-1"
-                            defaultValue="Mohamed"
+                            defaultValue={user.first_name} 
+                            onChange={(e)=>setFirstName(e.target.value)}
+                            required
                           />
                         </div>
                         <div className="form-group col-6">
@@ -129,7 +184,9 @@ function Profile() {
                           <input
                             type="text"
                             className="form-control"
-                            defaultValue="Nasser"
+                            defaultValue={user.last_name}
+                            onChange={(e)=>setLastName(e.target.value)}
+                            required
                           />
                         </div>
                       </div>
@@ -138,32 +195,36 @@ function Profile() {
                         <input
                           type="text"
                           className="form-control mb-1"
-                          defaultValue="nasser@gmail.com"
+                          defaultValue={user.email}
                           readOnly
                         />
                       </div>
                       <div className="form-group mb-2">
                         <label className="form-label">Phone</label>
                         <input
-                          type="text"
                           className="form-control"
-                          defaultValue="+0 (123) 456 7891"
+                          type="tel" 
+                          pattern="^01[0-2,5]{1}[0-9]{8}$"
+                          defaultValue={phone}
+                          onChange={(e)=>{setPhone(e.target.value)}}
+                          
                         />
                       </div>
                       <div className="form-group">
                         <label className="form-label">Profile</label>
-                        <input type="file" className="form-control" />
+                        <input type="file" className="form-control" onChange={e=>setProfileImage(e.target.files[0])}/>
                       </div>
                       <div className="text-right mt-4">
-                        <button type="button" className="filled-button">
+                        <button type="submit" className="filled-button" >
                           Save changes
                         </button>
                         &nbsp;
-                        <button type="button" className="btn btn-default">
+                        <button type="reset" className="btn btn-default">
                           Cancel
                         </button>
                       </div>
                     </div>
+                    </form>
                   </div>
                 </div>
               </div>
