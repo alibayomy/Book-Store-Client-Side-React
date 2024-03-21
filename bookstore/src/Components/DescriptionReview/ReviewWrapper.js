@@ -79,7 +79,7 @@ function ReviewWrapper(props) {
       rate :rate,
       user:current_user,
       book:props.book_id})
-      .then((res) => (console.log(`${id} review has been deleted successfuly`),getAllRates(props.book_id)))
+      .then((res) => (console.log(`${id} review has been updated successfuly`),getAllRates(props.book_id)))
       .catch((err) => console.log(err));
       setId(0)
       setRate(0)

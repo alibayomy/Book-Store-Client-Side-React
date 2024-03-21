@@ -40,7 +40,7 @@ const App = () => {
             ></PrivateRoute>
             <PrivateRoute exact component={test} path={"/test"}></PrivateRoute>
             <Route path="/" exact component={Home} />
-            <Route path="/profile" exact component={Profile} />
+            <PrivateRoute path="/profile/:user_id" exact component={Profile} />
             <Route path="/books" component={Books} />
             <Route path="/viewbook/:id" component={ViewBook} />
             <Route exact path={"/filter"} component={FilterBooks} />

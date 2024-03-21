@@ -5,11 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faSignOut } from "@fortawesome/free-solid-svg-icons";
 import "./DropdownButton.css";
+import useAxios from "../../Network/AxiosInstance";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function DropdownButton({ title, links }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const history= useHistory();
+  const current_user=(useContext(AuthContext).user)!==null?(useContext(AuthContext).user.user_id):0
   const { logoutUser } = useContext(AuthContext);
 
   const toggleDropdown = () => {
@@ -18,6 +21,7 @@ function DropdownButton({ title, links }) {
 
   const handleItemClick = () => {
     setIsOpen(false); // Close the dropdown menu when an item is clicked
+    history.push(`/profile/${current_user}`)
   };
 
   useEffect(() => {
@@ -46,14 +50,14 @@ function DropdownButton({ title, links }) {
       <div
         className={`dropdown-menu bg-body-tertiary p-3 ${isOpen ? "show" : ""}`}
       >
-        <Link
+        <button
           className="nav-link dropdown-item d-block mb-3 drop-items"
-          to="/profile"
+          // to="/profile"
           onClick={handleItemClick}
         >
           <FontAwesomeIcon className="me-2" icon={faUser} size="sm" />
           <span>My Profile</span>
-        </Link>
+        </button>
         <Link
           className="nav-link dropdown-item d-block drop-items"
           onClick={logoutUser}
