@@ -31,6 +31,7 @@ function UpdateABook(){
     
     const bookId = useParams()
     const [book, setBook] = useState({})
+    const [input, setInput] = useState({})
 
 
     let api = useAxios()
@@ -40,6 +41,20 @@ function UpdateABook(){
             console.log("GOT DATA")
             console.log(res)
             setBook(res.data.book)
+            let bookData = res.data.book
+            setInput({
+                authorNameInput: bookData.author_name ,
+                titleInput: bookData.name,
+                discriptionInput: bookData.description,
+                ISBNinput:bookData.ISBN,
+                languageInput: bookData.language,
+                publicationDate: bookData.year_of_publication,
+                priceInput: bookData.price,
+                quantityInput:bookData.total_number_of_book,
+                numOfPagesInput:bookData.no_of_page,
+                frontIMG: null,
+                backIMG: null
+            })
         })
         .catch((err)=> {
             console.log("GOT ERROR")
@@ -61,20 +76,19 @@ function UpdateABook(){
         backImgTrigger: 1
 
     })
-    console.log(book.name)
-    const [input, setInput] = useState({
-        authorNameInput: "",
-        titleInput: book.name,
-        discriptionInput: book.description,
-        ISBNinput: "",
-        languageInput: "English",
-        publicationDate: new Date().toLocaleString('en-GB', options) + '',
-        priceInput: book.pirce,
-        quantityInput:book.total_number_of_book,
-        numOfPagesInput:"",
-        frontIMG: null,
-        backIMG: null
-    })
+    // const [input, setInput] = useState({
+    //     authorNameInput: "",
+    //     titleInput: book.name,
+    //     discriptionInput: book.description,
+    //     ISBNinput: "",
+    //     languageInput: "English",
+    //     publicationDate: new Date().toLocaleString('en-GB', options) + '',
+    //     priceInput: book.pirce,
+    //     quantityInput:book.total_number_of_book,
+    //     numOfPagesInput:"",
+    //     frontIMG: null,
+    //     backIMG: null
+    // })
 
   
     const [error, setError] = useState({
@@ -173,7 +187,19 @@ function UpdateABook(){
 
     }
 
-
+    function numOfPagesValidation(e){
+        setInput({...input, numOfPagesInput: e.target.value})
+        if (!quantityRegex.test(e.target.value)) {
+            setError({ ...error, numOfPagesError: "Invalid  number of pages " })
+            setErrorClass({ ...errorClass, numOfPagesErrorClass: "is-invalid" })
+            setTrirger({ ...trigger, numOfPagesTrigger: 1 })
+        }
+        else {
+            setError({ ...error, numOfPagesError:"" })
+            setErrorClass({ ...errorClass, numOfPagesErrorClass: "is-valid" })
+            setTrirger({ ...trigger, numOfPagesTrigger: 0 })
+        }
+    }
 
     function checkSubmission(e) {
         e.preventDefault()
@@ -207,7 +233,7 @@ function UpdateABook(){
                                     value={book.ISBN}
                                     disabled="disabled"></PublishInputComponent>
                             </div>
-                            <div className="col-6 ms-2 mt-2">
+                            <div className="col-6 ms-2 ">
                                 <PublishInputComponent labelFor="name" labelContent="Language"
                                         type="input"  name="language"
                                         value={book.language}
@@ -252,6 +278,7 @@ function UpdateABook(){
                             <div className="col-6 ms-2">
                                 <PublishInputComponent min = {0} labelFor="numOfPages" labelContent="Number Of Pages"
                                     type="number" className={`mb-3 ${errorClass.numOfPagesErrorClass}`} name="numOfPages"
+                                    value={input.numOfPagesInput? input.numOfPagesInput: book.no_of_page}
                                     changeFunction={(e) => numOfPagesValidation(e)} errorMess={error.numOfPagesError}></PublishInputComponent>
                             </div>
                         </div>

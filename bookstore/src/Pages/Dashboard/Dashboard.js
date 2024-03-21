@@ -91,7 +91,7 @@ function Dashboard(){
                 {/* Books section */}
                 <div className='d-flex justify-content-between col-lg-7 '>
                     <h2 className='ps-5' >Books For You</h2>
-                    <Link to='#' className='text-decoration-none align-self-center fs-4' style={{"color":"#5f4ecb"}}>View All</Link>
+                    <Link to='/publisher/books' className='text-decoration-none align-self-center fs-4' style={{"color":"#5f4ecb"}}>View All</Link>
                 </div>
                 
                 <div className='col-lg-8 col-md-12 col-sm-12 mx-auto'>
