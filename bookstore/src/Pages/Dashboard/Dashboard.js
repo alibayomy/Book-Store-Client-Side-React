@@ -7,15 +7,18 @@ import publishlogo from '../../images/web-logo.jpg';
 import { Link } from "react-router-dom";
 import './dashboard.css'
 import MyCard from '../../Components/MyCard/MyCard';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import useAxios from '../../Network/AxiosInstance';
 import { useState } from 'react';
 import PopularBooks from '../../Components/PublisherDashboard/PopularBooks';
+import { AuthContext } from '../../Context/AuthContext';
 
 function Dashboard(){
 
     const [books, setBooks] = useState([])
+    const {user} = useContext(AuthContext)
     let api = useAxios()
+    console.log(user)
     useEffect(() => {
         api.get('get-publisher-books/')
         .then((res)=> {
@@ -74,8 +77,8 @@ function Dashboard(){
                     <div className="col-lg-11 col-md-11 col-sm-11 border p-2">
                         <img src={publishlogo} className="card-img-top d-block mx-auto" alt="..." style={{"width":"85%"}}/>
                         <div className="card-body p-0">
-                            <h3 className="card-title text-center fs-3">3ser Kotb</h3>
-                            <p className="card-text text-center fs-4"  style={{"color":"#5f4ecb"}}>fkr tla8y ktabk</p>
+                            <h3 className="card-title text-center fs-3">{user.first_name +" " +user.last_name} </h3>
+                            <p className="card-text text-center fs-4"  style={{"color":"#5f4ecb"}}>Publisher</p>
                         </div>
                     </div>
 

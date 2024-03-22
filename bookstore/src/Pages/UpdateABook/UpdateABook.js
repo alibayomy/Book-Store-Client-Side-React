@@ -10,113 +10,104 @@ import { Book } from "react-bootstrap-icons";
 
 function UpdateABook(){
 
-    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’‘\-–`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
+    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’‘—“”…\-–`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
     const priceRegex = new RegExp(/^((\d+)((,\d+|\d+)*)(\s*|\.(\d{2}))$)/)
     var options = { day: 'numeric', month: 'numeric', year: 'numeric' };
-    const quantityRegex = new RegExp(/^[+]?\d+([.]\d+)?$/)
+    const quantityRegex = new RegExp(/^[0-9]*$/)
     const history = useHistory()
-
-
+    const book_id = useParams()
 
     const [submitError, setSubmitError] = useState((""))
-    const [categories, setCategoris] = useState({})
     const [authors, setAuthors] = useState({})
 
 
     const [frontBookImg, setFrontBookImg] = useState(null)
     const [backBookImg, setBackBookImg] = useState(null)
-    const [bookCategories, setBookCategories] = useState(null)
     const[lstAuthors, setLstAuthors] = useState(null)
 
     
     const bookId = useParams()
     const [book, setBook] = useState({})
     const [input, setInput] = useState({})
+    const [categories, setCategoris] = useState({})
+    const [bookCategories, setBookCategories] = useState(null)
 
 
     let api = useAxios()
-    useEffect(()=> {
-        api.get(`/${bookId.id}-book/details`)
-        .then((res)=> {
-            console.log("GOT DATA")
-            console.log(res)
-            setBook(res.data.book)
-            let bookData = res.data.book
-            setInput({
-                authorNameInput: bookData.author_name ,
-                titleInput: bookData.name,
-                discriptionInput: bookData.description,
-                ISBNinput:bookData.ISBN,
-                languageInput: bookData.language,
-                publicationDate: bookData.year_of_publication,
-                priceInput: bookData.price,
-                quantityInput:bookData.total_number_of_book,
-                numOfPagesInput:bookData.no_of_page,
-                frontIMG: null,
-                backIMG: null
+
+
+    async function fetchData() {
+        await api.get(`/${bookId.id}-book/details`)
+            .then((res) => {
+                console.log("GOT DATA")
+                console.log(res)
+                setBook(res.data.book)
+                let bookData = res.data.book
+                setInput({
+                    authorNameInput: bookData.author_name,
+                    titleInput: bookData.name,
+                    discriptionInput: bookData.description,
+                    ISBNinput: bookData.ISBN,
+                    languageInput: bookData.language,
+                    publicationDate: bookData.year_of_publication,
+                    priceInput: bookData.price,
+                    quantityInput: bookData.total_number_of_book,
+                    numOfPagesInput: bookData.no_of_page,
+                    frontIMG: null,
+                    backIMG: null
+                })
             })
-        })
-        .catch((err)=> {
-            console.log("GOT ERROR")
-            console.log(err)
-        })
+            .then(api.get('/list-cateory/')
+                .then((res) => {
+                    setCategoris(res.data.results)
+                    console.log(res.data.results)
+                }))
+            .catch((err) => {
+                console.log(err)
+                setCategoris([])
+            })
+            .catch((err) => {
+                console.log(err)
+                setCategoris([])
+            })
+    }
+    useEffect(()=> {
+      
+      fetchData()
     }, [])
 
     const [trigger, setTrirger] = useState({
-        authorNameTrigger: 0,
-        titleTrigger: 1,
-        discriptionTrigger: 1,
-        ISBNTrigger: 1,
-        languageTrigger: 0,
-        publicationDateTrigger: 1,
-        priceTrigger: 1,
-        quantityTrigger:1,
-        numOfPagesTrigger:1,
-        frontImgTrigger: 1,
-        backImgTrigger: 1
-
+     
+        frontImgTrigger: 0,
+        backImgTrigger: 0
     })
-    // const [input, setInput] = useState({
-    //     authorNameInput: "",
-    //     titleInput: book.name,
-    //     discriptionInput: book.description,
-    //     ISBNinput: "",
-    //     languageInput: "English",
-    //     publicationDate: new Date().toLocaleString('en-GB', options) + '',
-    //     priceInput: book.pirce,
-    //     quantityInput:book.total_number_of_book,
-    //     numOfPagesInput:"",
-    //     frontIMG: null,
-    //     backIMG: null
-    // })
-
   
     const [error, setError] = useState({
-        authorNameError: "",
-        titleError: "",
-        discriptionError: "",
-        categoryError: "",
-        ISBNError: "",
-        languageError: "",
-        publicationDateError: "",
-        priceError: "",
-        quantityError:"",
-        numOfPagesError:"",
         frontImgError: "",
         backImgError: ""
     })
     const [errorClass, setErrorClass] = useState({
-        authorNameErrorClass: "",
-        titleErrorClass: "",
-        discriptionErrorClass: "",
-        ISBNErrorClass: "",
-        languageErrorClass: "",
-        publicationDateErrorClass: "",
-        priceErrorClass: "",
-        quantityErrorClass:"",
-        numOfPagesErrorClass:"",
         frontImgErrorClass: "",
         backImgErrorClass: ""
+    })
+    const [descriptionError, setDescriptionError]= useState({
+        msg:"",
+        class:""
+    })
+    const [categoryError, setCategoryError] = useState({
+        msg:"",
+    })
+    const [priceError, setPriceError] = useState({
+        msg:"",
+        class:""
+    })
+    const [quantityError, setQuantitiyError] = useState({
+        msg:"",
+        class:""
+    })
+    const [numOfPagesError, setNumOfPagesError] = useState({
+        msg:"",
+        class:""
     })
     function titleValidation(e) {
         if (!e.target.value) {
@@ -125,90 +116,190 @@ function UpdateABook(){
         else {
             setInput({ ...input, titleInput: e.target.value })
         }
-        console.log(input.titleInput)
     }
     function discriptionValidation(e) {
         if (!e.target.value) {
-            setInput({ ...input, discriptionInput: book.description})
+            setInput({ ...input, discriptionInput: book.name})
         }
         else {
             setInput({ ...input, discriptionInput: e.target.value })
-            if ((discriptionRegex.test(e.target.value) && book.language === "English") ||
-                (!discriptionRegex.test(e.target.value) && input.languageInput === "Arabic")) {
-                setError({ ...error, discriptionError: "" })
-                setErrorClass({ ...error, discriptionErrorClass: "is-valid" })
-                setTrirger({ ...trigger, discriptionTrigger: 0 })
-            }
-            else {
-                console.log((discriptionRegex.test(e.target.value)))
-                setError({ ...error, discriptionError: "Discription input does not matches the selected book language" })
-                setErrorClass({ ...errorClass, discriptionErrorClass: "is-invalid" })
-                setTrirger({ ...trigger, discriptionTrigger: 1 })
-
-            }
         }
-
     }
 
     function priceValidation(e) {
-        console.log(input.priceInput)
-        if (!e.target.value){
-            setInput({ ...input, priceInput: book.pirce })
-        } 
-        else{
-            setInput({ ...input, priceInput: e.target.value })
-        }
-        if (!priceRegex.test(e.target.value)) {
-            setError({ ...error, priceError: "Invalid Price " })
-            setErrorClass({ ...errorClass, priceErrorClass: "is-invalid" })
-            setTrirger({ ...trigger, priceTrigger: 1 })
+        if (!e.target.value) {
+            setInput({ ...input, priceInput: book.price})
         }
         else {
-            setError({ ...error, priceError: "" })
-            setErrorClass({ ...error, priceErrorClass: "is-valid" })
-            setTrirger({ ...trigger, priceTrigger: 0 })
-
-
+            setInput({ ...input, priceInput: e.target.value })
         }
 
     }
     function quantityValidation(e){
-        setInput({...input, quantityInput: e.target.value})
-        if (!quantityRegex.test(e.target.value)) {
-            setError({ ...error, quantityError: "Invalid quantity number " })
-            setErrorClass({ ...errorClass, quantityErrorClass: "is-invalid" })
-            setTrirger({ ...trigger, quantityTrigger: 1 })
+        if (!e.target.value) {
+            setInput({ ...input, quantityInput: book.total_number_of_book})
         }
         else {
-            setError({ ...error, quantityError: "" })
-            setErrorClass({ ...errorClass, quantityErrorClass: "is-valid" })
-            setTrirger({ ...trigger, quantityTrigger: 0 })
+            setInput({ ...input, quantityInput: e.target.value })
         }
 
     }
 
     function numOfPagesValidation(e){
-        setInput({...input, numOfPagesInput: e.target.value})
-        if (!quantityRegex.test(e.target.value)) {
-            setError({ ...error, numOfPagesError: "Invalid  number of pages " })
-            setErrorClass({ ...errorClass, numOfPagesErrorClass: "is-invalid" })
-            setTrirger({ ...trigger, numOfPagesTrigger: 1 })
+        if (!e.target.value) {
+            setInput({ ...input, numOfPagesInput: book.no_of_page})
         }
         else {
-            setError({ ...error, numOfPagesError:"" })
-            setErrorClass({ ...errorClass, numOfPagesErrorClass: "is-valid" })
-            setTrirger({ ...trigger, numOfPagesTrigger: 0 })
+            setInput({ ...input, numOfPagesInput: e.target.value })
+        }
+
+    }
+    function frontBookCoverValidation(e) {
+        let imgType = e.target.files[0]?.type.split("/")
+        setFrontBookImg(e.target.files[0])
+        if (!e.target.files[0]) {
+            setError({ ...error, frontImgError: "Upload your front book cover" })
+            setErrorClass({ ...errorClass, frontImgErrorClass: "is-invalid" })
+            setTrirger({ ...trigger, frontImgTrigger: 1 })
+        }
+        else if (imgType[0] !== "image") {
+            setError({ ...error, frontImgError: "Please upload image type" })
+            setErrorClass({ ...errorClass, frontImgErrorClass: "is-invalid" })
+            setTrirger({ ...trigger, frontImgTrigger: 1 })
+        }
+        else {
+            setError({ ...error, frontImgError: "" })
+            setErrorClass({ ...errorClass, frontImgErrorClass: "is-valid" })
+            setTrirger({ ...trigger, frontImgTrigger: 0 })
+            setInput({ ...input, frontIMG: e.target.files[0] })
+        }
+    }
+    function backBookCoverValidation(e) {
+        let imgType = e.target.files[0]?.type.split("/")
+        setBackBookImg(e.target.files[0])
+        if (!e.target.files[0]) {
+            setError({ ...error, backImgError: "Upload your back book cover" })
+            setErrorClass({ ...errorClass, backImgErrorClass: "is-invalid" })
+            setTrirger({ ...trigger, backImgTrigger: 1 })
+        }
+        else if (imgType[0] !== "image") {
+            setError({ ...error, backImgError: "Please upload image type" })
+            setErrorClass({ ...errorClass, backImgErrorClass: "is-invalid" })
+            setTrirger({ ...trigger, backImgTrigger: 1 })
+        }
+        else {
+            setError({ ...error, backImgError: "" })
+            setErrorClass({ ...errorClass, backImgErrorClass: "is-valid" })
+            setTrirger({ ...trigger, backImgTrigger: 0 })
+            setInput({ ...input, backIMG: e.target.files[0] })
+
         }
     }
 
     function checkSubmission(e) {
+        console.log(input.languageInput)
         e.preventDefault()
-        console.log(input)
+        let descriptionTrigger = 1
+        let categoryTrugger = 1
+        let priceTrigger = 1
+        let quantityTrigger = 1
+        let numOfPagesTrigger = 1
+        let book_category = book.category
+
+
+        // discreption validation
+        if (input.languageInput==="Arabic" && (!discriptionRegex.test(input.discriptionInput))){
+            descriptionTrigger = 0
+            setDescriptionError({...descriptionError, msg:"", class:"is-valid"})
+
         }
+        else if (input.languageInput==="English" && discriptionRegex.test(input.discriptionInput)){
+            descriptionTrigger = 0
+            setDescriptionError({...descriptionError, msg:"", class:"is-valid"})
+
+        }
+        else {
+            setDescriptionError({...descriptionError, msg:"Invalid Description for the book language", class:"is-invalid"})
+        }
+        if (bookCategories){
+            book_category = bookCategories.value
+        }
+        // price validation
+        if (priceRegex.test(input.priceInput)){
+            setPriceError({...priceError, class:"is-valid", msg:""})
+            priceTrigger = 0
+        }
+        else{
+            setPriceError({...priceError, class:"is-invalid", msg:"Invalid price"})
+            priceTrigger = 1
+
+        }
+        if (quantityRegex.test(input.quantityInput)){
+            setQuantitiyError({...quantityError, class:"is-valid", msg:""})
+            quantityTrigger = 0
+        }
+        else {
+            setQuantitiyError({...quantityError, class:"is-invalid", msg:"Invalid quantity"})
+            quantityTrigger = 1
+        }
+        if (quantityRegex.test(input.numOfPagesInput)){
+            setNumOfPagesError({...quantityError, class:"is-valid", msg:""})
+            numOfPagesTrigger = 0
+        }
+        else {
+            setNumOfPagesError({...quantityError, class:"is-invalid", msg:"Invalid number of pages"})
+            numOfPagesTrigger = 1
+
+        }
+     
+        if (descriptionTrigger === 0  && priceTrigger === 0 && quantityTrigger === 0 && numOfPagesTrigger ===0
+             && trigger.frontImgTrigger === 0 && trigger.backImgTrigger==0){
+            // setSubmitError(<div className="alert alert-success fw-bold" role="alert">
+            //     Your data submited successfulyy
+            // </div>)
+           var myObj = {
+            "name": input.titleInput,
+            "ISBN": input.ISBNinput,
+            "front_img": frontBookImg,
+            "back_img": backBookImg,
+            "description": input.discriptionInput,
+            "price": input.priceInput,
+            "language": input.languageInput,
+            "year_of_publication": input.publicationDate,
+            "author":book.author,
+            "category": book_category,
+            "total_number_of_book": input.quantityInput,
+            "no_of_page": input.numOfPagesInput
+        }
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+            api.patch(`${bookId.id}-book/update`,(myObj), config). 
+            then((res) => {
+                setSubmitError(<div className="alert alert-success" role="alert">
+                        Book Updated
+                    </div>)
+            }) .catch((err) => {
+                console.log(err)
+                setSubmitError(<div className="alert alert-danger" role="alert">
+                    {err.response.request.responseText}
+                </div>)})
+        history.push('/dashboard')
+        }
+        else {
+            setSubmitError(<div className="alert alert-danger fw-bold" role="alert">
+            Error input please make sure you fill all the form with no errors
+            </div>)
+        }
+    }
     return (
         <>
             <div className="container col-lg-6 col-md-6 col-sm-12 mt-3 border p-5 registerContainer">
-                <h1 className="mb-4 loginTitle">Publishing a new book?</h1>
+                <h1 className="mb-4 loginTitle text-center">You are updating your book</h1>
+                <h2 className="text-center" style={{color:"#4D3BC6"}}>{book.name}</h2>
+                <h3 className="text-center">{book.category_name}</h3>
                 <form onSubmit={(e) => checkSubmission(e)} noValidate className="needs-validation" >
                     <div className="row">
                         <div className="col-12 d-flex justify-content-between">
@@ -242,17 +333,18 @@ function UpdateABook(){
                         </div>
                         <div className="col-12 mb-1">
                             <label htmlFor="bookDiscription">Discription</label>
-                            <textarea className={`form-control ${errorClass.discriptionErrorClass}`} 
+                            <textarea className={`form-control ${descriptionError.class}`} 
                             rows={3} name="bookDiscription"
                             value={input.discriptionInput ? input.discriptionInput : book.description}
                             onChange={(e) => discriptionValidation(e)}>
                                 </textarea>
-                            <p className="error text-danger">{error.discriptionError}</p>
+                            <p className="error text-danger">{descriptionError.msg}</p>
 
                         </div>
                         <div className="col-12 mb-1 ">
-                            {/* <Select options={categories} isMulti={false} onChange={setBookCategories}></Select> */}
-                            <p className="error text-danger">{error.categoryError}</p>
+                            <label htmlFor="categories" className="mb-2">Change your book category</label>
+                            <Select options={categories} isMulti={false} onChange={setBookCategories}></Select>
+                            <p className="error text-danger">{categoryError.msg}</p>
                         </div>
                         <div className="col-12 d-flex justify-content-between">
                             <div className="col-6 me-2">
@@ -263,23 +355,23 @@ function UpdateABook(){
                             </div>
                             <div className="col-6 ms-2">
                                 <PublishInputComponent labelFor="bookPrice" labelContent="Price(egp)"
-                                    type="TEXT" className={`mb-3 ${errorClass.priceErrorClass}`} name="bookPrice"
+                                    type="TEXT" className={`mb-3 ${priceError.class}`} name="bookPrice"
                                     value={input.priceInput ? input.priceInput : book.price}
-                                    changeFunction={(e) => priceValidation(e)} errorMess={error.priceError}></PublishInputComponent>
+                                    changeFunction={(e) => priceValidation(e)} errorMess={priceError.msg}></PublishInputComponent>
                             </div>
                         </div>
                         <div className="col-12 d-flex justify-content-between">
                             <div className="col-6 me-2">
                                 <PublishInputComponent min = {0} labelFor="quantity" labelContent="Quantity"
-                                    type="number" className={`mb-3 ${errorClass.quantityErrorClass}`} name="quantity"
+                                    type="number" className={`mb-3 ${quantityError.class}`} name="quantity"
                                     value={input.quantityInput? input.quantityInput: book.total_number_of_book}
-                                    changeFunction={(e) => quantityValidation(e)} errorMess={error.quantityError}></PublishInputComponent>
+                                    changeFunction={(e) => quantityValidation(e)} errorMess={quantityError.msg}></PublishInputComponent>
                             </div>
                             <div className="col-6 ms-2">
                                 <PublishInputComponent min = {0} labelFor="numOfPages" labelContent="Number Of Pages"
-                                    type="number" className={`mb-3 ${errorClass.numOfPagesErrorClass}`} name="numOfPages"
+                                    type="number" className={`mb-3 ${numOfPagesError.class}`} name="numOfPages"
                                     value={input.numOfPagesInput? input.numOfPagesInput: book.no_of_page}
-                                    changeFunction={(e) => numOfPagesValidation(e)} errorMess={error.numOfPagesError}></PublishInputComponent>
+                                    changeFunction={(e) => numOfPagesValidation(e)} errorMess={numOfPagesError.msg}></PublishInputComponent>
                             </div>
                         </div>
                         <div className="mb-3">
