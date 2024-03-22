@@ -15,10 +15,10 @@ import Footer from "../../Components/Footer/Footer";
 
 // import MyCard from "../../Components/MyCard/MyCard";
 function Books() {
-  const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
-  const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
+  // const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
+  // const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
 
-  const localhost='http://localhost:8000'
+  const localhost = 'http://localhost:8000'
   const history = useHistory();
 
   const [language, setLanguage] = useState("en");
@@ -26,21 +26,22 @@ function Books() {
   const [skipItem, setSkipItem] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
 
-  const [Movies, setMovie] = useState([]);
-  const [books,setBooks]=useState([])
+  // const [Movies, setMovie] = useState([]);
+  const [books, setBooks] = useState([])
 
   useEffect(() => {
+    // axios
+    //   .get(
+    //     `${BaseMainUrl}?api_key=${BaseAPI}&page=${pageNumber}&language=${language}`
+    //   )
+    //   .then((res) => {console.log(res.data.results),setMovie(res.data.results)})
+    //   .catch((err) => console.log(err));
+
     axios
-      .get(
-        `${BaseMainUrl}?api_key=${BaseAPI}&page=${pageNumber}&language=${language}`
-      )
-      .then((res) => {console.log(res.data.results),setMovie(res.data.results)})
-      .catch((err) => console.log(err));
-      axios
       .get(
         `${localhost}/list-book/`
       )
-      .then((res) => {console.log(res.data.results),setBooks(res.data.results),console.log(books)})
+      .then((res) => { console.log(res.data.results), setBooks(res.data.results), console.log(books) })
       .catch((err) => console.log(err));
   }, [pageNumber, skipItem, language]);
 
@@ -674,16 +675,19 @@ function Books() {
             </div>
 
             <div className="row">
-              {books.map((book)=>(
+              {books.map((book) => (
                 <MyAllCards
-                key={book.id}
-                imageUrl={book.front_img}
-                title={book.name}
-                category={book.category_name}
-                path={`viewbook/${book.id}`}
-                rating="3"
-                price={book.price}
-              />
+                  key={book.id}
+                  imageUrl={book.front_img}
+                  title={book.name}
+                  category={book.category_name}
+                  path={`viewbook/${book.id}`}
+                  rating="3"
+                  price={book.price}
+                  publisher={book.publisher}
+                  quantity={book.total_number_of_book}
+                  book_id={book.id}
+                />
               ))}
               {/* {Movies.map((book) => (
                 <MyAllCards
