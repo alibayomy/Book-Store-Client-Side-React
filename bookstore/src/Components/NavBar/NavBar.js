@@ -13,11 +13,15 @@ import DropdownButton from "../DropdownButton/DropdownButton";
 import { ShoppingCart } from "../ShoppingCart/ShoppingCart";
 import { Offcanvas, Stack } from "react-bootstrap"
 import axios from "axios";
+import useAxios from "../../Network/AxiosInstance";
+
 
 function NavBar() {
   const history = useHistory();
-
+  let api=useAxios();
   const { user } = useContext(AuthContext);
+  const [books,setBooks]=useState([])
+  const current_user=(useContext(AuthContext).user)!==null?(useContext(AuthContext).user.user_id):0
 
   const goBack = () => {
     history.goBack(); // Go back to the previous page
@@ -38,21 +42,36 @@ function NavBar() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const hundleOnDelete=(item_id)=>{
+    api.delete(`http://127.0.0.1:8000/api-order/${current_user}/cart`,{data:{cart_item_id:item_id},
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then((res) => {console.log(res.data.msg),setBooks(res.data.cart.cart_items)})
+    .catch((err) => console.log(err));
+    console.log(item_id)
+  }
 
   const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
   const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
   const [Movies, setMovie] = useState([]);
   const total = 0
   useEffect(() => {
-    axios
-      .get(
-        `${BaseMainUrl}?api_key=${BaseAPI}`
+    // axios
+    //   .get(
+    //     `${BaseMainUrl}?api_key=${BaseAPI}`
+    //   )
+    //   .then((res) => { console.log(res.data.results), setMovie(res.data.results) })
+    //   .catch((err) => console.log(err));
+
+      api.get(
+        `http://127.0.0.1:8000/api-order/${current_user}/cart`
       )
-      .then((res) => { console.log(res.data.results), setMovie(res.data.results) })
+      .then((res) => { console.log(res.data.cart.cart_items),setBooks(res.data.cart.cart_items)})
       .catch((err) => console.log(err));
-
   }, []);
-
+console.log(books)
   return (
     <nav
       className="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm"
@@ -70,11 +89,12 @@ function NavBar() {
         />
         <Offcanvas.Body>
           <Stack gap={1} >
-            {Movies.map((book) => (
+            {books.map((book) => (
               <ShoppingCart
-                imageUrl={`https://image.tmdb.org/t/p/w500/${book.poster_path}`}
-                title={book.title}
-                price={book.vote_count.toFixed(0)}
+                imageUrl={`http://127.0.0.1:8000${book.book.front_img}`}
+                title={book.book.name}
+                price={book.book.price}
+                onDeleteClicked={()=>hundleOnDelete(book.id)}
               />
             ))}
             <div className="my-4 fw-bold fs-5 ">

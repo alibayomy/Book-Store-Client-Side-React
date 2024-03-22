@@ -18,7 +18,9 @@ export function ShoppingCart(props) {
                     </div>
                 </div>
                 <button
-                    className="btn btn-sm btn-outline-danger">
+                    className="btn btn-sm btn-outline-danger"
+                    onClick={props.onDeleteClicked}
+                    >
                     X
                 </button>
             </Stack>
