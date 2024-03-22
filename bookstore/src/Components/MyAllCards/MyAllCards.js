@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as regularStar } from "@fortawesome/free-regular-svg-icons";
 import { Link } from "react-router-dom";
+import useAxios from "../../Network/AxiosInstance";
+import { AuthContext } from "../../Context/AuthContext";
 
 function MyAllCards(props) {
+
   const renderRatingStars = () => {
     const rating = props.rating || 0;
     const starIcons = [];
@@ -18,9 +21,27 @@ function MyAllCards(props) {
         />
       );
     }
+  }
 
-    return starIcons;
-  };
+  let api = useAxios();
+  const localhost = 'http://localhost:8000'
+  const [cart, setCart] = useState([])
+  const { user } = useContext(AuthContext);
+  const current_user = (useContext(AuthContext).user) !== null ? (useContext(AuthContext).user.user_id) : 0
+
+  const onAddClicked = (item_id, publisher_id, total_quantity) => {
+
+    api.post(`${localhost}/api-order/${current_user}/cart`, {
+      book_id: item_id,
+      CustomPublisher_id: publisher_id,
+      total_number_of_book: total_quantity,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then((res) => { console.log(res.data.cart.cart_items), setCart(res.data.cart.cart_items) })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <div key={props.id} className="col-xl-4 col-lg-4 col-md-6 mt-3 mb-4">
@@ -46,7 +67,9 @@ function MyAllCards(props) {
             <span className="ms-1 mt-3 fs-5">EGP: {props.price}</span>
 
             {/* Add to Cart Button */}
-            <button className="filled-button">Add to Cart</button>
+            <button className="filled-button"
+              onClick={() => onAddClicked(props.book_id, props.publisher, props.quantity)}>
+              Add to Cart</button>
           </div>
         </div>
       </div>
