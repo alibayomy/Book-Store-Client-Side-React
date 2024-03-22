@@ -37,7 +37,7 @@ function UpdateABook(){
 
 
     async function fetchData() {
-        await api.get(`/${bookId.id}-book/details`)
+        await api.get(`/${bookId.id}-publisherbook/details`)
             .then((res) => {
                 console.log("GOT DATA")
                 console.log(res)
@@ -296,6 +296,8 @@ function UpdateABook(){
     }
     return (
         <>
+        {
+            book ?
             <div className="container col-lg-6 col-md-6 col-sm-12 mt-3 border p-5 registerContainer">
                 <h1 className="mb-4 loginTitle text-center">You are updating your book</h1>
                 <h2 className="text-center" style={{color:"#4D3BC6"}}>{book.name}</h2>
@@ -410,6 +412,12 @@ function UpdateABook(){
                     <PublishButtonComponent display='d-grid' title='Publish Now'></PublishButtonComponent>
                 </form >
             </div >
+            :
+            <div className="alert alert-danger fw-bold" role="alert">
+            You are not authoriszed to view this page
+            </div>
+        }
+
         </>
     )
 }

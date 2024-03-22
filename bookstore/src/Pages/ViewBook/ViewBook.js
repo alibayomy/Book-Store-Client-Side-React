@@ -43,7 +43,7 @@ function ViewBook() {
   return (
     <div>
       <ProductDetails book={book}/>
-      <DescriptionReview book_id={book.id} disc={book.description}/>
+      <DescriptionReview book_id={book?.id} disc={book?.description}/>
       <RelatedProducts />
       <Footer />
     </div>
