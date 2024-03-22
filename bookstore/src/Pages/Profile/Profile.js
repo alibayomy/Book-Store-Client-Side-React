@@ -2,24 +2,37 @@ import React, { useEffect, useState } from "react";
 import "./Profile.css";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import useAxios from "../../Network/AxiosInstance";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Modal, Button } from "react-bootstrap";
+
 
 function Profile() {
+  //model vars
+  const [show, setShow] = useState(false);
+  const handleClose = () => {setShow(false),setActiveTab("info")};
+  const handleShow = () => setShow(true);
   // State to track the active tab
   const [activeTab, setActiveTab] = useState("general");
-  const user_id=useParams().user_id;
-  const [user,setUser]=useState({})
-  const [first_name,setFirstName]=useState("")
-  const [last_name,setLastName]=useState(null)
-  const [phone,setPhone]=useState(null)
-  const [profile_image,setProfileImage]=useState(null)
-  let api= useAxios(); 
-  useEffect(()=>{
+  //
+  const user_id = useParams().user_id;
+  const [user, setUser] = useState({})
+  const [first_name, setFirstName] = useState("")
+  const [last_name, setLastName] = useState(null)
+  const [phone, setPhone] = useState(null)
+  const [profile_image, setProfileImage] = useState(null)
+  const [old_password, setOldPassword] = useState(null)
+  const [new_password, setNewPassword] = useState(null)
+  const [confirm_password, setConfirmPassword] = useState(null)
+  const [changePasswordError, setChangePasswordError] = useState("")
+  const [msg, setMSG] = useState("")
+  let api = useAxios();
+  useEffect(() => {
     api.get(`http://127.0.0.1:8000/users/${user_id}/`)
-    .then((res)=>(setUser(res.data),setFirstName(res.data.first_name),setLastName(res.data.last_name),console.log(Number(res.data.phone)),setPhone(res.data.phone)))
-    .catch((err)=>console.log(err))
-  },[])
-
-  const setUserData=(e)=>{
+      .then((res) => (setUser(res.data), setFirstName(res.data.first_name), setLastName(res.data.last_name), console.log(Number(res.data.phone)), setPhone(res.data.phone)))
+      .catch((err) => console.log(err))
+  }, [])
+  //function to hundle user profile update
+  const setUserData = (e) => {
     e.preventDefault();
     // if (!first_name){
     //   setErrors({
@@ -44,19 +57,42 @@ function Profile() {
     // }
     console.log(profile_image)
     api.patch(`http://127.0.0.1:8000/users/${user_id}/update/`, {
-      email:user.email,
-      first_name:first_name,
-      last_name:last_name,
-      phone:phone,
-      Profile_Pic:profile_image},
+      email: user.email,
+      first_name: first_name,
+      last_name: last_name,
+      phone: phone,
+      Profile_Pic: profile_image
+    },
       {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
-      .then((res) => (setUser(res.data),setFirstName(res.data.first_name),setLastName(res.data.last_name),console.log(res.data.phone),setPhone(res.data.phone)))
+      .then((res) => (setUser(res.data), setFirstName(res.data.first_name), setLastName(res.data.last_name), console.log(res.data.phone), setPhone(res.data.phone)))
       .catch((err) => console.log(err));
   }
+
+  //function to hundle user password update
+  const changeUserPassword = (e) => {
+    e.preventDefault();
+    setChangePasswordError("")
+    setMSG("")
+    if (new_password != confirm_password) {
+      setChangePasswordError("Passwords do not match.")
+      return 0;
+    }
+    api.patch(`http://127.0.0.1:8000/users/${user_id}/change-password/`, {
+      old_password: old_password,
+      new_password: new_password,
+      confirm_password: confirm_password
+    },
+    )
+      .then((res) => (console.log(res), setMSG(res.data),handleShow()))
+      .catch((err) => (console.log(err.response.data), setChangePasswordError(err.response.data.old_password)));
+
+
+  }
+
   // Function to handle tab change
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -70,27 +106,24 @@ function Profile() {
           <div className="col-md-3 pt-0">
             <div className="list-group list-group-flush account-settings-links">
               <a
-                className={`list-group-item list-group-item-action ${
-                  activeTab === "general" ? "active" : ""
-                }`}
+                className={`list-group-item list-group-item-action ${activeTab === "general" ? "active" : ""
+                  }`}
                 onClick={() => handleTabChange("general")}
                 href="#account-general"
               >
                 General
               </a>
               <a
-                className={`list-group-item list-group-item-action ${
-                  activeTab === "info" ? "active" : ""
-                }`}
+                className={`list-group-item list-group-item-action ${activeTab === "info" ? "active" : ""
+                  }`}
                 onClick={() => handleTabChange("info")}
                 href="#account-info"
               >
                 Update Profile
               </a>
               <a
-                className={`list-group-item list-group-item-action ${
-                  activeTab === "password" ? "active" : ""
-                }`}
+                className={`list-group-item list-group-item-action ${activeTab === "password" ? "active" : ""
+                  }`}
                 onClick={() => handleTabChange("password")}
                 href="#account-change-password"
               >
@@ -101,9 +134,8 @@ function Profile() {
           <div className="col-md-9 p-4">
             <div className="tab-content">
               <div
-                className={`tab-pane fade ${
-                  activeTab === "general" ? "active show" : ""
-                }`}
+                className={`tab-pane fade ${activeTab === "general" ? "active show" : ""
+                  }`}
                 id="account-general"
               >
                 {/* General content */}
@@ -111,7 +143,7 @@ function Profile() {
                   <div className="row">
                     <div className="col-4">
                       <img
-                        src={user.Profile_Pic?user.Profile_Pic:"https://bootdey.com/img/Content/avatar/avatar1.png"}
+                        src={user.Profile_Pic ? user.Profile_Pic : "https://bootdey.com/img/Content/avatar/avatar1.png"}
                         alt=""
                         className="rounded w-75"
                       />
@@ -123,7 +155,7 @@ function Profile() {
                           <input
                             type="text"
                             className="form-control mb-1"
-                            defaultValue={user.first_name}                            
+                            defaultValue={user.first_name}
                             readOnly
                           />
                         </div>
@@ -151,113 +183,130 @@ function Profile() {
                 </div>
               </div>
               <div
-                className={`tab-pane fade ${
-                  activeTab === "info" ? "active show" : ""
-                }`}
+                className={`tab-pane fade ${activeTab === "info" ? "active show" : ""
+                  }`}
                 id="account-info"
               >
                 {/* Info content */}
-                <div className="container">
-                  <div className="row">
-                    <div className="col-4">
-                      <img
-                        src={user.Profile_Pic?user.Profile_Pic:"https://bootdey.com/img/Content/avatar/avatar1.png"}
-                        alt=""
-                        className="rounded w-75"
-                      />
-                    </div>
-                    <form onSubmit={e => { setUserData(e) }} enctype='multipart/form-data'>
-                    <div className="col-8">
-                      <div className="row mb-2">
-                        <div className="form-group col-6">
-                          <label className="form-label">First Name</label>
+                <form onSubmit={e => { setUserData(e) }} enctype='multipart/form-data'>
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-4">
+                        <img
+                          src={user.Profile_Pic ? user.Profile_Pic : "https://bootdey.com/img/Content/avatar/avatar1.png"}
+                          alt=""
+                          className="rounded w-75"
+                        />
+                      </div>
+                      <div className="col-8">
+                        <div className="row mb-2">
+                          <div className="form-group col-6">
+                            <label className="form-label">First Name</label>
+                            <input
+                              type="text"
+                              className="form-control mb-1"
+                              defaultValue={user.first_name}
+                              onChange={(e) => setFirstName(e.target.value)}
+                              required
+                            />
+                          </div>
+                          <div className="form-group col-6">
+                            <label className="form-label">Last Name</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              defaultValue={user.last_name}
+                              onChange={(e) => setLastName(e.target.value)}
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div className="form-group mb-2">
+                          <label className="form-label">Email</label>
                           <input
                             type="text"
                             className="form-control mb-1"
-                            defaultValue={user.first_name} 
-                            onChange={(e)=>setFirstName(e.target.value)}
-                            required
+                            defaultValue={user.email}
+                            readOnly
                           />
                         </div>
-                        <div className="form-group col-6">
-                          <label className="form-label">Last Name</label>
+                        <div className="form-group mb-2">
+                          <label className="form-label">Phone</label>
                           <input
-                            type="text"
                             className="form-control"
-                            defaultValue={user.last_name}
-                            onChange={(e)=>setLastName(e.target.value)}
-                            required
+                            type="tel"
+                            pattern="^01[0-2,5]{1}[0-9]{8}$"
+                            defaultValue={phone}
+                            onChange={(e) => { setPhone(e.target.value) }}
+
                           />
                         </div>
-                      </div>
-                      <div className="form-group mb-2">
-                        <label className="form-label">Email</label>
-                        <input
-                          type="text"
-                          className="form-control mb-1"
-                          defaultValue={user.email}
-                          readOnly
-                        />
-                      </div>
-                      <div className="form-group mb-2">
-                        <label className="form-label">Phone</label>
-                        <input
-                          className="form-control"
-                          type="tel" 
-                          pattern="^01[0-2,5]{1}[0-9]{8}$"
-                          defaultValue={phone}
-                          onChange={(e)=>{setPhone(e.target.value)}}
-                          
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label className="form-label">Profile</label>
-                        <input type="file" className="form-control" onChange={e=>setProfileImage(e.target.files[0])}/>
-                      </div>
-                      <div className="text-right mt-4">
-                        <button type="submit" className="filled-button" >
-                          Save changes
-                        </button>
-                        &nbsp;
-                        <button type="reset" className="btn btn-default">
-                          Cancel
-                        </button>
+                        <div className="form-group">
+                          <label className="form-label">Profile</label>
+                          <input type="file" className="form-control" onChange={e => setProfileImage(e.target.files[0])} />
+                        </div>
+                        <div className="text-right mt-4">
+                          <button type="submit" className="filled-button" >
+                            Save changes
+                          </button>
+                          &nbsp;
+                          <button type="reset" className="btn btn-default">
+                            Cancel
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    </form>
                   </div>
-                </div>
+                </form>
               </div>
               <div
-                className={`tab-pane fade ${
-                  activeTab === "password" ? "active show" : ""
-                }`}
+                className={`tab-pane fade ${activeTab === "password" ? "active show" : ""
+                  }`}
                 id="account-change-password"
               >
                 {/* Change password content */}
-                <div className="card-body pb-2">
-                  <div className="form-group mb-3">
-                    <label className="form-label">Current password</label>
-                    <input type="password" className="form-control" />
+                <form onSubmit={e => { changeUserPassword(e) }}>
+                  <div className="card-body pb-2">
+                    <div className="form-group mb-3">
+                      <label className="form-label">Current password</label>
+                      <input type="password" className="form-control" onChange={e => setOldPassword(e.target.value)} />
+                    </div>
+                    <div className="form-group mb-3">
+                      <label className="form-label">New password</label>
+                      <input type="password" className="form-control" onChange={e => setNewPassword(e.target.value)} />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Repeat new password</label>
+                      <input type="password" className="form-control" onChange={e => setConfirmPassword(e.target.value)} />
+                    </div>
+                    <div className="text-right mt-4">
+                      {changePasswordError && <p className="text-danger">{changePasswordError}</p>}
+                      {msg && <>
+                        {/* <Button variant="primary" onClick={handleShow}>
+        click modal
+      </Button> */}
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>confirmation message</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{msg}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            OK
+          </Button>
+        </Modal.Footer>
+      </Modal>
+                      </>}
+                      <button type="submit" className="filled-button">
+                        Save changes
+                      </button>
+                      &nbsp;
+                      <button type="reset" className="btn btn-default">
+                        Cancel
+                      </button>
+                    </div>
                   </div>
-                  <div className="form-group mb-3">
-                    <label className="form-label">New password</label>
-                    <input type="password" className="form-control" />
-                  </div>
-                  <div className="form-group">
-                    <label className="form-label">Repeat new password</label>
-                    <input type="password" className="form-control" />
-                  </div>
-                  <div className="text-right mt-4">
-                    <button type="button" className="filled-button">
-                      Save changes
-                    </button>
-                    &nbsp;
-                    <button type="button" className="btn btn-default">
-                      Cancel
-                    </button>
-                  </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
