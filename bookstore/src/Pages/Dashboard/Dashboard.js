@@ -18,6 +18,7 @@ function Dashboard() {
 
     const [books, setBooks] = useState([])
     const [authors, setAuthors] = useState([])
+    const [orders, setOrders] = useState([])
     const { user } = useContext(AuthContext)
     let api = useAxios()
     console.log(user)
@@ -32,14 +33,22 @@ function Dashboard() {
                     console.log("author res", res)
                     setAuthors(res.data.results)
                 }).catch((err) => console.log("Auth error", err)))
+                .then((api.get(`api-order/orders/publisher/${user.user_id}/`))
+                .then((res)=> {
+                    console.log("Orders data", res)
+                    setOrders(res.data.orders)
+                }).catch((err)=> {
+                    console.log("orders, erro" , err)
+                }))
             .catch((err) => console.log(err))
 
 
     }, [])
 
-    const booksNums = books.length
+    const booksCount = books.length
     const authorsCount = authors.length
-
+    console.log(orders)
+    const ordersCount = orders?.length
 
 
     //!! Modal functions
@@ -287,7 +296,7 @@ function Dashboard() {
                                     <div className='p-3  col-lg-3 sol-md-3 col-sm-3'>
                                         <i class="fa-solid fa-book align-self-end fs-1" style={{ "color": "#5f4ecb" }}></i>
                                     </div>
-                                    <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>{booksNums}</h1>
+                                    <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>{booksCount}</h1>
 
                                 </div>
                                 <div className='d-flex justify-content-around'>
@@ -314,7 +323,7 @@ function Dashboard() {
                                     <div className='p-3  col-lg-3 sol-md-3 col-sm-3'>
                                         <i class="bi bi-basket3 align-self-end fs-1 col-lg-3 sol-md-3 col-sm-3" style={{ "color": "#5f4ecb" }}></i>
                                     </div>
-                                    <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>20</h1>
+                                    <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>{ordersCount}</h1>
                                 </div>
                                 <div className='d-flex justify-content-around'>
                                     <p className='fs-4 text-dark text-start p-0 m-0'>Orders</p>

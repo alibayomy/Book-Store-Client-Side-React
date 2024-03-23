@@ -9,23 +9,33 @@ import { useHistory } from 'react-router-dom';
 
 function ReviewForm(props) {
   const current_user=(useContext(AuthContext).user)!==null?(useContext(AuthContext).user.user_id):0
+  const is_publisher=current_user? useContext(AuthContext).user.is_publisher?true:false:false
   const history = useHistory();
   const [rate, setRate] = useState(0);
   const [hover, setHover] = useState(null);
-
   const [comment, setComment] = useState(props.coming_comment);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [error,setError]=useState("");
 useEffect(()=>{
   setRate(props.coming_rate)
   setComment(props.coming_comment)
 },[props])
+useEffect(()=>{
+(comment||rate)&&
+setError("")
+},[rate,comment])
   const handleSubmit = (e) => {
     e.preventDefault();
+    // setError("")
     if (!current_user){
     history.push("/login");
     }
     else{
+    is_publisher?
+    setError("only customer allowed!"): 
+    (!comment || !rate)?
+    setError("please fill required fields"): 
     props.id?props.editReview(props.id,rate, comment):props.addReview(rate, comment, name, email);
     setRate(null);
     setComment("");
@@ -113,6 +123,7 @@ useEffect(()=>{
             ></input>
           </div>
         </div> */}
+        {error&&<p className="text-danger">{error}</p>}
         <button className="outline-button mt-3" type="submit">
         {props.id!==0?"Update":"Submit"}
         </button>

@@ -89,7 +89,11 @@ function Login() {
           setAuthTokens(response.data);
           setUser(jwtDecode(response.data.access));
           localStorage.setItem("authTokens", JSON.stringify(response.data));
-          history.goBack();
+          try {
+            history.location.state.from === "register" && history.push("/");
+          } catch (e) {
+            history.goBack();
+          }
         })
         .catch((err) => {
           console.log(err, err.status);
@@ -166,7 +170,7 @@ function Login() {
                       <span style={{ fontSize: "1.2em", marginRight: "8px" }}>
                         Create a new account?
                       </span>
-                      <Link to="/" style={{ color: "#5f4ecb" }}>
+                      <Link to="/register" style={{ color: "#5f4ecb" }}>
                         Sign up
                       </Link>
                     </p>
