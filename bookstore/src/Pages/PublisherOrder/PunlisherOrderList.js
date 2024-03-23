@@ -18,7 +18,7 @@ function PublisherOrderList() {
       .then((res) =>  
       {
        setOrders(res.data.orders)
-      console.log(res.data.orders)
+      console.log(res.data)
       })
      
       .catch((err) => console.log(err));
@@ -85,7 +85,7 @@ function PublisherOrderList() {
                         <td>{orderItem.book.name}</td>
                         <td>${orderItem.price}</td>
                         <td>{orderItem.quantity}</td>
-                        <td>${orderItem.book.total}</td>
+                        <td>${orderItem.total}</td>
                         <td>{order.ordered_date}</td>
                         <td className={getStatusClass(order.status)}>
                           {order.status}
