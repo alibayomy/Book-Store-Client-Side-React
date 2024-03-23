@@ -68,7 +68,12 @@ function ClientSelectComponent() {
       <p className="text-center mt-2">
         {" "}
         Already have an account?{" "}
-        <Link className="cool-text" to="/login">
+        <Link className="cool-text" to ={{
+    pathname: "/login", 
+    state: {
+      from: 'register' 
+    }
+   }}>
           Log In
         </Link>
       </p>

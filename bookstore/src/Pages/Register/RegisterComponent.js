@@ -179,7 +179,7 @@ function RegitserComponent(props) {
             formData.append('certificate', certificate.certificate)  
             const response = await axios.post('http://127.0.0.1:8000/users/create-publisher/', formData);
             console.log('Publisher registration successful:', response.data);
-            history.push('/login');
+            history.push('/login', { from: 'register' });
         } else {
           const formData = new FormData();
             formData.append('first_name', registerFormData.firstName);
@@ -188,7 +188,7 @@ function RegitserComponent(props) {
             formData.append('password', registerFormData.password);
           const response = await axios.post('http://127.0.0.1:8000/users/create/', formData);
           console.log('User registration successful:', response.data);
-          history.push('/login');
+          history.push('/login', { from: 'register' });
 
         }      
       } catch (error) {
