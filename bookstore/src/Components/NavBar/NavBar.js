@@ -188,9 +188,14 @@ function NavBar() {
                 Contact
               </Link>
             </li>
-            <Link className="nav-link" to="/publisher/addbook">
-              addbook
-            </Link>
+            {
+              user
+              ?
+              user.is_publisher ? <Link className="nav-link" to="/dashboard">Dashboard</Link> : <span></span>
+              :
+             <span></span>
+            }
+           
           </ul>
           <form className="d-flex ms-auto" role="search">
             <input

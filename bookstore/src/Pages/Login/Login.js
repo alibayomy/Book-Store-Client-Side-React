@@ -93,7 +93,7 @@ function Login() {
           history.goBack()
       }).catch(err => {
           console.log(err, err.status)
-          setSuccessMessage(err.message)
+          setSuccessMessage("Invalid username or password")
       })
     }
 
