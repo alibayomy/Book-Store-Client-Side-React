@@ -95,7 +95,7 @@ function PublishABook(props) {
                 setCategoris(res.data.results)
                 console.log(res.data.results)
             })
-            .then( api.get('/account/authors-all/')
+            .then( api.get('account/publisher-authors/')
             .then((response) => {
                 const transformedAuthors = response.data.results.map(author => ({
                     value: author.id,

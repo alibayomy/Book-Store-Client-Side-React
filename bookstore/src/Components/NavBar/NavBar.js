@@ -40,7 +40,6 @@ function NavBar() {
   let myName = useContext(AuthContext);
 
   // for Cart
-
   const localhost = "http://localhost:8000";
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -60,18 +59,7 @@ function NavBar() {
     console.log(item_id);
   };
 
-  // const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
-  // const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
-  // const [Movies, setMovie] = useState([]);
-  // const total = 0
   useEffect(() => {
-    // axios
-    //   .get(
-    //     `${BaseMainUrl}?api_key=${BaseAPI}`
-    //   )
-    //   .then((res) => { console.log(res.data.results), setMovie(res.data.results) })
-    //   .catch((err) => console.log(err));
-
     api
       .get(`${localhost}/api-order/${current_user}/cart`)
       .then((res) => {
@@ -101,30 +89,41 @@ function NavBar() {
                   title={book.book.name}
                   price={book.book.price}
                   onDeleteClicked={() => hundleOnDelete(book.id)}
+                  book_id={book.book.id}
+                  publisher_id={book.book.publisher}
+                  total_books={book.book.total_number_of_book}
+                  quantity={book.quantity}
                 />
               </div>
             ))}
-            <div className="my-4 fw-bold fs-5 ">Subtotal:</div>
 
-            <button
-              className="outline-button my-1 w-100 books-sorting"
-              onClick={() => {
-                history.push("/cart");
-                setShow(false);
-              }}
-            >
-              <h5>View Cart</h5>
-            </button>
+            {books.length === 0 ? (
+              <h4 className="empty-text">Your basket is currently empty </h4>
+            ) : (
+              <div>
+                <div className="my-4 fw-bold fs-5 ">Subtotal:</div>
 
-            <button
-              className="outline-button my-1 w-100 books-sorting"
-              onClick={() => {
-                history.push("/checkout");
-                setShow(false);
-              }}
-            >
-              <h5>Checkout</h5>
-            </button>
+                <button
+                  className=" btn btn-outline-success w-100 books-sorting"
+                  onClick={() => {
+                    history.push("/cart");
+                    setShow(false);
+                  }}
+                >
+                  <h5>View Cart</h5>
+                </button>
+
+                <button
+                  className="my-1 btn btn-outline-success w-100 books-sorting"
+                  onClick={() => {
+                    history.push("/checkout");
+                    setShow(false);
+                  }}
+                >
+                  <h5>Checkout</h5>
+                </button>
+              </div>
+            )}
           </Stack>
         </Offcanvas.Body>
       </Offcanvas>
@@ -141,8 +140,13 @@ function NavBar() {
           {user ? (
             <div className="d-flex align-items-center">
               <span className="me-4" onClick={handleShow}>
-                <span className="me-3">EGP 0.00</span>
-                <FontAwesomeIcon icon={faBasketShopping} size="lg" />
+                <div className="">
+                  <span className="me-3">$0.00</span>
+                  <FontAwesomeIcon icon={faBasketShopping} size="lg" />
+                  <span class="position-absolute ms-1 fs-6 translate-middle badge rounded-pill bg-danger">
+                    {books.length}
+                  </span>
+                </div>
               </span>
               <DropdownButton />
             </div>
@@ -188,9 +192,17 @@ function NavBar() {
                 Contact
               </Link>
             </li>
-            <Link className="nav-link" to="/publisher/addbook">
-              addbook
-            </Link>
+            {user ? (
+              user.is_publisher ? (
+                <Link className="nav-link" to="/dashboard">
+                  Dashboard
+                </Link>
+              ) : (
+                <span></span>
+              )
+            ) : (
+              <span></span>
+            )}
           </ul>
           <form className="d-flex ms-auto" role="search">
             <input
