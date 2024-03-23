@@ -141,9 +141,9 @@ function NavBar() {
             <div className="d-flex align-items-center">
               <span className="me-4" onClick={handleShow}>
                 <div className="">
-                  <span className="me-3">$0.00</span>
+                  <span className="me-3">EGP 0.00</span>
                   <FontAwesomeIcon icon={faBasketShopping} size="lg" />
-                  <span class="position-absolute ms-1 fs-6 translate-middle badge rounded-pill bg-danger">
+                  <span class="position-absolute ms-1 fs-7 translate-middle badge rounded-pill bg-danger">
                     {books.length}
                   </span>
                 </div>
