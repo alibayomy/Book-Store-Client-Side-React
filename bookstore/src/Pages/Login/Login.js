@@ -21,17 +21,15 @@ function Login() {
 
   const [successMessage, setSuccessMessage] = useState("");
 
-
-  const {user, setUser, setAuthTokens} = useContext(AuthContext)
+  const { user, setUser, setAuthTokens } = useContext(AuthContext);
   // const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const emailRegex = /.*/;
-  
+
   // const passwordRegex =
   // /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  const passwordRegex =
-    /.*/;
-  const history = useHistory()
-  
+  const passwordRegex = /.*/;
+  const history = useHistory();
+
   const ChangeuserData = (e) => {
     const { name, value } = e.target;
     setUserData({
@@ -47,8 +45,8 @@ function Login() {
             value.length === 0
               ? "This field is required."
               : !emailRegex.test(value)
-                ? "Please enter a valid email"
-                : "",
+              ? "Please enter a valid email"
+              : "",
         }));
         break;
       case "password":
@@ -58,8 +56,8 @@ function Login() {
             value.length === 0
               ? "This field is required."
               : !passwordRegex.test(value)
-                ? "Password should be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
-                : "",
+              ? "Password should be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, one digit, and one special character."
+              : "",
         }));
         break;
       default:
@@ -75,28 +73,29 @@ function Login() {
         email: "This field is required.",
         password: "This field is required.",
       });
-    }  else {
+    } else {
       const config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-      const email = userData.email
-      const password = userData.password
-      const body = JSON.stringify({email, password})
-      axios.post('http://127.0.0.1:8000/api/token/', body, config)
-      .then(response => {
-          console.log("Log In")
-          setAuthTokens(response.data)
-          setUser(jwtDecode(response.data.access))
-          localStorage.setItem("authTokens", JSON.stringify(response.data))
-          history.goBack()
-      }).catch(err => {
-          console.log(err, err.status)
-          setSuccessMessage("Invalid username or password")
-      })
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+      const email = userData.email;
+      const password = userData.password;
+      const body = JSON.stringify({ email, password });
+      axios
+        .post("http://127.0.0.1:8000/api/token/", body, config)
+        .then((response) => {
+          console.log("Log In");
+          setAuthTokens(response.data);
+          setUser(jwtDecode(response.data.access));
+          localStorage.setItem("authTokens", JSON.stringify(response.data));
+          history.goBack();
+        })
+        .catch((err) => {
+          console.log(err, err.status);
+          setSuccessMessage("Invalid username or password");
+        });
     }
-
   };
 
   return (
@@ -125,8 +124,9 @@ function Login() {
                 <div className="form-floating mb-3">
                   <input
                     type="text"
-                    className={`form-control ${formError.email ? "is-invalid" : ""
-                      }`}
+                    className={`form-control ${
+                      formError.email ? "is-invalid" : ""
+                    }`}
                     id="floatingInput"
                     placeholder="name@example.com"
                     onChange={ChangeuserData}
@@ -141,8 +141,9 @@ function Login() {
                 <div className="form-floating mt-5 mb-3">
                   <input
                     type="password"
-                    className={`form-control ${formError.password ? "is-invalid" : ""
-                      }`}
+                    className={`form-control ${
+                      formError.password ? "is-invalid" : ""
+                    }`}
                     id="floatingPassword"
                     placeholder="Password"
                     name="password"
@@ -165,7 +166,7 @@ function Login() {
                       <span style={{ fontSize: "1.2em", marginRight: "8px" }}>
                         Create a new account?
                       </span>
-                      <Link to="/register" style={{"color":"#5f4ecb"}}>
+                      <Link to="/" style={{ color: "#5f4ecb" }}>
                         Sign up
                       </Link>
                     </p>
