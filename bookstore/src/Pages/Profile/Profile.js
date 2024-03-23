@@ -31,6 +31,12 @@ function Profile() {
       .then((res) => (setUser(res.data), setFirstName(res.data.first_name), setLastName(res.data.last_name), console.log(Number(res.data.phone)), setPhone(res.data.phone)))
       .catch((err) => console.log(err))
   }, [])
+  useEffect(()=>{
+setNewPassword("");
+setConfirmPassword("");
+setChangePasswordError("");
+setOldPassword("");
+  },[activeTab])
   //function to hundle user profile update
   const setUserData = (e) => {
     e.preventDefault();
@@ -269,15 +275,15 @@ function Profile() {
                   <div className="card-body pb-2">
                     <div className="form-group mb-3">
                       <label className="form-label">Current password</label>
-                      <input type="password" className="form-control" onChange={e => setOldPassword(e.target.value)} />
+                      <input type="password" className="form-control" value={old_password} onChange={e => setOldPassword(e.target.value)} />
                     </div>
                     <div className="form-group mb-3">
                       <label className="form-label">New password</label>
-                      <input type="password" className="form-control" onChange={e => setNewPassword(e.target.value)} />
+                      <input type="password" className="form-control" value={new_password} onChange={e => setNewPassword(e.target.value)} />
                     </div>
                     <div className="form-group">
                       <label className="form-label">Repeat new password</label>
-                      <input type="password" className="form-control" onChange={e => setConfirmPassword(e.target.value)} />
+                      <input type="password" className="form-control" value={confirm_password} onChange={e => setConfirmPassword(e.target.value)} />
                     </div>
                     <div className="text-right mt-4">
                       {changePasswordError && <p className="text-danger">{changePasswordError}</p>}
