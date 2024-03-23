@@ -24,7 +24,6 @@ function NavBar() {
     useContext(AuthContext).user !== null
       ? useContext(AuthContext).user.user_id
       : 0;
-
   const goBack = () => {
     history.goBack(); // Go back to the previous page
   };
@@ -41,12 +40,14 @@ function NavBar() {
   let myName = useContext(AuthContext);
 
   // for Cart
+
+  const localhost = "http://localhost:8000";
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const hundleOnDelete = (item_id) => {
     api
-      .delete(`http://127.0.0.1:8000/api-order/${current_user}/cart`, {
+      .delete(`${localhost}/api-order/${current_user}/cart`, {
         data: { cart_item_id: item_id },
         headers: {
           "Content-Type": "multipart/form-data",
@@ -59,10 +60,10 @@ function NavBar() {
     console.log(item_id);
   };
 
-  const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
-  const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
-  const [Movies, setMovie] = useState([]);
-  const total = 0;
+  // const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
+  // const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
+  // const [Movies, setMovie] = useState([]);
+  // const total = 0
   useEffect(() => {
     // axios
     //   .get(
@@ -72,14 +73,14 @@ function NavBar() {
     //   .catch((err) => console.log(err));
 
     api
-      .get(`http://127.0.0.1:8000/api-order/${current_user}/cart`)
+      .get(`${localhost}/api-order/${current_user}/cart`)
       .then((res) => {
         console.log(res.data.cart.cart_items),
           setBooks(res.data.cart.cart_items);
       })
       .catch((err) => console.log(err));
-  }, []);
-  console.log(books);
+  }, [show]);
+
   return (
     <nav
       className="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm"
@@ -94,17 +95,19 @@ function NavBar() {
         <Offcanvas.Body>
           <Stack gap={1}>
             {books.map((book) => (
-              <ShoppingCart
-                imageUrl={`http://127.0.0.1:8000${book.book.front_img}`}
-                title={book.book.name}
-                price={book.book.price}
-                onDeleteClicked={() => hundleOnDelete(book.id)}
-              />
+              <div key={book.id}>
+                <ShoppingCart
+                  imageUrl={`${localhost}/${book.book.front_img}`}
+                  title={book.book.name}
+                  price={book.book.price}
+                  onDeleteClicked={() => hundleOnDelete(book.id)}
+                />
+              </div>
             ))}
             <div className="my-4 fw-bold fs-5 ">Subtotal:</div>
 
             <button
-              className=" outline-button w-100 my-1 books-sorting"
+              className="outline-button my-1 w-100 books-sorting"
               onClick={() => {
                 history.push("/cart");
                 setShow(false);
@@ -114,7 +117,7 @@ function NavBar() {
             </button>
 
             <button
-              className="my-1 outline-button w-100 my-1 books-sorting"
+              className="outline-button my-1 w-100 books-sorting"
               onClick={() => {
                 history.push("/checkout");
                 setShow(false);
