@@ -98,6 +98,10 @@ function NavBar() {
                   title={book.book.name}
                   price={book.book.price}
                   onDeleteClicked={() => hundleOnDelete(book.id)}
+                  book_id={book.book.id}
+                  publisher_id={book.book.publisher}
+                  total_books={book.book.total_number_of_book}
+                  quantity={book.quantity}
                 />
               </div>))
             }
