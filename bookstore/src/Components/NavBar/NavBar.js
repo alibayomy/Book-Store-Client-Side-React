@@ -141,7 +141,7 @@ function NavBar() {
           {user ? (
             <div className="d-flex align-items-center">
               <span className="me-4" onClick={handleShow}>
-                <span className="me-3">$0.00</span>
+                <span className="me-3">EGP 0.00</span>
                 <FontAwesomeIcon icon={faBasketShopping} size="lg" />
               </span>
               <DropdownButton />
