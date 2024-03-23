@@ -99,7 +99,7 @@ function Cart() {
           <div className=" text-center p-3">
             {items.length > 0 && (
               <button
-                className="btn btn-lg btn-success"
+                className="filled-button"
                 onClick={() => {
                   history.push("/checkout");
                 }}

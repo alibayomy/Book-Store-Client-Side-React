@@ -104,7 +104,7 @@ function NavBar() {
                 <div className="my-4 fw-bold fs-5 ">Subtotal:</div>
 
                 <button
-                  className=" btn btn-outline-success w-100 books-sorting"
+                  className="outline-button my-1 w-100 books-sorting"
                   onClick={() => {
                     history.push("/cart");
                     setShow(false);
@@ -114,7 +114,7 @@ function NavBar() {
                 </button>
 
                 <button
-                  className="my-1 btn btn-outline-success w-100 books-sorting"
+                  className="outline-button my-1 w-100 books-sorting"
                   onClick={() => {
                     history.push("/checkout");
                     setShow(false);
