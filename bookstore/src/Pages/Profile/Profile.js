@@ -41,6 +41,12 @@ function Profile() {
       )
       .catch((err) => console.log(err));
   }, []);
+  useEffect(()=>{
+setNewPassword("");
+setConfirmPassword("");
+setChangePasswordError("");
+setOldPassword("");
+  },[activeTab])
   //function to hundle user profile update
   const setUserData = (e) => {
     e.preventDefault();
