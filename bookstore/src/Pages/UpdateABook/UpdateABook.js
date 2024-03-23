@@ -409,7 +409,7 @@ function UpdateABook(){
                         </div>
                         {submitError}
                     </div>
-                    <PublishButtonComponent display='d-grid' title='Publish Now'></PublishButtonComponent>
+                    <PublishButtonComponent display='d-grid' title='Update Now'></PublishButtonComponent>
                 </form >
             </div >
             :

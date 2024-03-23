@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import PublishInputComponent from "../../Components/PublishABookComponents/PublishInputComponent";
 import PublishButtonComponent from "../../Components/PublishABookComponents/PublishButtonComponent";
 import MyCard from "../../Components/MyCard/MyCard";
@@ -8,6 +8,7 @@ import Select from 'react-select';
 import PublishImgCard from "../../Components/PublishImgCard/PublishImgCard";
 import useAxios from "../../Network/AxiosInstance";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { AuthContext } from "../../Context/AuthContext";
 
 
 
@@ -18,6 +19,7 @@ function PublishABook(props) {
     const priceRegex = new RegExp(/^((\d+)((,\d+|\d+)*)(\s*|\.(\d{2}))$)/)
     var options = { day: 'numeric', month: 'numeric', year: 'numeric' };
     const quantityRegex = new RegExp(/^[0-9]*$/)
+    let {user} = useContext(AuthContext)
     const history = useHistory()
 
     let api = useAxios()
@@ -93,7 +95,7 @@ function PublishABook(props) {
                 setCategoris(res.data.results)
                 console.log(res.data.results)
             })
-            .then( api.get('/account/authors-all/')
+            .then( api.get('account/publisher-authors/')
             .then((response) => {
                 const transformedAuthors = response.data.results.map(author => ({
                     value: author.id,
@@ -329,7 +331,8 @@ function PublishABook(props) {
                     "author": lstAuthors.value,
                     "category": bookCategories.value,
                     "total_number_of_book": input.quantityInput,
-                    "no_of_page": input.numOfPagesInput
+                    "no_of_page": input.numOfPagesInput,
+                    "publisher" : user.user_id
 
                 }
                 const config = {
