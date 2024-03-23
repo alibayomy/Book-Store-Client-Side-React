@@ -194,7 +194,7 @@ function Dashboard() {
                     {/* Books section */}
                     <div className='d-flex justify-content-between col-lg-7 '>
                         <h2 className='ps-5' >Your Authors</h2>
-                        <button className="filled-button" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Auhtor</button>
+                        <button className="filled-button" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Author</button>
                     </div>
 
                     <div className='col-lg-8 col-md-12 col-sm-12 mx-auto'>
