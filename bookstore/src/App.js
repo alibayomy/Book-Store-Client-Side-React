@@ -24,6 +24,7 @@ import PublisherPrivateRoute from "./Network/PublisherPriavteRoute";
 import UpdateABook from "./Pages/UpdateABook/UpdateABook";
 import PublisherBooks from "./Pages/PublisherBooks/PublihserBooks";
 import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage";
+import OrderList from "./Pages/OrderList/OrderList";
 
 const App = () => {
   // JWT Authen
@@ -44,6 +45,7 @@ const App = () => {
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile/:user_id" exact component={Profile} />
             <Route path="/books" component={Books} />
+            <Route path="/orders" component={OrderList} />
             <Route path="/checkout" component={CheckoutPage} />
             <Route path="/viewbook/:id" component={ViewBook} />
             <Route exact path={"/filter"} component={FilterBooks} />
