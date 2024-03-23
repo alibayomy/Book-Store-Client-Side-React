@@ -23,6 +23,7 @@ import Profile from "./Pages/Profile/Profile";
 import PublisherPrivateRoute from "./Network/PublisherPriavteRoute";
 import UpdateABook from "./Pages/UpdateABook/UpdateABook";
 import PublisherBooks from "./Pages/PublisherBooks/PublihserBooks";
+import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage";
 
 const App = () => {
   // JWT Authen
@@ -43,6 +44,7 @@ const App = () => {
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile/:user_id" exact component={Profile} />
             <Route path="/books" component={Books} />
+            <Route path="/checkout" component={CheckoutPage} />
             <Route path="/viewbook/:id" component={ViewBook} />
             <Route exact path={"/filter"} component={FilterBooks} />
             <Route exact path={"/filterPrice"} component={FilterPrice} />
@@ -66,9 +68,21 @@ const App = () => {
               path={"/publisher/addbook"}
               component={PublishABook}
             ></Route>
-            <PublisherPrivateRoute exact path="/dashboard" component={Dashboard} />
-            <PublisherPrivateRoute exact path={"/publisher/updatebook/:id"} component={UpdateABook}/>
-            <PublisherPrivateRoute exact path={"/publisher/books"} component={PublisherBooks}/>
+            <PublisherPrivateRoute
+              exact
+              path="/dashboard"
+              component={Dashboard}
+            />
+            <PublisherPrivateRoute
+              exact
+              path={"/publisher/updatebook/:id"}
+              component={UpdateABook}
+            />
+            <PublisherPrivateRoute
+              exact
+              path={"/publisher/books"}
+              component={PublisherBooks}
+            />
             <Route exact path="/test" component={test}></Route>
           </Switch>
         </div>
