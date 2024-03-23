@@ -11,17 +11,19 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import DropdownButton from "../DropdownButton/DropdownButton";
 import { ShoppingCart } from "../ShoppingCart/ShoppingCart";
-import { Offcanvas, Stack } from "react-bootstrap"
+import { Offcanvas, Stack } from "react-bootstrap";
 import axios from "axios";
 import useAxios from "../../Network/AxiosInstance";
-
 
 function NavBar() {
   const history = useHistory();
   let api = useAxios();
   const { user } = useContext(AuthContext);
-  const [books, setBooks] = useState([])
-  const current_user = (useContext(AuthContext).user) !== null ? (useContext(AuthContext).user.user_id) : 0
+  const [books, setBooks] = useState([]);
+  const current_user =
+    useContext(AuthContext).user !== null
+      ? useContext(AuthContext).user.user_id
+      : 0;
   const goBack = () => {
     history.goBack(); // Go back to the previous page
   };
@@ -38,27 +40,32 @@ function NavBar() {
   let myName = useContext(AuthContext);
 
   // for Cart
-  const localhost = 'http://localhost:8000'
+  const localhost = "http://localhost:8000";
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const hundleOnDelete = (item_id) => {
-    api.delete(`${localhost}/api-order/${current_user}/cart`, {
-      data: { cart_item_id: item_id },
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-      .then((res) => { console.log(res.data.msg), setBooks(res.data.cart.cart_items) })
+    api
+      .delete(`${localhost}/api-order/${current_user}/cart`, {
+        data: { cart_item_id: item_id },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.data.msg), setBooks(res.data.cart.cart_items);
+      })
       .catch((err) => console.log(err));
-    console.log(item_id)
-  }
+    console.log(item_id);
+  };
 
   useEffect(() => {
-    api.get(
-      `${localhost}/api-order/${current_user}/cart`
-    )
-      .then((res) => { console.log(res.data.cart.cart_items), setBooks(res.data.cart.cart_items) })
+    api
+      .get(`${localhost}/api-order/${current_user}/cart`)
+      .then((res) => {
+        console.log(res.data.cart.cart_items),
+          setBooks(res.data.cart.cart_items);
+      })
       .catch((err) => console.log(err));
   }, [show]);
 
@@ -67,22 +74,17 @@ function NavBar() {
       className="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm"
       style={{ height: "80px" }}
     >
-
       {/* for Cart */}
-      <Offcanvas placement="end" show={show} onHide={handleClose} >
+      <Offcanvas placement="end" show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Shopping Cart</Offcanvas.Title>
         </Offcanvas.Header>
-        <hr
-          style={{ borderWidth: "2px", width: "100%" }}
-          className="my-1"
-        />
+        <hr style={{ borderWidth: "2px", width: "100%" }} className="my-1" />
         <Offcanvas.Body>
           <Stack gap={1}>
-
             {books.map((book) => (
               <div key={book.id}>
-                < ShoppingCart
+                <ShoppingCart
                   imageUrl={`${localhost}/${book.book.front_img}`}
                   title={book.book.name}
                   price={book.book.price}
@@ -92,40 +94,36 @@ function NavBar() {
                   total_books={book.book.total_number_of_book}
                   quantity={book.quantity}
                 />
-              </div>))
-            }
+              </div>
+            ))}
 
             {books.length === 0 ? (
               <h4 className="empty-text">Your basket is currently empty </h4>
             ) : (
               <div>
-                <div className="my-4 fw-bold fs-5 ">
-                  Subtotal:
-                </div>
+                <div className="my-4 fw-bold fs-5 ">Subtotal:</div>
 
-                <button className=" btn btn-outline-success w-100 books-sorting"
+                <button
+                  className="outline-button my-1 w-100 books-sorting"
                   onClick={() => {
-                    history.push("/cart")
-                    setShow(false)
+                    history.push("/cart");
+                    setShow(false);
                   }}
                 >
-                  <h5 >
-                    View Cart
-                  </h5>
+                  <h5>View Cart</h5>
                 </button>
 
-                <button className="my-1 btn btn-outline-success w-100 books-sorting"
+                <button
+                  className="outline-button my-1 w-100 books-sorting"
                   onClick={() => {
-                    history.push("/checkout")
-                    setShow(false)
-                  }}>
-                  <h5>
-                    Checkout
-                  </h5>
+                    history.push("/checkout");
+                    setShow(false);
+                  }}
+                >
+                  <h5>Checkout</h5>
                 </button>
               </div>
-            )
-            }
+            )}
           </Stack>
         </Offcanvas.Body>
       </Offcanvas>
@@ -143,9 +141,9 @@ function NavBar() {
             <div className="d-flex align-items-center">
               <span className="me-4" onClick={handleShow}>
                 <div className="">
-                  <span className="me-3">$0.00</span>
+                  <span className="me-3">EGP 0.00</span>
                   <FontAwesomeIcon icon={faBasketShopping} size="lg" />
-                  <span class="position-absolute ms-1 fs-6 translate-middle badge rounded-pill bg-danger">
+                  <span class="position-absolute ms-1 fs-7 translate-middle badge rounded-pill bg-danger">
                     {books.length}
                   </span>
                 </div>
@@ -194,14 +192,17 @@ function NavBar() {
                 Contact
               </Link>
             </li>
-            {
-              user
-              ?
-              user.is_publisher ? <Link className="nav-link" to="/dashboard">Dashboard</Link> : <span></span>
-              :
-             <span></span>
-            }
-           
+            {user ? (
+              user.is_publisher ? (
+                <Link className="nav-link" to="/dashboard">
+                  Dashboard
+                </Link>
+              ) : (
+                <span></span>
+              )
+            ) : (
+              <span></span>
+            )}
           </ul>
           <form className="d-flex ms-auto" role="search">
             <input

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,32 +8,43 @@ import { useContext } from "react";
 import { CartPage } from "../../Components/ShoppingCart/CartPage";
 
 function Cart() {
-
   const history = useHistory();
 
-  const current_user = (useContext(AuthContext).user) !== null ? (useContext(AuthContext).user.user_id) : 0
+  const current_user =
+    useContext(AuthContext).user !== null
+      ? useContext(AuthContext).user.user_id
+      : 0;
   const [items, setItems] = useState([]);
 
-  const localhost = 'http://localhost:8000'
+  const localhost = "http://localhost:8000";
 
   const hundleOnDelete = (item_id) => {
-    api.delete(`${localhost}/api-order/${current_user}/cart`, {
-      data: { cart_item_id: item_id },
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-      .then((res) => { console.log(res.data), setItems(res.data.cart.cart_items) })
+    api
+      .delete(`${localhost}/api-order/${current_user}/cart`, {
+        data: { cart_item_id: item_id },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.data), setItems(res.data.cart.cart_items);
+      })
       .catch((err) => console.log(err));
-    console.log(item_id)
-  }
+    console.log(item_id);
+  };
 
-  let api = useAxios()
-  const total = 0
+  let api = useAxios();
+  const total = 0;
   useEffect(() => {
-    axios.get(`http://127.0.0.1:8000/api-order/${current_user}/cart`)
-      .then((res) => (setItems(res.data.cart.cart_items), console.log(res.data.cart.cart_items)))
-      .catch((err) => console.log(err))
+    axios
+      .get(`http://127.0.0.1:8000/api-order/${current_user}/cart`)
+      .then(
+        (res) => (
+          setItems(res.data.cart.cart_items),
+          console.log(res.data.cart.cart_items)
+        )
+      )
+      .catch((err) => console.log(err));
     // .finally(() => (items.map((item) => (setTotalCost(total_cost += Number(item.book.price * item.quantity))))));
   }, []);
 
@@ -59,7 +69,11 @@ function Cart() {
             <CartPage
               cart_id={item.id}
               imageUrl={`http://127.0.0.1:8000${item.book.front_img}`}
-              title={item.book.name.length > 18 ? item.book.name.substr(0, 18) + "..." : item.book.name}
+              title={
+                item.book.name.length > 18
+                  ? item.book.name.substr(0, 18) + "..."
+                  : item.book.name
+              }
               price={item.book.price}
               onDeleteClicked={() => hundleOnDelete(item.id)}
               book_id={item.book.id}
@@ -69,33 +83,34 @@ function Cart() {
             />
           </>
         ))}
-
       </table>
-      <div className="p-3 w-50 ">
-        <div className=" border">
+      <div className="p-3 w-50 mx-auto">
+        <div className="border">
           <h2 className="border p-2 ps-3">Cart total</h2>
           <div className=" text-center mt-3">
-            <h4 className="bold">Total <span
-              className="ms-5"><span
-                className="">EGP: </span>0</span></h4>
+            <h4 className="bold">
+              Total{" "}
+              <span className="ms-5">
+                <span className="">EGP: </span>0
+              </span>
+            </h4>
           </div>
 
           <div className=" text-center p-3">
-            {
-              items.length > 0 && (
-                <button className="btn btn-lg btn-success"
-                  onClick={() => {
-                    history.push("/checkout")
-                  }}>
-                  Proceed to checkout
-                </button>
-              )
-            }
+            {items.length > 0 && (
+              <button
+                className="filled-button"
+                onClick={() => {
+                  history.push("/checkout");
+                }}
+              >
+                Proceed to checkout
+              </button>
+            )}
           </div>
         </div>
       </div>
-
-    </div >
+    </div>
   );
 }
 

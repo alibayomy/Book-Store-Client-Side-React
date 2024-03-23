@@ -27,7 +27,7 @@ function Biography() {
           </div>
         </div>
       </section>
-      <div className="container mt-5">
+      {/* <div className="container mt-5">
         <div className="row justify-content-between align-items-center">
           <div className="col-sm-6 col-md-6 col-lg-3 text-center">
             <span></span>
@@ -62,7 +62,7 @@ function Biography() {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
       <br />
     </div>
   );
