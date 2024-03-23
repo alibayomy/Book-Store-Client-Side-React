@@ -11,17 +11,19 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import DropdownButton from "../DropdownButton/DropdownButton";
 import { ShoppingCart } from "../ShoppingCart/ShoppingCart";
-import { Offcanvas, Stack } from "react-bootstrap"
+import { Offcanvas, Stack } from "react-bootstrap";
 import axios from "axios";
 import useAxios from "../../Network/AxiosInstance";
 
-
 function NavBar() {
   const history = useHistory();
-  let api=useAxios();
+  let api = useAxios();
   const { user } = useContext(AuthContext);
-  const [books,setBooks]=useState([])
-  const current_user=(useContext(AuthContext).user)!==null?(useContext(AuthContext).user.user_id):0
+  const [books, setBooks] = useState([]);
+  const current_user =
+    useContext(AuthContext).user !== null
+      ? useContext(AuthContext).user.user_id
+      : 0;
 
   const goBack = () => {
     history.goBack(); // Go back to the previous page
@@ -42,21 +44,25 @@ function NavBar() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const hundleOnDelete=(item_id)=>{
-    api.delete(`http://127.0.0.1:8000/api-order/${current_user}/cart`,{data:{cart_item_id:item_id},
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    })
-    .then((res) => {console.log(res.data.msg),setBooks(res.data.cart.cart_items)})
-    .catch((err) => console.log(err));
-    console.log(item_id)
-  }
+  const hundleOnDelete = (item_id) => {
+    api
+      .delete(`http://127.0.0.1:8000/api-order/${current_user}/cart`, {
+        data: { cart_item_id: item_id },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.data.msg), setBooks(res.data.cart.cart_items);
+      })
+      .catch((err) => console.log(err));
+    console.log(item_id);
+  };
 
   const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
   const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
   const [Movies, setMovie] = useState([]);
-  const total = 0
+  const total = 0;
   useEffect(() => {
     // axios
     //   .get(
@@ -65,61 +71,56 @@ function NavBar() {
     //   .then((res) => { console.log(res.data.results), setMovie(res.data.results) })
     //   .catch((err) => console.log(err));
 
-      api.get(
-        `http://127.0.0.1:8000/api-order/${current_user}/cart`
-      )
-      .then((res) => { console.log(res.data.cart.cart_items),setBooks(res.data.cart.cart_items)})
+    api
+      .get(`http://127.0.0.1:8000/api-order/${current_user}/cart`)
+      .then((res) => {
+        console.log(res.data.cart.cart_items),
+          setBooks(res.data.cart.cart_items);
+      })
       .catch((err) => console.log(err));
   }, []);
-console.log(books)
+  console.log(books);
   return (
     <nav
       className="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm"
       style={{ height: "80px" }}
     >
-
       {/* for Cart */}
-      <Offcanvas placement="end" show={show} onHide={handleClose} >
+      <Offcanvas placement="end" show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Shopping Cart</Offcanvas.Title>
         </Offcanvas.Header>
-        <hr
-          style={{ borderWidth: "2px", width: "100%" }}
-          className="my-1"
-        />
+        <hr style={{ borderWidth: "2px", width: "100%" }} className="my-1" />
         <Offcanvas.Body>
-          <Stack gap={1} >
+          <Stack gap={1}>
             {books.map((book) => (
               <ShoppingCart
                 imageUrl={`http://127.0.0.1:8000${book.book.front_img}`}
                 title={book.book.name}
                 price={book.book.price}
-                onDeleteClicked={()=>hundleOnDelete(book.id)}
+                onDeleteClicked={() => hundleOnDelete(book.id)}
               />
             ))}
-            <div className="my-4 fw-bold fs-5 ">
-              Subtotal:
-            </div>
+            <div className="my-4 fw-bold fs-5 ">Subtotal:</div>
 
-            <button className=" btn btn-outline-success w-100 books-sorting"
+            <button
+              className=" outline-button w-100 my-1 books-sorting"
               onClick={() => {
-                history.push("/cart")
-                setShow(false)
+                history.push("/cart");
+                setShow(false);
               }}
             >
-              <h5 >
-                View Cart
-              </h5>
+              <h5>View Cart</h5>
             </button>
 
-            <button className="my-1 btn btn-outline-success w-100 books-sorting"
+            <button
+              className="my-1 outline-button w-100 my-1 books-sorting"
               onClick={() => {
-                history.push("/checkout")
-                setShow(false)
-              }}>
-              <h5>
-                Checkout
-              </h5>
+                history.push("/checkout");
+                setShow(false);
+              }}
+            >
+              <h5>Checkout</h5>
             </button>
           </Stack>
         </Offcanvas.Body>
