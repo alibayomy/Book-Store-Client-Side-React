@@ -4,10 +4,6 @@
   height: auto;
 }
 
-th,
-td {
-  font-size: 24px;
-}
 
 .search-input-table,
 .search-button-table {
@@ -37,25 +33,5 @@ td {
   color: var(--primary);
 }
 
-/* pagination */
-
-.page {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-.movment {
-  color: #4d3bc6;
-  background-color: #fff;
-  border: 1px solid #4d3bc6;
-  padding: 8px 12px;
-  text-decoration: none;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.page.active .movment {
-  background-color: #4d3bc6;
-  color: #fff;
-}
 
 
