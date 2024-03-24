@@ -20,6 +20,7 @@ export function ShoppingCart(props) {
             .then((res) => { console.log(res.data.cart.cart_items) })
             .catch((err) => console.log(err));
     }, [Quantity])
+    
     return (
         <>
             <Stack direction="horizontal" gap={3} className="d-flex align-items-center py-1">
