@@ -85,7 +85,7 @@ function RegitserComponent(props) {
       });
       let passwordMessage;
       const passwordRegex =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@*%$#])[A-Za-z\d@*%$#]{8,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+[{\]};:'",<.>/?\\|~`])[\w!@#$%^&*()\-_=+[{\]};:'",<.>/?\\|~`]{8,}$/;
 
       if (e.target.value.length === 0) {
         passwordMessage = "Password Field is requird";
@@ -93,7 +93,7 @@ function RegitserComponent(props) {
         passwordMessage = "Password must be greater than 8 character";
       } else if (!passwordRegex.test(e.target.value)) {
         passwordMessage =
-          "Password must contain contains at least onelowercase , one uppercase , at least one digit and special character [ example : *@%$#";
+          "Password must contain at least one lowercase letter, one uppercase letter, one digit, and Eny special character (!@#$%^&*()\-_=+[{\]};:'\",<.>/?\\|~`)";
       } else {
         passwordMessage = null;
       }

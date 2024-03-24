@@ -13,6 +13,8 @@ import { useState } from 'react';
 import PopularBooks from '../../Components/PublisherDashboard/PopularBooks';
 import { AuthContext } from '../../Context/AuthContext';
 import PublishInputComponent from '../../Components/PublishABookComponents/PublishInputComponent';
+import PublisherAuthorCard from '../../Components/PublisherAuthorComponent/PublisherAuthorComponent';
+import AuthorComponentDashBoard from '../../Components/AuthorComponentDashBoard/AuthorComponentDashBoard';
 
 function Dashboard() {
 
@@ -33,12 +35,12 @@ function Dashboard() {
                     console.log("author res", res)
                     setAuthors(res.data.results)
                 }).catch((err) => console.log("Auth error", err)))
-                .then((api.get(`api-order/orders/publisher/${user.user_id}/`))
-                .then((res)=> {
+            .then((api.get(`api-order/orders/publisher/${user.user_id}/`))
+                .then((res) => {
                     console.log("Orders data", res)
                     setOrders(res.data.orders)
-                }).catch((err)=> {
-                    console.log("orders, erro" , err)
+                }).catch((err) => {
+                    console.log("orders, erro", err)
                 }))
             .catch((err) => console.log(err))
 
@@ -49,7 +51,11 @@ function Dashboard() {
     const authorsCount = authors.length
     console.log(orders)
     const ordersCount = orders?.length
-
+    const getBooksToSort = [...books]
+    const latestThreeBooks = getBooksToSort.slice(-3)
+    const getAuthorsToSort = [...authors]
+    const lastFourAuthors = getAuthorsToSort.slice(-4);
+    console.log(latestThreeBooks)
 
     //!! Modal functions
 
@@ -123,8 +129,8 @@ function Dashboard() {
             api.post('account/authors-all/', myObj, config).then((res) => {
                 console.log(res)
                 setSubmitError(<div className="alert alert-success fw-bold" role="alert">
-                Author added successfully 
-            </div>)
+                    Author added successfully
+                </div>)
 
             }).catch((err) => console.log(err))
         }
@@ -140,14 +146,14 @@ function Dashboard() {
                 <div className="row">
                     {/* Popular Books section  */}
                     <div className='d-flex justify-content-between col-lg-8 col-md-12 col-sm-12 mt-2 mb-3'>
-                        <h3 className='text-secondary w-25'>Popular Books</h3>
+                        <h3 className='text-secondary w-25'>Your oldest three Books</h3>
                         <Link to='/publisher/books' className='text-decoration-none align-self-center fs-4' style={{ "color": "#5f4ecb" }}>Go to your books</Link>
 
                     </div>
 
                     <div className='container d-flex justify-content-evenly flex-wrap col-lg-7 col-md-11 col-sm-12 px-0 popular-books'>
                         {
-                            books.map((book, index) => {
+                            latestThreeBooks.map((book, index) => {
                                 return (
                                     <PopularBooks title={book.name} discr={book.description.slice(0, 30) + "..."} img={book.front_img}></PopularBooks>
                                 )
@@ -202,88 +208,28 @@ function Dashboard() {
 
                     {/* Books section */}
                     <div className='d-flex justify-content-between col-lg-7 '>
-                        <h2 className='ps-5' >Your Authors</h2>
+                        <h2 className='ps-5' >Your Latest Authors</h2>
                         <button className="filled-button" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Author</button>
                     </div>
 
                     <div className='col-lg-8 col-md-12 col-sm-12 mx-auto'>
-                        <div className='d-flex bg-light shadow mt-3 col-lg-10 position-relative'>
-                            <div className='w-25'>
-                                <img src={book2} className="card-img-top d-block mx-auto  w-100" style={{ "height": "120px" }} alt="..." />
-                            </div>
-                            <div className='w-75'>
-                                <h4 className='mt-4 ms-3 '>Fy mmr elf2ran </h4>
-                                <h5 className='ms-3 opacity-50'>BY Dr.A7med 5ald</h5>
-                                <ul className='d-flex book-dashboard-detail col-md-12 col-sm-12 p-0'>
-                                    <li className='ms-4 ms-md-3 ms-sm-2' ><span className='fs-6' style={{ "color": "#5f4ecb" }}>70</span> reviews</li>
-                                    <li className='ms-3'><span className='fs-6' style={{ "color": "#5f4ecb" }}>120</span> rating</li>
-                                    <li className='ms-4'>
-                                        <span class="fa fa-star checked" style={{ "color": "#5f4ecb" }}></span>
-                                        <span class="fa fa-star checked" style={{ "color": "#5f4ecb" }}></span>
-                                        <span class="fa fa-star checked" style={{ "color": "#5f4ecb" }}></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li className='ms-4'><span className='fs-6 fw-bold' style={{ "color": "#5f4ecb" }}>4.2</span> </li>
-
-                                </ul>
-                            </div>
-                            <div className='book-arrow position-absolute'>
-                                <i class="bi bi-arrow-right-circle-fill fs-3" style={{ "color": "#5f4ecb" }}></i>
+                        <div className="container">
+                            <div className="row">
+                                {
+                                    lastFourAuthors.map((author, book) => {
+                                        return (
+                                            <AuthorComponentDashBoard id={author.id} name={author.f_name + author.l_name} first_name={author.f_name} last_name={author.l_name} bio={author.biography ? author.biography.slice(0, 50) :
+                                                "No bigropahy for this author,No bigropahy for this author"}></AuthorComponentDashBoard>
+                                        )
+                                    })
+                                }
                             </div>
                         </div>
 
-                        <div className='d-flex bg-light shadow mt-3 col-lg-10 position-relative'>
-                            <div className='w-25'>
-                                <img src={book2} className="card-img-top d-block mx-auto  w-100" style={{ "height": "160px" }} alt="..." />
-                            </div>
-                            <div className='w-75'>
-                                <h4 className='mt-4 ms-3 '>Fy mmr elf2ran </h4>
-                                <h5 className='ms-3 opacity-50'>BY Dr.A7med 5ald</h5>
-                                <ul className='d-flex book-dashboard-detail p-0'>
-                                    <li className='ms-4 ms-md-3 ms-sm-2'><span className='fs-6' style={{ "color": "#5f4ecb" }}>70</span> reviews</li>
-                                    <li className='ms-3'><span className='fs-6' style={{ "color": "#5f4ecb" }}>150</span> rating</li>
-                                    <li className='ms-4'>
-                                        <span class="fa fa-star checked" style={{ "color": "#5f4ecb" }}></span>
-                                        <span class="fa fa-star checked" style={{ "color": "#5f4ecb" }}></span>
-                                        <span class="fa fa-star checked" style={{ "color": "#5f4ecb" }}></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li className='ms-4'><span className='fs-6 fw-bold' style={{ "color": "#5f4ecb" }}>5.2</span> </li>
+                
 
-                                </ul>
-                            </div>
-                            <div className='book-arrow position-absolute'>
-                                <i class="bi bi-arrow-right-circle-fill fs-3" style={{ "color": "#5f4ecb" }}></i>
-                            </div>
-                        </div>
+                       
 
-                        <div className='d-flex bg-light shadow mt-3 col-lg-10 position-relative'>
-                            <div className='w-25'>
-                                <img src={book4} className="card-img-top d-block mx-auto  w-100" style={{ "height": "160px" }} alt="..." />
-                            </div>
-                            <div className='w-75'>
-                                <h4 className='mt-4 ms-3 '>ard zekola</h4>
-                                <h5 className='ms-3 opacity-50'>BY Dr.A7med 5ald</h5>
-                                <ul className='d-flex book-dashboard-detail p-0'>
-                                    <li className='ms-sm-2 ms-4 ms-md-3 '><span className='fs-6' style={{ "color": "#5f4ecb" }}>50</span> reviews</li>
-                                    <li className='ms-3'><span className='fs-6' style={{ "color": "#5f4ecb" }}>130</span> rating</li>
-                                    <li className='ms-4'>
-                                        <span class="fa fa-star checked" style={{ "color": "#5f4ecb" }}></span>
-                                        <span class="fa fa-star checked" style={{ "color": "#5f4ecb" }}></span>
-                                        <span class="fa fa-star checked" style={{ "color": "#5f4ecb" }}></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li className='ms-4'><span className='fs-6 fw-bold' style={{ "color": "#5f4ecb" }}>3.2</span></li>
-
-                                </ul>
-                            </div>
-                            <div className='book-arrow position-absolute'>
-                                <i class="bi bi-arrow-right-circle-fill fs-3" style={{ "color": "#5f4ecb" }}></i>
-                            </div>
-                        </div>
                     </div>
                     {/* end Books section */}
 
@@ -313,8 +259,8 @@ function Dashboard() {
                                     <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>{authorsCount}</h1>
                                 </div>
                                 <div className='d-flex justify-content-around'>
-                                    <p className='fs-4 text-dark text-start p-0 m-0'>Auhtors</p>
-                                    <Link to='#' className='text-decoration-none align-self-center fs-4' style={{ "color": "#5f4ecb" }}>View All</Link>
+                                    <p className='fs-4 text-dark text-start p-0 m-0'>Authors</p>
+                                    <Link to='/publisher/authors' className='text-decoration-none align-self-center fs-4' style={{ "color": "#5f4ecb" }}>View All</Link>
                                 </div>
                             </div>
 

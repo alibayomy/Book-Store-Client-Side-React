@@ -52,7 +52,6 @@ function Books() {
   const fromPrice = useSelector((state) => state.fromPrice);
   const toPrice = useSelector((state) => state.toPrice);
 
-  const dispatch = useDispatch();
   const fromPriceing = (e) => {
     dispatch({ type: "FROM_PRICE", payload: e.target.value });
   };
@@ -687,6 +686,7 @@ function Books() {
                   publisher={book.publisher}
                   quantity={book.total_number_of_book}
                   book_id={book.id}
+
                 />
               ))}
               {/* {Movies.map((book) => (
@@ -709,45 +709,55 @@ function Books() {
         <ScrollUpButton />
       </div>
 
-      <ul class="pagination  justify-content-center m-3">
-        {pageNumber > 1 ? (
-          <li className="page-item">
-            <button
-              onClick={() => previousPage(pageNumber)}
-              className="page-link"
-            >
-              Previous
-            </button>
-          </li>
+      {
+        books.length > 20 ? (
+
+          <ul class="pagination  justify-content-center m-3">
+
+            {pageNumber > 1 ? (
+              <li className="page-item">
+                <button
+                  onClick={() => previousPage(pageNumber)}
+                  className="page-link"
+                >
+                  Previous
+                </button>
+              </li>
+            ) : (
+              <li className="page-item">
+                <button
+                  onClick={() => previousPage(pageNumber)}
+                  className="page-link disabled"
+                >
+                  Previous
+                </button>
+              </li>
+            )}
+            {pageNumber >= 1 && pageNumber <= 3 ? (
+              <li className="page-item">
+                {" "}
+                <button onClick={() => nextPage(pageNumber)} className="page-link">
+                  Next
+                </button>
+              </li>
+            ) : (
+              <li className="page-item">
+                {" "}
+                <button
+                  onClick={() => nextPage(pageNumber)}
+                  className="page-link disabled"
+                >
+                  Next
+                </button>
+              </li>
+            )}
+          </ul>
         ) : (
-          <li className="page-item">
-            <button
-              onClick={() => previousPage(pageNumber)}
-              className="page-link disabled"
-            >
-              Previous
-            </button>
-          </li>
-        )}
-        {pageNumber >= 1 && pageNumber <= 3 ? (
-          <li className="page-item">
-            {" "}
-            <button onClick={() => nextPage(pageNumber)} className="page-link">
-              Next
-            </button>
-          </li>
-        ) : (
-          <li className="page-item">
-            {" "}
-            <button
-              onClick={() => nextPage(pageNumber)}
-              className="page-link disabled"
-            >
-              Next
-            </button>
-          </li>
-        )}
-      </ul>
+          <div>
+            
+          </div>
+        )
+      }
       <Footer />
     </div>
   );
