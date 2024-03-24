@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function CheckoutPage() {
   const api = useAxios();
+  const { user } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     country: "",
@@ -48,9 +49,23 @@ function CheckoutPage() {
         security_code: formData.cvv,
       },
     };
-    console.log("Form data:", formDataObject);
+    // console.log("Form data:", formDataObject);
 
-    // api.post(`http://127.0.0.1:8000/api-order/${}/orders/create`)
+    let data = JSON.stringify(formDataObject);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    api
+      .post(
+        `http://127.0.0.1:8000/api-order/${user.user_id}/orders/create`,
+        data,
+        config
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
