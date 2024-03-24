@@ -3,14 +3,16 @@ import { AuthContext } from "../Context/AuthContext"
 import { Redirect, Route } from "react-router-dom/cjs/react-router-dom.min"
 
 
-const PrivateRoute = ({childern, ...rest}) => {
+
+const PublicRoute = ({childern, ...rest}) => {
 
     let {user} = useContext(AuthContext)
+
     return (
-    <Route {...rest}>
-        {!user ? <Redirect to="/login"/> : childern}
-    </Route>
+        <Route {...rest}>
+            {user ? <Redirect to="/"/> : childern}
+        </Route>
+
     )
 }
-
-export default PrivateRoute
+export default PublicRoute
