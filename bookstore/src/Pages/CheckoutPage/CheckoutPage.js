@@ -1,6 +1,32 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import useAxios from "../../Network/AxiosInstance";
+import { jwtDecode } from "jwt-decode";
+import { AuthContext } from "../../Context/AuthContext";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function CheckoutPage() {
+  const api = useAxios();
+
+  const [formData, setFormData] = useState({
+    country: "",
+    city: "",
+    address: "",
+    phone: "",
+    cardNumber: "",
+    expiryDate: "",
+    cvv: "",
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
   const [paymentMethod, setPaymentMethod] = useState("card");
 
   const handlePaymentMethodChange = (event) => {
@@ -9,48 +35,43 @@ function CheckoutPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle form submission logic
+    const formDataObject = {
+      address: {
+        country: formData.country,
+        city: formData.city,
+        street: formData.street,
+        phone: formData.phone,
+      },
+      payment: {
+        card_number: formData.cardNumber,
+        expire: formData.expiryDate,
+        security_code: formData.cvv,
+      },
+    };
+    console.log("Form data:", formDataObject);
+
+    // api.post(`http://127.0.0.1:8000/api-order/${}/orders/create`)
   };
 
   return (
     <div className="checkout-page">
       <div className="container py-4">
         <div className="mx-auto bg-white rounded shadow p-5">
-          <div className="row px-lg-5 px-1">
-            <h2 className="mt-3 mb-4">Checkout</h2>
-            <div className="col-lg-6">
-              <h6 className="mt-1">Billing details</h6>
-              <hr></hr>
-              <form
-                onSubmit={handleSubmit}
-                className="shipping-information-form"
-              >
-                <div className="form-group row mb-2">
-                  <div className="col-6">
-                    <label htmlFor="fullName">First Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="fullName"
-                      required
-                    />
-                  </div>
-                  <div className="col-6">
-                    <label htmlFor="fullName">Last Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="fullName"
-                      required
-                    />
-                  </div>
-                </div>
+          <form onSubmit={handleSubmit} className="shipping-information-form">
+            <div className="row px-lg-5 px-1">
+              <h2 className="mt-3 mb-4">Checkout</h2>
+              <div className="col-lg-6">
+                <h6 className="mt-1">Billing details</h6>
+                <hr></hr>
                 <div className="form-group mb-2">
                   <label htmlFor="address">Country / Region</label>
                   <input
                     type="text"
                     className="form-control"
                     id="address"
+                    name="country"
+                    value={formData.country}
+                    onChange={handleInputChange}
                     required
                   />
                 </div>
@@ -60,15 +81,21 @@ function CheckoutPage() {
                     type="text"
                     className="form-control"
                     id="city"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleInputChange}
                     required
                   />
                 </div>
                 <div className="form-group mb-2">
-                  <label htmlFor="state">Home address</label>
+                  <label htmlFor="street">Street address</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="Home"
+                    id="street"
+                    name="street"
+                    value={formData.street}
+                    onChange={handleInputChange}
                     required
                   />
                 </div>
@@ -77,64 +104,26 @@ function CheckoutPage() {
                   <input
                     type="text"
                     className="form-control"
-                    id="Phone"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
                     required
                   />
                 </div>
-              </form>
-              <h2 className="mt-4">Payment Details</h2>
-              <form onSubmit={handleSubmit} className="payment-details-form">
+
+                <h2 className="mt-4 mb-3">Payment Details</h2>
                 <div className="form-group mb-2">
-                  <label>Select Payment Method:</label>
-                  <div className="d-flex justify-content-between mt-2">
-                    <div className="form-check form-check-inline">
-                      <input
-                        type="radio"
-                        className="form-check-input"
-                        id="cardMethod"
-                        value="card"
-                        checked={paymentMethod === "card"}
-                        onChange={handlePaymentMethodChange}
-                      />
-                      <label className="form-check-label" htmlFor="cardMethod">
-                        Debit or Credit card
-                      </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                      <input
-                        type="radio"
-                        className="form-check-input"
-                        id="paypalMethod"
-                        value="paypal"
-                        checked={paymentMethod === "paypal"}
-                        onChange={handlePaymentMethodChange}
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="paypalMethod"
-                      >
-                        Paypal
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                {paymentMethod === "card" && (
                   <div>
-                    <div className="form-group mb-2">
-                      <label htmlFor="cardHolderName">Cardholder Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="cardHolderName"
-                        required
-                      />
-                    </div>
                     <div className="form-group mb-2">
                       <label htmlFor="cardNumber">Card Number</label>
                       <input
                         type="text"
                         className="form-control"
                         id="cardNumber"
+                        name="cardNumber"
+                        value={formData.cardNumber}
+                        onChange={handleInputChange}
                         required
                       />
                     </div>
@@ -144,28 +133,30 @@ function CheckoutPage() {
                         type="text"
                         className="form-control"
                         id="expiryDate"
+                        name="expiryDate"
+                        value={formData.expiryDate}
+                        onChange={handleInputChange}
                         required
                       />
                     </div>
                     <div className="form-group mb-2">
-                      <label htmlFor="cvv">CVV</label>
+                      <label htmlFor="cvv">Security Code</label>
                       <input
                         type="text"
                         className="form-control"
                         id="cvv"
+                        name="cvv"
+                        value={formData.cvv}
+                        onChange={handleInputChange}
                         required
                       />
                     </div>
                   </div>
-                )}
-                {paymentMethod === "paypal" && (
-                  <div>{/* Paypal form fields */}</div>
-                )}
-              </form>
-            </div>
-            <div className="col-lg-5 mt-md-4 ms-auto">
-              <div className="card p-4">
-                <form onSubmit={handleSubmit} className="payment-details-form">
+                </div>
+              </div>
+
+              <div className="col-lg-5 mt-md-4 ms-auto">
+                <div className="card p-4">
                   <div className="order-summary">
                     <h6 className="mb-4">Your order</h6>
                     <div className="px-2">
@@ -193,10 +184,10 @@ function CheckoutPage() {
                       Palce Order
                     </button>
                   </div>
-                </form>
+                </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
