@@ -27,6 +27,7 @@ import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage";
 import OrderList from "./Pages/OrderList/OrderList";
 import PublisherAuthors from "./Pages/PublisherAuthors/PublisherAuthors";
 import PublisherAuthorDetails from "./Pages/PublisherAuthorDetails/PublisherAuthorDeatils";
+import PublicRoute from "./Network/PublickRoute";
 
 const App = () => {
   // JWT Authen
@@ -38,25 +39,20 @@ const App = () => {
         <NavBar />
         <div className="container mt-4">
           <Switch>
-            <PrivateRoute
-              exact
-              component={PublishABook}
-              path={"/publisher/addbook"}
-            ></PrivateRoute>
-            <PrivateRoute exact component={test} path={"/test"}></PrivateRoute>
+           
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile/:user_id" exact component={Profile} />
             <Route path="/books" component={Books} />
-            <Route path="/orders" component={OrderList} />
+            <PrivateRoute path="/orders" component={OrderList} />
             <Route path="/checkout" component={CheckoutPage} />
             <Route path="/viewbook/:id" component={ViewBook} />
             <Route exact path={"/filter"} component={FilterBooks} />
             <Route exact path={"/filterPrice"} component={FilterPrice} />
             <Route path="/cart" component={Cart} />
             <Route path="/checkout" component={Checkout} />
-            <Route path="/login" component={Login} />
-            <Route exact path={"/register"} component={ClientSelectComponent} />
-            <Route
+            <PublicRoute path="/login" component={Login} />
+            <PublicRoute exact path={"/register"} component={ClientSelectComponent} />
+            <PublicRoute
               exact
               path={"/register/:userType"}
               component={RegitserComponent}
@@ -67,11 +63,11 @@ const App = () => {
               path={"/publisherorder"}
               component={PublisherOrderList}
             />
-            <Route
+            <PublisherPrivateRoute
               exact
               path={"/publisher/addbook"}
               component={PublishABook}
-            ></Route>
+            ></PublisherPrivateRoute>
             <PublisherPrivateRoute
               exact
               path="/dashboard"
@@ -97,7 +93,6 @@ const App = () => {
             path={"/publisher/updateauthor/:id"}
             component={PublisherAuthorDetails}
             />
-            <Route exact path="/test" component={test}></Route>
           </Switch>
         </div>
       </Router>
