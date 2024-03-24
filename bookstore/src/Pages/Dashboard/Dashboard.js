@@ -15,6 +15,7 @@ import { AuthContext } from '../../Context/AuthContext';
 import PublishInputComponent from '../../Components/PublishABookComponents/PublishInputComponent';
 import PublisherAuthorCard from '../../Components/PublisherAuthorComponent/PublisherAuthorComponent';
 import AuthorComponentDashBoard from '../../Components/AuthorComponentDashBoard/AuthorComponentDashBoard';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Dashboard() {
 
@@ -22,6 +23,9 @@ function Dashboard() {
     const [authors, setAuthors] = useState([])
     const [orders, setOrders] = useState([])
     const { user } = useContext(AuthContext)
+
+    const [modalOpen, setModalOpen] = useState(false)
+    const history = useHistory()
     let api = useAxios()
     console.log(user)
     useEffect(() => {
@@ -34,6 +38,7 @@ function Dashboard() {
                 .then((res) => {
                     console.log("author res", res)
                     setAuthors(res.data.results)
+                    setModalOpen(false)
                 }).catch((err) => console.log("Auth error", err)))
             .then((api.get(`api-order/orders/publisher/${user.user_id}/`))
                 .then((res) => {
@@ -45,7 +50,7 @@ function Dashboard() {
             .catch((err) => console.log(err))
 
 
-    }, [])
+    }, [modalOpen])
 
     const booksCount = books.length
     const authorsCount = authors.length
@@ -133,10 +138,13 @@ function Dashboard() {
                 </div>)
 
             }).catch((err) => console.log(err))
+            setModalOpen(true)
+        
         }
         else {
-            setSubmitError(<div className="alert alert-danger fw-bold" role="alert">
-                Error input please make sure you fill all the form with no errors
+            setSubmitError(<div className="alert alert-danger mt-1" role="alert">
+                Error input please make sure you fill at least the First Name and the 
+                Last Name
             </div>)
         }
     }
@@ -219,7 +227,7 @@ function Dashboard() {
                                     lastFourAuthors.map((author, book) => {
                                         return (
                                             <AuthorComponentDashBoard id={author.id} name={author.f_name + author.l_name} first_name={author.f_name} last_name={author.l_name} bio={author.biography ? author.biography.slice(0, 50) :
-                                                "No bigropahy for this author,No bigropahy for this author"}></AuthorComponentDashBoard>
+                                                "No bigropahy for this author"}></AuthorComponentDashBoard>
                                         )
                                     })
                                 }
@@ -327,7 +335,7 @@ function Dashboard() {
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-danger" onClick={(e) => { addAuhtor(e) }}>Add</button>
+                            <button type="button" class="btn btn-success"  onClick={(e) => { addAuhtor(e) }}>Add</button>
                         </div>
                     </div>
                 </div>

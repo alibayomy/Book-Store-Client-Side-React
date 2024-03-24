@@ -5,6 +5,7 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import MessageErrorComponent from "../../Components/MessageErrorcomponent/MessageErrorcomponent";
 // import book1 from '../../Images/stack-of-books.png'
 import book1 from "../../images/book-01.png";
+import './RegisterComponent.css'
 
 
 function RegitserComponent(props) {
@@ -212,6 +213,7 @@ function RegitserComponent(props) {
           alt="books"
         />
       </div>
+      {userType.userType ==='client'? <h1 className="text-center loginTitle">Client</h1> : <h1 className="text-center loginTitle">Hello Publisher</h1>}
 
       <div className="container mb-5">
         <div className="col-lg-6 col-md-10 col-sm-10 p-4 mt-2 mx-auto border bg-white rounded shadow">
