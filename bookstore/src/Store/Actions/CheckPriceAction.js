@@ -13,10 +13,16 @@ export const toPrice = (payload) => {
   };
 };
 
+export const cartNumber = (payload) => {
+  return {
+    type: 'CART_COUNTER',
+    payload
+  };
+};
 
-export const search=(payload)=>{
-  return{
-      type:"setSearch",
-      payload
+export const search = (payload) => {
+  return {
+    type: "setSearch",
+    payload
   }
 }
