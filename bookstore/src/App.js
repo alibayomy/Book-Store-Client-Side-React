@@ -27,6 +27,7 @@ import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage";
 import OrderList from "./Pages/OrderList/OrderList";
 import PublisherAuthors from "./Pages/PublisherAuthors/PublisherAuthors";
 import PublisherAuthorDetails from "./Pages/PublisherAuthorDetails/PublisherAuthorDeatils";
+import Footer from "./Components/Footer/Footer";
 import PublicRoute from "./Network/PublickRoute";
 
 const App = () => {
@@ -39,7 +40,6 @@ const App = () => {
         <NavBar />
         <div className="container mt-4">
           <Switch>
-           
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile/:user_id" exact component={Profile} />
             <Route path="/books" component={Books} />
@@ -51,7 +51,11 @@ const App = () => {
             <Route path="/cart" component={Cart} />
             <Route path="/checkout" component={Checkout} />
             <PublicRoute path="/login" component={Login} />
-            <PublicRoute exact path={"/register"} component={ClientSelectComponent} />
+            <PublicRoute
+              exact
+              path={"/register"}
+              component={ClientSelectComponent}
+            />
             <PublicRoute
               exact
               path={"/register/:userType"}
@@ -84,17 +88,18 @@ const App = () => {
               component={PublisherBooks}
             />
             <PublisherPrivateRoute
-            exact
-            path={"/publisher/authors"}
-            component={PublisherAuthors}
+              exact
+              path={"/publisher/authors"}
+              component={PublisherAuthors}
             />
             <PublisherPrivateRoute
-            exact
-            path={"/publisher/updateauthor/:id"}
-            component={PublisherAuthorDetails}
+              exact
+              path={"/publisher/updateauthor/:id"}
+              component={PublisherAuthorDetails}
             />
           </Switch>
         </div>
+        <Footer />
       </Router>
     </AuthProvider>
   );

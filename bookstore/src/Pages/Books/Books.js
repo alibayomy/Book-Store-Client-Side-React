@@ -11,14 +11,13 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import Footer from "../../Components/Footer/Footer";
 
 // import MyCard from "../../Components/MyCard/MyCard";
 function Books() {
   // const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
   // const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
 
-  const localhost = 'http://localhost:8000'
+  const localhost = "http://localhost:8000";
   const history = useHistory();
 
   const [language, setLanguage] = useState("en");
@@ -27,7 +26,7 @@ function Books() {
   const [pageNumber, setPageNumber] = useState(1);
 
   // const [Movies, setMovie] = useState([]);
-  const [books, setBooks] = useState([])
+  const [books, setBooks] = useState([]);
 
   useEffect(() => {
     // axios
@@ -38,10 +37,12 @@ function Books() {
     //   .catch((err) => console.log(err));
 
     axios
-      .get(
-        `${localhost}/list-book/`
-      )
-      .then((res) => { console.log(res.data.results), setBooks(res.data.results), console.log(books) })
+      .get(`${localhost}/list-book/`)
+      .then((res) => {
+        console.log(res.data.results),
+          setBooks(res.data.results),
+          console.log(books);
+      })
       .catch((err) => console.log(err));
   }, [pageNumber, skipItem, language]);
 
@@ -686,7 +687,6 @@ function Books() {
                   publisher={book.publisher}
                   quantity={book.total_number_of_book}
                   book_id={book.id}
-
                 />
               ))}
               {/* {Movies.map((book) => (
@@ -709,56 +709,52 @@ function Books() {
         <ScrollUpButton />
       </div>
 
-      {
-        books.length > 20 ? (
-
-          <ul class="pagination  justify-content-center m-3">
-
-            {pageNumber > 1 ? (
-              <li className="page-item">
-                <button
-                  onClick={() => previousPage(pageNumber)}
-                  className="page-link"
-                >
-                  Previous
-                </button>
-              </li>
-            ) : (
-              <li className="page-item">
-                <button
-                  onClick={() => previousPage(pageNumber)}
-                  className="page-link disabled"
-                >
-                  Previous
-                </button>
-              </li>
-            )}
-            {pageNumber >= 1 && pageNumber <= 3 ? (
-              <li className="page-item">
-                {" "}
-                <button onClick={() => nextPage(pageNumber)} className="page-link">
-                  Next
-                </button>
-              </li>
-            ) : (
-              <li className="page-item">
-                {" "}
-                <button
-                  onClick={() => nextPage(pageNumber)}
-                  className="page-link disabled"
-                >
-                  Next
-                </button>
-              </li>
-            )}
-          </ul>
-        ) : (
-          <div>
-            
-          </div>
-        )
-      }
-      <Footer />
+      {books.length > 20 ? (
+        <ul class="pagination  justify-content-center m-3">
+          {pageNumber > 1 ? (
+            <li className="page-item">
+              <button
+                onClick={() => previousPage(pageNumber)}
+                className="page-link"
+              >
+                Previous
+              </button>
+            </li>
+          ) : (
+            <li className="page-item">
+              <button
+                onClick={() => previousPage(pageNumber)}
+                className="page-link disabled"
+              >
+                Previous
+              </button>
+            </li>
+          )}
+          {pageNumber >= 1 && pageNumber <= 3 ? (
+            <li className="page-item">
+              {" "}
+              <button
+                onClick={() => nextPage(pageNumber)}
+                className="page-link"
+              >
+                Next
+              </button>
+            </li>
+          ) : (
+            <li className="page-item">
+              {" "}
+              <button
+                onClick={() => nextPage(pageNumber)}
+                className="page-link disabled"
+              >
+                Next
+              </button>
+            </li>
+          )}
+        </ul>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }
