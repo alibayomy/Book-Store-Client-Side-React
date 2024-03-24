@@ -29,14 +29,17 @@ function NavBar() {
   };
   const dispatch = useDispatch();
   const [searchInputField, setSearchInputField] = useState("");
-  const setSearchWord = () => {
-    dispatch(search(searchInputField));
+  const setSearchWord = (word) => {
+    console.log(word)
+    setSearchInputField(word)
+    dispatch(search(word));
+    word?history.push("/search"):history.push('/books')
   };
-  useEffect(() => {
-    if (!searchInputField) {
-      setSearchWord();
-    }
-  }, [searchInputField]);
+  // useEffect(() => {
+  //   if (!searchInputField) {
+  //     setSearchWord();
+  //   }
+  // }, [searchInputField]);
   let myName = useContext(AuthContext);
 
   // for Cart
@@ -215,12 +218,10 @@ function NavBar() {
               type="search"
               placeholder="Search"
               aria-label="Search"
-              onChange={(e) => {
-                setSearchInputField(e.target.value);
-              }}
               value={searchInputField}
+              onChange={(e) =>setSearchWord(e.target.value)}
             />
-            <Link to="/search">
+            {/* <Link to="/search">
               <button
                 className="input-group-text border-0"
                 id="search-addon"
@@ -230,7 +231,7 @@ function NavBar() {
               >
                 <FontAwesomeIcon icon={faSearch} size="lg" />
               </button>
-            </Link>
+            </Link> */}
           </form>
         </div>
       </div>
