@@ -34,7 +34,12 @@ function UpdateABook(){
 
 
     let api = useAxios()
-
+  
+    function deleteBook(e){
+      api.delete(`/${book_id.id}-book/delete`)
+      .then(history.push('/dashboard'))
+      .catch((err)=> console.log(err))
+    }
 
     async function fetchData() {
         await api.get(`/${bookId.id}-publisherbook/details`)
@@ -410,14 +415,34 @@ function UpdateABook(){
                         {submitError}
                     </div>
                     <PublishButtonComponent display='d-grid' title='Update Now'></PublishButtonComponent>
+                 
                 </form >
+                <div className="d-grid">
+                    <button className={`fw-bold  filled-button`}   data-bs-toggle="modal" data-bs-target="#exampleModal" style={{background:"red"}}>Delete</button>
+                    </div>
             </div >
             :
             <div className="alert alert-danger fw-bold" role="alert">
             You are not authoriszed to view this page
             </div>
         }
-
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete confirmation message</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete yourbook: {input.titleInput}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger"  data-bs-dismiss="modal" onClick={(e)=> {deleteBook(e)}}>Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
         </>
     )
 }

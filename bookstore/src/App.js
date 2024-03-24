@@ -26,6 +26,7 @@ import PublisherBooks from "./Pages/PublisherBooks/PublihserBooks";
 import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage";
 import OrderList from "./Pages/OrderList/OrderList";
 import PublisherAuthors from "./Pages/PublisherAuthors/PublisherAuthors";
+import PublisherAuthorDetails from "./Pages/PublisherAuthorDetails/PublisherAuthorDeatils";
 
 const App = () => {
   // JWT Authen
@@ -88,8 +89,13 @@ const App = () => {
             />
             <PublisherPrivateRoute
             exact
-            path={"/publisher/auhtors"}
+            path={"/publisher/authors"}
             component={PublisherAuthors}
+            />
+            <PublisherPrivateRoute
+            exact
+            path={"/publisher/updateauthor/:id"}
+            component={PublisherAuthorDetails}
             />
             <Route exact path="/test" component={test}></Route>
           </Switch>
