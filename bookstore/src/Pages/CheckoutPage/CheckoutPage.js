@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 function CheckoutPage() {
   const api = useAxios();
   const { user } = useContext(AuthContext);
+  const history=useHistory()
 
   const [formData, setFormData] = useState({
     country: "",
@@ -64,7 +65,7 @@ function CheckoutPage() {
         data,
         config
       )
-      .then((res) => console.log(res))
+      .then((res) =>(history.push('/orders')))
       .catch((err) => console.log(err));
   };
 
