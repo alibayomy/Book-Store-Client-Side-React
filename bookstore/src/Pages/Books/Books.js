@@ -132,8 +132,8 @@ function Books() {
         <div class="row flex-nowrap">
           <div class="col-auto col-md-2 col-xl-2 px-sm-1 px-0 bg-dark myNav mt-4 m-1 rounded">
             <div class=" align-items-center align-items-sm-start px-2 pt-2 text-white min-vh-100">
-              <a
-                href="/books"
+              <Link
+                to="/books"
                 class="d-flex align-items-center  mb-md-0 me-md-auto text-white text-decoration-none"
               >
                 <span
@@ -144,7 +144,7 @@ function Books() {
                 >
                   Filters
                 </span>
-              </a>
+              </Link>
               <p className="m-0 p-0 border-0 ToClearFilter pb-2">
                 click to remove all filters
               </p>
