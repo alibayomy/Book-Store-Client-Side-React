@@ -98,7 +98,7 @@ function ReviewWrapper(props) {
   return (
     <div>
       {!is_publisher?id?<ReviewForm addReview={addReview} editReview={editReview} id={id} coming_rate={rate} coming_comment={comment}/>:<ReviewForm addReview={addReview} editReview={editReview} id={0} coming_rate={0} coming_comment={""}/>:<></>}
-      {reviews.length!==0&&<div className="mb-3 fs-3">Reviews</div>}
+      <div className="mb-3 fs-3">Reviews</div>
       {reviews.map((review, index) => (
         <Review
           key={review.id}

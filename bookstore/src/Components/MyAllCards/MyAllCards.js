@@ -62,14 +62,11 @@ function MyAllCards(props) {
                           w-100 p-3 bg-warning  align-items-center  text-center ">
                   <span>Out Of Stock</span>
                 </div>
-                <div class="d-flex p-3 mb-2">
-                  <img
-                    src={props.imageUrl}
-                    alt={props.title}
-                    className="img-top rounded-0 mx-auto img-fluid"
-                    style={{ height: "350px" }}
-                  />
-                </div>
+                <img
+                  src={props.imageUrl}
+                  alt={props.title}
+                  className="card-img-top rounded-0"
+                />
                 <div className="card-body p-0 pt-1">
                   <p className="card-text m-1 opacity-50">{props.category}</p>
                   <h5 className="card-title">{props.title}</h5>
@@ -89,14 +86,11 @@ function MyAllCards(props) {
           ) : (
             <div className="card my-card bg-body-tertiary h-100 rounded-0 border-0">
               <Link to={props.path} className="text-decoration-none">
-                <div class="d-flex p-3 mb-2">
-                  <img
-                    src={props.imageUrl}
-                    alt={props.title}
-                    className="img-top rounded-0 mx-auto img-fluid"
-                    style={{ height: "350px" }}
-                  />
-                </div>
+                <img
+                  src={props.imageUrl}
+                  alt={props.title}
+                  className="card-img-top rounded-0"
+                />
               </Link>
               <div className="card-body p-0 pt-1">
                 <p className="card-text m-1 opacity-50">{props.category}</p>

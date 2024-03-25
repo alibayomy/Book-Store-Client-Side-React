@@ -100,7 +100,7 @@ function Search() {
     return (
       <div>
           {/* dir={language === "ar" ? "rtl" : "ltr"} */}
-          <div className="container-fluid vh-100">
+          <div className="container-fluid">
             <div className="row flex-nowrap">
   
               <div class="col py-3">
@@ -135,6 +135,7 @@ function Search() {
                   : <li className="page-item"> <button onClick={() => nextPage(pageNumber)} className='page-link disabled'>Next</button></li>}
   
               </ul>
+        <Footer />
       </div>
     );
   }

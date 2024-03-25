@@ -112,9 +112,10 @@ function NavBar() {
                 <h4 className="text-center mt-5 pt-5 empty-text">Your basket is currently empty </h4>
               ) : (
                 <div>
+                  <div className="my-4 fw-bold fs-5 ">Subtotal:</div>
 
                   <button
-                    className="outline-button my-1 w-100 books-sorting mt-3"
+                    className="outline-button my-1 w-100 books-sorting"
                     onClick={() => {
                       history.push("/cart");
                       setShow(false);

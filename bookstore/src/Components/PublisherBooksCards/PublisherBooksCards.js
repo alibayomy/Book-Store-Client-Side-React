@@ -7,7 +7,7 @@ import useAxios from "../../Network/AxiosInstance";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function PublisherBooksCards(props) {
-  console.log(props)
+    console.log(props)
   const renderRatingStars = () => {
     const rating = props.rating || 0;
     const starIcons = [];
@@ -27,23 +27,20 @@ function PublisherBooksCards(props) {
   const history = useHistory()
   const api = useAxios()
 
-  function deleteBook(e) {
+  function deleteBook(e){
     api.delete(`/${props.id}-book/delete`)
-      .then(history.push('/dashboard'))
-      .catch((err) => console.log(err))
+    .then(history.push('/dashboard'))
+    .catch((err)=> console.log(err))
   }
   return (
     <div key={props.id} className="col-xl-4 col-lg-4 col-md-6 mt-3 mb-4">
       <div className="card my-card bg-body-tertiary h-100 rounded-0 border-0">
         <Link to={props.path} className="text-decoration-none">
-          <div class="d-flex p-3 mb-2">
-            <img
-              src={props.imageUrl}
-              alt={props.title}
-              className="img-top rounded-0 mx-auto img-fluid"
-              style={{ height: "350px" }}
-            />
-          </div>
+          <img
+            src={props.imageUrl}
+            alt={props.title}
+            className="card-img-top rounded-0"
+          />
         </Link>
         <div className="card-body p-0 pt-1">
           <p className="card-text m-1 opacity-50">{props.category}</p>
