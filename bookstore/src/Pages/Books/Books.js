@@ -45,8 +45,7 @@ function Books() {
         setAuthors(transformedAuthors);
       })
 
-    axios
-      .get(`${localhost}/list-book/`)
+    axios.get(`${localhost}/list-book/`)
       .then((res) => {
         console.log(res.data.results),
           setBooks(res.data.results),
