@@ -64,8 +64,7 @@ function NavBar() {
   };
 
   const cartCounter = useSelector((state) => state.cartCounter);
-  console.log("the cart quantity", cartCounter);
-
+  
   useEffect(() => {    
 
     api

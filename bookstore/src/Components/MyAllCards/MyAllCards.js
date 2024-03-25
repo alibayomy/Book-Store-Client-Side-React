@@ -49,9 +49,6 @@ function MyAllCards(props) {
       .catch((err) => console.log(err));
   }
 
-  if (props.total_number_of_book == 0)
-    props.id
-
   return (
     <div key={props.id} className="col-xl-4 col-lg-4 col-md-6 mt-3 mb-4" >
 
@@ -110,7 +107,6 @@ function MyAllCards(props) {
 
                   {/* Add to Cart Button */}
                   <button className="filled-button"
-
                     onClick={() => onAddClicked(props.book_id, props.publisher, 1)}>
                     Add to Cart</button>
                 </div>

@@ -2,20 +2,17 @@ import React from "react";
 import "./Books.css";
 import { Link } from "react-router-dom";
 import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
-// import product1 from "../../images/author-book-store-book-cover-06.jpg";
-// import product2 from "../../images/author-book-store-book-cover-07.jpg";
-// import product3 from "../../images/author-book-store-book-cover-08.jpg";
-// import product4 from "../../images/author-book-store-book-img-01.jpg";
 import MyAllCards from "../../Components/MyAllCards/MyAllCards";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
+import Footer from "../../Components/Footer/Footer";
+import useAxios from "../../Network/AxiosInstance";
+import { Categories } from "../../Components/Filters/Categories";
+import Filtering from "../../Components/ShoppingCart/testCard";
 
-// import MyCard from "../../Components/MyCard/MyCard";
 function Books() {
-  // const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
-  // const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
 
   const localhost = "http://localhost:8000";
   const history = useHistory();
@@ -25,16 +22,29 @@ function Books() {
   const [skipItem, setSkipItem] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
 
-  // const [Movies, setMovie] = useState([]);
-  const [books, setBooks] = useState([]);
+
+  const [books, setBooks] = useState([])
+
+  const [categories, setCategoris] = useState([])
+
+  const [authors, setAuthors] = useState([])
+
+  let api = useAxios()
 
   useEffect(() => {
-    // axios
-    //   .get(
-    //     `${BaseMainUrl}?api_key=${BaseAPI}&page=${pageNumber}&language=${language}`
-    //   )
-    //   .then((res) => {console.log(res.data.results),setMovie(res.data.results)})
-    //   .catch((err) => console.log(err));
+
+    api.get('/list-cateory/')
+      .then((res) => { setCategoris(res.data.results), console.log(res.data.results) })
+
+    api.get('get-publisher-books/')
+      .then((response) => {
+        const transformedAuthors = response.data.results.map(author => ({
+          value: author.id,
+          label: `${author.f_name} ${author.l_name}`
+        }));
+        console.log(transformedAuthors)
+        setAuthors(transformedAuthors);
+      })
 
     axios
       .get(`${localhost}/list-book/`)
@@ -46,12 +56,23 @@ function Books() {
       .catch((err) => console.log(err));
   }, [pageNumber, skipItem, language]);
 
-  const handelChangeLang = (e) => {
-    setLanguage(e.target.value);
-  };
+  // const handelChangeLang = (e) => {
+
+  //   const getMoviesToSort = [...books];
+  //   const LanguageBooks = books.filter((a) => { a.language.toUpperCase() === e.target.value.toUpperCase() });
+  //   console.log(LanguageBooks, e.target.value);
+  //   setBooks(LanguageBooks)
+  // };
+
+  const dispatch = useDispatch();
 
   const fromPrice = useSelector((state) => state.fromPrice);
   const toPrice = useSelector((state) => state.toPrice);
+
+  const getMoviesToSort = [...books];
+  console.log(getMoviesToSort);
+  const priceBooks = getMoviesToSort.filter(
+    (a) => a.price >= fromPrice + 1 && a.price <= toPrice + 1);
 
   const fromPriceing = (e) => {
     dispatch({ type: "FROM_PRICE", payload: e.target.value });
@@ -60,6 +81,10 @@ function Books() {
   const toPriceing = (e) => {
     dispatch({ type: "TO_PRICE", payload: e.target.value });
   };
+
+  const categorybooks = useSelector((state) => state.categoryFilter);
+
+  const categoryBooks = books.filter((a) => a.category == categorybooks);
 
   const previousPage = (pagNum) => {
     setPageNumber(--pagNum);
@@ -87,122 +112,6 @@ function Books() {
       setSkipItem(75);
     }
   };
-
-  // const allBooks = [
-  //   // Replace with actual book data or fetch from an API
-  //   {
-  //     id: 1,
-  //     title: "The Born of APLEX",
-  //     category: "fantasy",
-  //     imageUrl: `${product1}`,
-  //     rating: 6,
-  //     price: "$26.00",
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "The Throned Mirror",
-  //     category: "fantasy",
-  //     imageUrl: `${product2}`,
-  //     rating: 4,
-  //     price: "$23.00",
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Ark Forging",
-  //     category: "fantasy",
-  //     imageUrl: `${product3}`,
-  //     rating: 5,
-  //     price: "$20.00",
-  //   },
-  //   {
-  //     id: 4,
-  //     title: "The Sons of the Empire",
-  //     category: "fantasy",
-  //     imageUrl: `${product4}`,
-  //     rating: 2,
-  //     price: "$20.00",
-  //   },
-  //   {
-  //     id: 5,
-  //     title: "The Sons of the Empire",
-  //     category: "fantasy",
-  //     imageUrl: `${product1}`,
-  //     rating: 5,
-  //     price: "$20.00",
-  //   },
-  //   {
-  //     id: 6,
-  //     title: "The Sons of the Empire",
-  //     category: "fantasy",
-  //     imageUrl: `${product3}`,
-  //     rating: 4,
-  //     price: "$20.00",
-  //   },
-  //   {
-  //     id: 7,
-  //     title: "The Sons of the Empire",
-  //     category: "fantasy",
-  //     imageUrl: `${product4}`,
-  //     rating: 2,
-  //     price: "$20.00",
-  //   },
-  //   {
-  //     id: 8,
-  //     title: "The Sons of the Empire",
-  //     category: "fantasy",
-  //     imageUrl: `${product1}`,
-  //     rating: 5,
-  //     price: "$20.00",
-  //   },
-  //   {
-  //     id: 9,
-  //     title: "The Sons of the Empire",
-  //     category: "fantasy",
-  //     imageUrl: `${product3}`,
-  //     rating: 5,
-  //     price: "$20.00",
-  //   },
-  //   {
-  //     id: 10,
-  //     title: "The Sons of the Empire",
-  //     category: "fantasy",
-  //     imageUrl: `${product1}`,
-  //     rating: 5,
-  //     price: "$20.00",
-  //   },
-  //   {
-  //     id: 11,
-  //     title: "The Sons of the Empire",
-  //     category: "fantasy",
-  //     imageUrl: `${product4}`,
-  //     rating: 3,
-  //     price: "$20.00",
-  //   },
-  //   {
-  //     id: 12,
-  //     title: "The Sons of the Empire",
-  //     category: "fantasy",
-  //     imageUrl: `${product1}`,
-  //     rating: 5,
-  //     price: "$20.00",
-  //   },
-  //   {
-  //     id: 13,
-  //     title: "The Sons of the Empire",
-  //     category: "fantasy",
-  //     imageUrl: `${product4}`,
-  //     rating: 5,
-  //     price: "$20.00",
-  //   },
-  //   {
-  //     id: 14,
-  //     title: "The Sons of the Empire",
-  //     category: "fantasy",
-  //     imageUrl: `${product3}`,
-  //     rating: 1,
-  //     price: "$20.00",
-  //   },
-  // ];
 
   return (
     <div>
@@ -245,7 +154,9 @@ function Books() {
                 class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                 id="menu"
               >
-                <li>
+
+                {/* language */}
+                {/* <li>
                   <a
                     href="#submenu1"
                     data-bs-toggle="collapse"
@@ -254,7 +165,7 @@ function Books() {
                     <i class="fs-5 bi-translate text-white"></i>
                     <p
                       class="ms-1  d-none d-sm-inline text-white "
-                      onClick={() => history.push("/filter")}
+                      onClick={() => history.push("/books")}
                     >
                       Books Language
                     </p>{" "}
@@ -267,7 +178,7 @@ function Books() {
                     <li>
                       <input
                         class="form-check-input mySmallCheckbox"
-                        value="ar"
+                        value="Arabic"
                         onChange={(e) => handelChangeLang(e)}
                         type="radio"
                         name="flexRadioDefault"
@@ -285,7 +196,7 @@ function Books() {
                       <input
                         class="form-check-input mySmallCheckbox"
                         type="radio"
-                        value="en"
+                        value="English"
                         onChange={(e) => handelChangeLang(e)}
                         name="flexRadioDefault"
                         id="flexRadioDefault2"
@@ -298,30 +209,15 @@ function Books() {
                         English Books{" "}
                       </label>
                     </li>
-                    <li>
-                      <input
-                        class="form-check-input  mySmallCheckbox"
-                        type="radio"
-                        value="fr"
-                        onChange={(e) => handelChangeLang(e)}
-                        name="flexRadioDefault"
-                        id="flexRadioDefault3"
-                      />
-                      <label
-                        class="form-check-label ms-1 d-sm-inline mySmallText"
-                        for="flexRadioDefault3"
-                      >
-                        French Books{" "}
-                      </label>
-                    </li>
                   </ul>
-                </li>
+                </li> */}
 
-                <hr
+                {/* <hr
                   style={{ borderWidth: "2px", width: "100%" }}
                   className="my-1"
-                />
+                /> */}
 
+                {/* Categories */}
                 <li>
                   <a
                     href="#submenu3"
@@ -342,137 +238,15 @@ function Books() {
                     id="submenu3"
                     data-bs-parent="#menu"
                   >
-                    <li class="w-100">
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault3 "
-                        >
-                          Translated
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault3"
+                    {categories.map((cat) => (
+                      <div key={cat.value}>
+                        <Categories
+                          category={cat.label}
+                          id={cat.value}
                         />
                       </div>
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault4"
-                        >
-                          Miscellaneous
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault4"
-                        />
-                      </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a> */}
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault5"
-                        >
-                          Business
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault5"
-                        />
-                      </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a> */}
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          History
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                        />
-                      </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a> */}
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          Arabic Novels
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          Short Stories
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          Parenting
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          Comics
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                        />
-                      </div>
-                    </li>
+                    ))
+                    }
                   </ul>
                 </li>
 
@@ -481,6 +255,7 @@ function Books() {
                   className="my-1"
                 />
 
+                {/* Publishers */}
                 <li>
                   <a
                     href="#submenu4"
@@ -490,7 +265,7 @@ function Books() {
                     <i class="fs-5 bi-pencil-square text-white"></i>{" "}
                     <span
                       class="ms-1 d-none d-sm-inline text-white"
-                      onClick={() => history.push("/filter")}
+                      onClick={() => history.push("/filterPublisher")}
                     >
                       Publishers
                     </span>{" "}
@@ -501,105 +276,6 @@ function Books() {
                     id="submenu4"
                     data-bs-parent="#menu"
                   >
-                    <li class="w-100">
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault3 "
-                        >
-                          Book Juice
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault3"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault4"
-                        >
-                          Bint Al-Zayat
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault4"
-                        />
-                      </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a> */}
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault5"
-                        >
-                          Arab Foundation
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault5"
-                        />
-                      </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a> */}
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          Drawing
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                        />
-                      </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a> */}
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          Stoicism
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          Arabic literature
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                        />
-                      </div>
-                    </li>
                   </ul>
                 </li>
 
@@ -634,7 +310,6 @@ function Books() {
                           onChange={fromPriceing}
                           value={fromPrice}
                         />
-
                         <label class=" mx-2" for="flexRadioDefault113">
                           To
                         </label>
@@ -649,7 +324,7 @@ function Books() {
                       </div>
                       <div class="text-center">
                         <button
-                          class="form-check-label btn btn-outline-success mt-3"
+                          class=" btn filled-button mt-3"
                           for="flexRadioDefault13"
                           onClick={() => history.push("/filterPrice")}
                         >
@@ -675,7 +350,12 @@ function Books() {
             </div>
 
             <div className="row">
-              {books.map((book) => (
+
+              <Filtering
+                item={books}
+              />
+
+              {/* {books.map((book) => (
                 <MyAllCards
                   key={book.id}
                   imageUrl={book.front_img}
@@ -688,73 +368,54 @@ function Books() {
                   quantity={book.total_number_of_book}
                   book_id={book.id}
                 />
-              ))}
-              {/* {Movies.map((book) => (
-                <MyAllCards
-                  key={book.id}
-                  imageUrl={`https://image.tmdb.org/t/p/w500/${book.poster_path}`}
-                  title={book.title}
-                  category="action"
-                  path={`viewbook/${book.id}`}
-                  rating={book.vote_average.toFixed(2) - 3}
-                  price={book.vote_count.toFixed(0)}
-                />
               ))} */}
             </div>
           </div>
         </div>
       </div>
-
       <div data-toggle="tooltip" data-placement="right" title="Back to top">
         <ScrollUpButton />
       </div>
 
-      {books.length > 20 ? (
-        <ul class="pagination  justify-content-center m-3">
-          {pageNumber > 1 ? (
-            <li className="page-item">
-              <button
-                onClick={() => previousPage(pageNumber)}
-                className="page-link"
-              >
-                Previous
-              </button>
-            </li>
-          ) : (
-            <li className="page-item">
-              <button
-                onClick={() => previousPage(pageNumber)}
-                className="page-link disabled"
-              >
-                Previous
-              </button>
-            </li>
-          )}
-          {pageNumber >= 1 && pageNumber <= 3 ? (
-            <li className="page-item">
-              {" "}
-              <button
-                onClick={() => nextPage(pageNumber)}
-                className="page-link"
-              >
-                Next
-              </button>
-            </li>
-          ) : (
-            <li className="page-item">
-              {" "}
-              <button
-                onClick={() => nextPage(pageNumber)}
-                className="page-link disabled"
-              >
-                Next
-              </button>
-            </li>
-          )}
-        </ul>
-      ) : (
-        <div></div>
-      )}
+      <ul className="pagination  justify-content-center m-3">
+        {pageNumber > 1 ? (
+          <li className="page-item">
+            <button
+              onClick={() => previousPage(pageNumber)}
+              className="page-link "
+            >
+              Previous
+            </button>
+          </li>
+        ) : (
+          <li className="page-item">
+            <button
+              onClick={() => previousPage(pageNumber)}
+              className="page-link disabled"
+            >
+              Previous
+            </button>
+          </li>
+        )}
+        {pageNumber >= 1 && pageNumber <= 3 ? (
+          <li className="page-item">
+            {" "}
+            <button onClick={() => nextPage(pageNumber)} className="page-link">
+              Next
+            </button>
+          </li>
+        ) : (
+          <li className="page-item">
+            {" "}
+            <button
+              onClick={() => nextPage(pageNumber)}
+              className="page-link disabled"
+            >
+              Next
+            </button>
+          </li>
+        )}
+      </ul>
     </div>
   );
 }

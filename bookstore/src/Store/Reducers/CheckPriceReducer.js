@@ -2,7 +2,9 @@ const INITIAL_VALUE = {
     fromPrice: 0,
     toPrice: 0,
     cartCounter: 0,
-    search: ""
+    search: "",
+    categoryFilter: 0,
+    publisherFilter: 0
 }
 
 export default function priceCheck(state = INITIAL_VALUE, action) {
@@ -32,7 +34,19 @@ export default function priceCheck(state = INITIAL_VALUE, action) {
                 ...state,
                 cartCounter: action.payload,
             };
-            
+
+        case 'CATEGORY_FILTER':
+            return {
+                ...state,
+                categoryFilter: action.payload,
+            };
+
+        case 'PUBLISHER_FILTER':
+            return {
+                ...state,
+                publisherFilter: action.payload,
+            };
+
         default:
             return state;
     }
