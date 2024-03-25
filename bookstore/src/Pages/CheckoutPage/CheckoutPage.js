@@ -14,6 +14,7 @@ function CheckoutPage() {
     ? useContext(AuthContext).user.user_id
     : 0;
   const [items, setItems] = useState([]);
+  const history=useHistory()
 
   const [formData, setFormData] = useState({
     country: "",
@@ -85,7 +86,7 @@ function CheckoutPage() {
         data,
         config
       )
-      .then((res) => console.log(res))
+      .then((res) =>(history.push('/orders')))
       .catch((err) => console.log(err));
   };
   console.log(items)
