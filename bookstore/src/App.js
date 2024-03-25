@@ -44,12 +44,12 @@ const App = () => {
             <PrivateRoute path="/profile/:user_id" exact component={Profile} />
             <Route path="/books" component={Books} />
             <PrivateRoute path="/orders" component={OrderList} />
-            <Route path="/checkout" component={CheckoutPage} />
+            <PrivateRoute path="/checkout" component={CheckoutPage} />
             <Route path="/viewbook/:id" component={ViewBook} />
             <Route exact path={"/filter"} component={FilterBooks} />
             <Route exact path={"/filterPrice"} component={FilterPrice} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/checkout" component={Checkout} />
+            <PrivateRoute path="/cart" component={Cart} />
+            <PrivateRoute path="/checkout" component={Checkout} />
             <PublicRoute path="/login" component={Login} />
             <PublicRoute
               exact
@@ -62,7 +62,7 @@ const App = () => {
               component={RegitserComponent}
             />
             <Route exact path="/search" component={Search} />
-            <Route
+            <PublisherPrivateRoute
               exact
               path={"/publisherorder"}
               component={PublisherOrderList}

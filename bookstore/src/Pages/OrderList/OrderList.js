@@ -22,6 +22,7 @@ function OrderList() {
     .then((res) => (console.log(res.data.orders[0].orderitems),setOrders(res.data.orders),setRes()))
     .catch((err) => console.log(err))
   },[])
+  console.log(orders)
   return (
     <div className=" border m-2 mb-4">
       <h2 className="m-3">Order List</h2>
