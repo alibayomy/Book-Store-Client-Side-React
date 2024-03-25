@@ -34,7 +34,7 @@ function ViewBook() {
   }
   useEffect(() => {
     api
-      .get(`${localhost}/rate/get-all-rates/${id}`)
+      .get(`${localhost}/rate/get-all-rates/${book_name}`)
       .then(
         (res) => (
           console.log(res.data.data), setNoOfReviews(res.data.data.length)

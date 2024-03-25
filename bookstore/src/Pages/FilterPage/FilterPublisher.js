@@ -33,14 +33,13 @@ function Books() {
     const toPrice = useSelector((state) => state.toPrice);
 
     const dispatch = useDispatch();
-    let api = useAxios()
 
     useEffect(() => {
 
-        api.get('/list-cateory/')
+        axios.get(`${localhost}/list-cateory/`)
             .then((res) => { setCategoris(res.data.results), console.log(res.data.results) })
 
-        api.get('/users/publisher-list/')
+        axios.get(`${localhost}/users/publisher-list/`)
             .then((res) => { setPublishers(res.data.results), console.log(res.data.results) })
 
         axios

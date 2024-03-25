@@ -16,7 +16,6 @@ function Books() {
 
   const localhost = "http://localhost:8000";
   const history = useHistory();
-
   const [language, setLanguage] = useState("en");
 
   const [skipItem, setSkipItem] = useState(0);
@@ -33,10 +32,10 @@ function Books() {
 
   useEffect(() => {
 
-    api.get('/list-cateory/')
+    axios.get(`${localhost}/list-cateory/`)
       .then((res) => { setCategoris(res.data.results), console.log(res.data.results) })
 
-    api.get('get-publisher-books/')
+    axios.get(`${localhost}/users/publisher-list/`)
       .then((response) => {
         const transformedAuthors = response.data.results.map(author => ({
           value: author.id,
