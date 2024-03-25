@@ -37,7 +37,7 @@ function ViewBook() {
       .catch((err) => console.log(err));
   };
   useEffect(() => {
-    api
+    axios
       .get(`${localhost}/${book_name}-book/details`)
       .then((res) => setBook(res.data.book))
       .catch((err) => console.log(err));

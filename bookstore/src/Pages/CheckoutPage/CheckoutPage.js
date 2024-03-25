@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import useAxios from "../../Network/AxiosInstance";
@@ -9,6 +9,11 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 function CheckoutPage() {
   const api = useAxios();
   const { user } = useContext(AuthContext);
+  const current_user =
+    useContext(AuthContext).user !== null
+      ? useContext(AuthContext).user.user_id
+      : 0;
+  const [items, setItems] = useState([]);
   const history = useHistory();
 
   const [formData, setFormData] = useState({
@@ -29,6 +34,24 @@ function CheckoutPage() {
     }));
   };
 
+  const [paymentMethod, setPaymentMethod] = useState("card");
+
+  const handlePaymentMethodChange = (event) => {
+    setPaymentMethod(event.target.value);
+  };
+
+  useEffect(() => {
+    axios
+      .get(`http://127.0.0.1:8000/api-order/${current_user}/cart`)
+      .then(
+        (res) => (
+          setItems(res.data.cart.cart_items),
+          console.log(res.data.cart.cart_items)
+        )
+      )
+      .catch((err) => console.log(err));
+  }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formDataObject = {
@@ -38,13 +61,13 @@ function CheckoutPage() {
         street: formData.street,
         phone: formData.phone,
       },
-      // payment: {
-      //   card_number: formData.cardNumber,
-      //   expire: formData.expiryDate,
-      //   security_code: formData.cvv,
-      // },
+      payment: {
+        card_number: formData.cardNumber,
+        expire: formData.expiryDate,
+        security_code: formData.cvv,
+      },
     };
-    // console.log("Form data:", formDataObject);
+    console.log("Form data:", formDataObject);
 
     let data = JSON.stringify(formDataObject);
     const config = {
@@ -62,12 +85,16 @@ function CheckoutPage() {
       .then((res) => history.push("/orders"))
       .catch((err) => console.log(err));
   };
-
+  console.log(items);
   return (
     <div className="checkout-page">
       <div className="container py-4">
         <div className="mx-auto bg-white rounded shadow p-5">
-          <form onSubmit={handleSubmit} className="shipping-information-form">
+          <form
+            action={`http://127.0.0.1:8000/api-order/${user.user_id}/orders/create`}
+            method="POST"
+            className="shipping-information-form"
+          >
             <div className="row px-lg-5 px-1">
               <h2 className="mt-3 mb-4">Checkout</h2>
               <div className="col-lg-6">
@@ -121,48 +148,6 @@ function CheckoutPage() {
                     required
                   />
                 </div>
-
-                {/* <h2 className="mt-4 mb-3">Payment Details</h2>
-                <div className="form-group mb-2">
-                  <div>
-                    <div className="form-group mb-2">
-                      <label htmlFor="cardNumber">Card Number</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="cardNumber"
-                        name="cardNumber"
-                        value={formData.cardNumber}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group mb-2">
-                      <label htmlFor="expiryDate">Expiry Date</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="expiryDate"
-                        name="expiryDate"
-                        value={formData.expiryDate}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group mb-2">
-                      <label htmlFor="cvv">Security Code</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="cvv"
-                        name="cvv"
-                        value={formData.cvv}
-                        onChange={handleInputChange}
-                        required
-                      />
-                    </div>
-                  </div>
-                </div> */}
               </div>
 
               <div className="col-lg-5 mt-md-4 ms-auto">
