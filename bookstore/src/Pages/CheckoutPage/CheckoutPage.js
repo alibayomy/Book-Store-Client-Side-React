@@ -10,23 +10,21 @@ function CheckoutPage() {
   const api = useAxios();
   const { user } = useContext(AuthContext);
   const current_user =
-  useContext(AuthContext).user !== null
-    ? useContext(AuthContext).user.user_id
-    : 0;
+    useContext(AuthContext).user !== null
+      ? useContext(AuthContext).user.user_id
+      : 0;
   const [items, setItems] = useState([]);
-  const history=useHistory()
+  const history = useHistory();
 
   const [formData, setFormData] = useState({
     country: "",
     city: "",
     address: "",
     phone: "",
-    cardNumber: "",
-    expiryDate: "",
-    cvv: "",
+    // cardNumber: "",
+    // expiryDate: "",
+    // cvv: "",
   });
-
-  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -41,7 +39,7 @@ function CheckoutPage() {
   const handlePaymentMethodChange = (event) => {
     setPaymentMethod(event.target.value);
   };
-  
+
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/api-order/${current_user}/cart`)
@@ -69,9 +67,7 @@ function CheckoutPage() {
         security_code: formData.cvv,
       },
     };
-    // console.log("Form data:", formDataObject);
-
-
+    console.log("Form data:", formDataObject);
 
     let data = JSON.stringify(formDataObject);
     const config = {
@@ -86,15 +82,32 @@ function CheckoutPage() {
         data,
         config
       )
-      .then((res) =>(history.push('/orders')))
+      .then((res) => history.push("/orders"))
       .catch((err) => console.log(err));
   };
-  console.log(items)
+  console.log(items);
+
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get(`http://127.0.0.1:8000/api-order/${current_user}/cart`)
+      .then((res) => {
+        setItems(res.data.cart.cart_items);
+        setTotalPrice(res.data.cart.total_price_cart);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="checkout-page">
       <div className="container py-4">
         <div className="mx-auto bg-white rounded shadow p-5">
-          <form  action={`http://127.0.0.1:8000/api-order/${user.user_id}/orders/create`}  method="POST"  className="shipping-information-form">
+          <form
+            action={`http://127.0.0.1:8000/api-order/${user.user_id}/orders/create`}
+            method="POST"
+            className="shipping-information-form"
+          >
             <div className="row px-lg-5 px-1">
               <h2 className="mt-3 mb-4">Checkout</h2>
               <div className="col-lg-6">
@@ -148,7 +161,6 @@ function CheckoutPage() {
                     required
                   />
                 </div>
-           
               </div>
 
               <div className="col-lg-5 mt-md-4 ms-auto">
@@ -156,28 +168,15 @@ function CheckoutPage() {
                   <div className="order-summary">
                     <h6 className="mb-4">Your order</h6>
                     <div className="px-2">
-                      <div className="d-flex justify-content-between">
-                        <p>Product</p>
-                        <p>Subtotal</p>
-                      </div>
-                      <hr className="mt-0 mb-3"></hr>
-                      <div className="d-flex justify-content-between">
-                        <p>The Throned Mirror × 1</p>
-                        <p>EGP23.00</p>
-                      </div>
-                      <hr className="mt-0 mb-3"></hr>
-                      <div className="d-flex justify-content-between">
-                        <p>Subtotal</p>
-                        <p>EGP23.00</p>
-                      </div>
                       <hr className="mt-0 mb-3"></hr>
                       <div className="d-flex justify-content-between">
                         <p>Total</p>
-                        <p>EGP23.00</p>
+                        <p>EGP {totalPrice}</p>
                       </div>
+                      <hr className="mt-0 mb-3"></hr>
                     </div>
                     <button type="submit" className="outline-button w-100 mb-1">
-                      Palce Order
+                      Palce Order using Stripe
                     </button>
                   </div>
                 </div>

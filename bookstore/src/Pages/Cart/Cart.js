@@ -8,19 +8,20 @@ import { CartPage } from "../../Components/ShoppingCart/CartPage";
 
 function Cart() {
   const history = useHistory();
+  const api = useAxios();
   const current_user =
     useContext(AuthContext).user !== null
       ? useContext(AuthContext).user.user_id
       : 0;
   const [items, setItems] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0); 
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     axios
       .get(`http://127.0.0.1:8000/api-order/${current_user}/cart`)
       .then((res) => {
         setItems(res.data.cart.cart_items);
-        setTotalPrice(res.data.cart.total_price_cart); 
+        setTotalPrice(res.data.cart.total_price_cart);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -45,7 +46,6 @@ function Cart() {
       <h2 className="m-3 ">Cart Page</h2>
 
       <table className="table shadow">
-        
         <thead>
           <tr>
             <th></th>
@@ -85,7 +85,7 @@ function Cart() {
               Total{" "}
               <span className="ms-5">
                 <span className="">EGP: </span>
-                {totalPrice} 
+                {totalPrice}
               </span>
             </h4>
           </div>
