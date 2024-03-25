@@ -44,11 +44,12 @@ function ViewBook() {
   }, []);
   console.log(noOfReviews);
   console.log(book);
+  console.log(book.id);
   return (
     <div>
       <ProductDetails book={book} />
       <DescriptionReview book_id={book?.id} disc={book?.description} />
-      <RelatedProducts />
+      <RelatedProducts book_id={book.id} />
     </div>
   );
 }

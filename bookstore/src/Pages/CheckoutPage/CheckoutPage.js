@@ -9,16 +9,16 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 function CheckoutPage() {
   const api = useAxios();
   const { user } = useContext(AuthContext);
-  const history=useHistory()
+  const history = useHistory();
 
   const [formData, setFormData] = useState({
     country: "",
     city: "",
     address: "",
     phone: "",
-    cardNumber: "",
-    expiryDate: "",
-    cvv: "",
+    // cardNumber: "",
+    // expiryDate: "",
+    // cvv: "",
   });
 
   const handleInputChange = (event) => {
@@ -27,12 +27,6 @@ function CheckoutPage() {
       ...prevFormData,
       [name]: value,
     }));
-  };
-
-  const [paymentMethod, setPaymentMethod] = useState("card");
-
-  const handlePaymentMethodChange = (event) => {
-    setPaymentMethod(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -44,11 +38,11 @@ function CheckoutPage() {
         street: formData.street,
         phone: formData.phone,
       },
-      payment: {
-        card_number: formData.cardNumber,
-        expire: formData.expiryDate,
-        security_code: formData.cvv,
-      },
+      // payment: {
+      //   card_number: formData.cardNumber,
+      //   expire: formData.expiryDate,
+      //   security_code: formData.cvv,
+      // },
     };
     // console.log("Form data:", formDataObject);
 
@@ -65,7 +59,7 @@ function CheckoutPage() {
         data,
         config
       )
-      .then((res) =>(history.push('/orders')))
+      .then((res) => history.push("/orders"))
       .catch((err) => console.log(err));
   };
 
@@ -128,7 +122,7 @@ function CheckoutPage() {
                   />
                 </div>
 
-                <h2 className="mt-4 mb-3">Payment Details</h2>
+                {/* <h2 className="mt-4 mb-3">Payment Details</h2>
                 <div className="form-group mb-2">
                   <div>
                     <div className="form-group mb-2">
@@ -168,7 +162,7 @@ function CheckoutPage() {
                       />
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <div className="col-lg-5 mt-md-4 ms-auto">
@@ -197,7 +191,7 @@ function CheckoutPage() {
                       </div>
                     </div>
                     <button type="submit" className="outline-button w-100 mb-1">
-                      Palce Order
+                      Palce Order using Stripe
                     </button>
                   </div>
                 </div>
