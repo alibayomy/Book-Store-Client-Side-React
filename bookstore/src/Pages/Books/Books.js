@@ -56,9 +56,13 @@ function Books() {
       .catch((err) => console.log(err));
   }, [pageNumber, skipItem, language]);
 
-  const handelChangeLang = (e) => {
-    setLanguage(e.target.value);
-  };
+  // const handelChangeLang = (e) => {
+
+  //   const getMoviesToSort = [...books];
+  //   const LanguageBooks = books.filter((a) => { a.language.toUpperCase() === e.target.value.toUpperCase() });
+  //   console.log(LanguageBooks, e.target.value);
+  //   setBooks(LanguageBooks)
+  // };
 
   const dispatch = useDispatch();
 
@@ -152,7 +156,7 @@ function Books() {
               >
 
                 {/* language */}
-                <li>
+                {/* <li>
                   <a
                     href="#submenu1"
                     data-bs-toggle="collapse"
@@ -161,7 +165,7 @@ function Books() {
                     <i class="fs-5 bi-translate text-white"></i>
                     <p
                       class="ms-1  d-none d-sm-inline text-white "
-                      onClick={() => history.push("/filter")}
+                      onClick={() => history.push("/books")}
                     >
                       Books Language
                     </p>{" "}
@@ -174,7 +178,7 @@ function Books() {
                     <li>
                       <input
                         class="form-check-input mySmallCheckbox"
-                        value="ar"
+                        value="Arabic"
                         onChange={(e) => handelChangeLang(e)}
                         type="radio"
                         name="flexRadioDefault"
@@ -192,7 +196,7 @@ function Books() {
                       <input
                         class="form-check-input mySmallCheckbox"
                         type="radio"
-                        value="en"
+                        value="English"
                         onChange={(e) => handelChangeLang(e)}
                         name="flexRadioDefault"
                         id="flexRadioDefault2"
@@ -205,29 +209,13 @@ function Books() {
                         English Books{" "}
                       </label>
                     </li>
-                    <li>
-                      <input
-                        class="form-check-input  mySmallCheckbox"
-                        type="radio"
-                        value="fr"
-                        onChange={(e) => handelChangeLang(e)}
-                        name="flexRadioDefault"
-                        id="flexRadioDefault3"
-                      />
-                      <label
-                        class="form-check-label ms-1 d-sm-inline mySmallText"
-                        for="flexRadioDefault3"
-                      >
-                        French Books{" "}
-                      </label>
-                    </li>
                   </ul>
-                </li>
+                </li> */}
 
-                <hr
+                {/* <hr
                   style={{ borderWidth: "2px", width: "100%" }}
                   className="my-1"
-                />
+                /> */}
 
                 {/* Categories */}
                 <li>
@@ -288,105 +276,6 @@ function Books() {
                     id="submenu4"
                     data-bs-parent="#menu"
                   >
-                    <li class="w-100">
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault3 "
-                        >
-                          Book Juice
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault3"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault4"
-                        >
-                          Bint Al-Zayat
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault4"
-                        />
-                      </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 2</a> */}
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault5"
-                        >
-                          Arab Foundation
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault5"
-                        />
-                      </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 3</a> */}
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          Drawing
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                        />
-                      </div>
-                      {/* <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Product</span> 4</a> */}
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          Stoicism
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div class="form-check">
-                        <label
-                          class="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          Arabic literature
-                        </label>
-                        <input
-                          class="form-check-input mySmallCheckbox"
-                          type="checkbox"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                        />
-                      </div>
-                    </li>
                   </ul>
                 </li>
 
@@ -527,7 +416,6 @@ function Books() {
           </li>
         )}
       </ul>
-      <Footer />
     </div>
   );
 }

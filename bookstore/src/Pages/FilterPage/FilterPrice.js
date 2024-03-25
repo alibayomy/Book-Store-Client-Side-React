@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fromPrice } from "../../Store/Actions/CheckPriceAction";
 import Footer from "../../Components/Footer/Footer";
 import Filtering from "../../Components/ShoppingCart/testCard";
+import { Publishers } from "../../Components/Filters/Publishers";
 
 function Books() {
   const history = useHistory();
@@ -23,9 +24,11 @@ function Books() {
   const fromPrice = useSelector((state) => state.fromPrice);
   const toPrice = useSelector((state) => state.toPrice);
 
+  const publisherbooks = useSelector((state) => state.publisherFilter);
+  const [publishers, setPublishers] = useState([])
+
   const getMoviesToSort = [...books];
-  const priceBooks = getMoviesToSort.filter(
-    (a) => a.price >= fromPrice + 1 && a.price <= toPrice + 1);
+  const priceBooks = getMoviesToSort.filter((a) => a.price > fromPrice + 2 && a.price < toPrice + 1);
   console.log(priceBooks);
 
   const dispatch = useDispatch();
@@ -126,7 +129,7 @@ function Books() {
                 className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                 id="menu"
               >
-                <li>
+                {/* <li>
                   <a
                     href="#submenu1"
                     data-bs-toggle="collapse"
@@ -197,12 +200,12 @@ function Books() {
                       </label>
                     </li>
                   </ul>
-                </li>
+                </li> */}
 
-                <hr
+                {/* <hr
                   style={{ borderWidth: "2px", width: "100%" }}
                   className="my-1"
-                />
+                /> */}
 
                 <li>
                   <a
@@ -224,163 +227,6 @@ function Books() {
                     id="submenu3"
                     data-bs-parent="#menu"
                   >
-                    <li>
-                      <input
-                        className="form-check-input rounded h-50 my-1 p-1 w-100"
-                        type="search"
-                        placeholder="search here"
-                        onChange={(e) => handelChangeLang(e)}
-                        name="flexRadioDefault"
-                        id="flexRadioDefaul"
-                      ></input>
-                    </li>
-                    <li className="w-100">
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault4"
-                        >
-                          Translated
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault4"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="Translated"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault5"
-                        >
-                          Miscellaneous
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault5"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="Miscellaneous"
-                        />
-                      </div>
-                      {/* <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 2</a> */}
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault6"
-                        >
-                          Business
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault6"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="Business"
-                        />
-                      </div>
-                      {/* <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 3</a> */}
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault7"
-                        >
-                          History
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault7"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="History"
-                        />
-                      </div>
-                      {/* <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 4</a> */}
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault8"
-                        >
-                          Arabic Novels
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault8"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="arabic no"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault9"
-                        >
-                          Short Stories
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault9"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="Short Stories"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault10"
-                        >
-                          Parenting
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault10"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="Parenting"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault11"
-                        >
-                          Comics
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault11"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="Comics"
-                        />
-                      </div>
-                    </li>
                   </ul>
                 </li>
 
@@ -409,127 +255,16 @@ function Books() {
                     id="submenu4"
                     data-bs-parent="#menu"
                   >
-                    <li>
-                      <input
-                        className="form-check-input rounded h-50 my-1 p-1 w-100"
-                        type="search"
-                        placeholder="search here"
-                        onChange={(e) => handelChangeLang(e)}
-                        name="flexRadioDefault"
-                        id="flexRadioDefaul"
-                      ></input>
-                    </li>
-
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault113"
-                        >
-                          Book Juice
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault113"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="book"
+                    {publishers.map((cat) => (
+                      <div key={cat.id}>
+                        <Publishers
+                          f_name={cat.first_name}
+                          l_name={cat.last_name}
+                          id={cat.id}
                         />
                       </div>
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault13"
-                        >
-                          Bint Al-Zayat
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault13"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="zayat"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault14"
-                        >
-                          Arab Foundation
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault14"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="Foundation"
-                        />
-                      </div>
-                      {/* <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 3</a> */}
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault15"
-                        >
-                          Drawing
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault15"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="Drawing"
-                        />
-                      </div>
-                      {/* <a href="#" className="nav-link px-0"> <span className="d-none d-sm-inline">Product</span> 4</a> */}
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault16"
-                        >
-                          Stoicism
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault16"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="Stoi"
-                        />
-                      </div>
-                    </li>
-                    <li>
-                      <div className="form-check">
-                        <label
-                          className="form-check-label mySmallText"
-                          for="flexRadioDefault17"
-                        >
-                          Arabic literature
-                        </label>
-                        <input
-                          className="form-check-input mySmallCheckbox"
-                          type="radio"
-                          name="flexRadioDefault"
-                          id="flexRadioDefault17"
-                          onChange={(e) => handelChangeLang(e)}
-                          value="literature"
-                        />
-                      </div>
-                    </li>
+                    ))
+                    }
                   </ul>
                 </li>
                 <hr
@@ -663,7 +398,6 @@ function Books() {
           </li>
         )}
       </ul>
-      <Footer />
     </div>
   );
 }

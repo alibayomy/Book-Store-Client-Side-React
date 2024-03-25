@@ -4,7 +4,7 @@ import useAxios from "../../Network/AxiosInstance";
 import { AuthContext } from "../../Context/AuthContext";
 import { useSelector, useDispatch } from "react-redux";
 
-export function Categories(props) {
+export function Publishers(props) {
 
     const dispatch = useDispatch();
     let api = useAxios()
@@ -13,7 +13,7 @@ export function Categories(props) {
 
     const Category_filter = (test) => {
         console.log(test);
-        dispatch({ type: "CATEGORY_FILTER", payload: test });
+        dispatch({ type: "PUBLISHER_FILTER", payload: test });
     };
 
     return (
@@ -23,9 +23,8 @@ export function Categories(props) {
                     <label
                         class="form-check-label mySmallText"
                         for={props.id} >
-                        {props.category}
+                        {props.f_name}{props.l_name}
                     </label>
-
                     <input
                         class="form-check-input mySmallCheckbox"
                         type="radio"
