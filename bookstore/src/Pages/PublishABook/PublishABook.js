@@ -34,8 +34,8 @@ function PublishABook(props) {
         languageTrigger: 0,
         publicationDateTrigger: 1,
         priceTrigger: 1,
-        quantityTrigger:1,
-        numOfPagesTrigger:1,
+        quantityTrigger: 1,
+        numOfPagesTrigger: 1,
         frontImgTrigger: 1,
         backImgTrigger: 1
 
@@ -48,8 +48,8 @@ function PublishABook(props) {
         languageInput: "English",
         publicationDate: new Date().toLocaleString('en-GB', options) + '',
         priceInput: "",
-        quantityInput:"",
-        numOfPagesInput:"",
+        quantityInput: "",
+        numOfPagesInput: "",
         frontIMG: null,
         backIMG: null
     })
@@ -57,7 +57,7 @@ function PublishABook(props) {
     const [frontBookImg, setFrontBookImg] = useState(null)
     const [backBookImg, setBackBookImg] = useState(null)
     const [bookCategories, setBookCategories] = useState(null)
-    const[lstAuthors, setLstAuthors] = useState(null)
+    const [lstAuthors, setLstAuthors] = useState(null)
     const [error, setError] = useState({
         authorNameError: "",
         titleError: "",
@@ -67,8 +67,8 @@ function PublishABook(props) {
         languageError: "",
         publicationDateError: "",
         priceError: "",
-        quantityError:"",
-        numOfPagesError:"",
+        quantityError: "",
+        numOfPagesError: "",
         frontImgError: "",
         backImgError: ""
     })
@@ -80,8 +80,8 @@ function PublishABook(props) {
         languageErrorClass: "",
         publicationDateErrorClass: "",
         priceErrorClass: "",
-        quantityErrorClass:"",
-        numOfPagesErrorClass:"",
+        quantityErrorClass: "",
+        numOfPagesErrorClass: "",
         frontImgErrorClass: "",
         backImgErrorClass: ""
     })
@@ -90,34 +90,38 @@ function PublishABook(props) {
     const [categories, setCategoris] = useState({})
     const [authors, setAuthors] = useState({})
 
-    async function fetchData(){
+    async function fetchData() {
 
-        await api.get('/list-cateory/')
-            .then((res) => {
-                setCategoris(res.data.results)
-                console.log(res.data.results)
-            })
-            .then( api.get('account/publisher-authors/')
-            .then((response) => {
-                const transformedAuthors = response.data.results.map(author => ({
-                    value: author.id,
-                    label: `${author.f_name} ${author.l_name}`
-                  }));
-                  console.log(transformedAuthors)
-                  setAuthors(transformedAuthors);
-            })
-            .catch((err) => {console.log(err)
-            setAuthors([])}))
-            .catch((err) => {
-                console.log(err)
-                setCategoris([])})
+        await
+            api.get('/list-cateory/')
+                .then((res) => {
+                    setCategoris(res.data.results)
+                    console.log(res.data.results)
+                })
+                .then(api.get('account/publisher-authors/')
+                    .then((response) => {
+                        const transformedAuthors = response.data.results.map(author => ({
+                            value: author.id,
+                            label: `${author.f_name} ${author.l_name}`
+                        }));
+                        console.log(transformedAuthors)
+                        setAuthors(transformedAuthors);
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        setAuthors([])
+                    }))
+                .catch((err) => {
+                    console.log(err)
+                    setCategoris([])
+                })
     }
 
-    useEffect(() =>  {
-      fetchData()
-      
+    useEffect(() => {
+        fetchData()
+
     }, [])
- 
+
 
 
     function titleValidation(e) {
@@ -222,8 +226,8 @@ function PublishABook(props) {
 
     }
 
-    function quantityValidation(e){
-        setInput({...input, quantityInput: e.target.value})
+    function quantityValidation(e) {
+        setInput({ ...input, quantityInput: e.target.value })
         console.log(quantityRegex.test(e.target.value))
         if (!quantityRegex.test(e.target.value)) {
             setError({ ...error, quantityError: "Invalid quantity number " })
@@ -239,15 +243,15 @@ function PublishABook(props) {
     }
 
 
-    function numOfPagesValidation(e){
-        setInput({...input, numOfPagesInput: e.target.value})
+    function numOfPagesValidation(e) {
+        setInput({ ...input, numOfPagesInput: e.target.value })
         if (!quantityRegex.test(e.target.value)) {
             setError({ ...error, numOfPagesError: "Invalid  number of pages " })
             setErrorClass({ ...errorClass, numOfPagesErrorClass: "is-invalid" })
             setTrirger({ ...trigger, numOfPagesTrigger: 1 })
         }
         else {
-            setError({ ...error, numOfPagesError:"" })
+            setError({ ...error, numOfPagesError: "" })
             setErrorClass({ ...errorClass, numOfPagesErrorClass: "is-valid" })
             setTrirger({ ...trigger, numOfPagesTrigger: 0 })
         }
@@ -299,14 +303,13 @@ function PublishABook(props) {
     function checkSubmission(e) {
         e.preventDefault()
         let formisvalid = true
-        if (!lstAuthors || !bookCategories){
+        if (!lstAuthors || !bookCategories) {
             formisvalid = false
             setSubmitError(<div className="alert alert-danger fw-bold" role="alert">
-            Error input please make sure you fill all the form with no errors
+                Error input please make sure you fill all the form with no errors
             </div>)
         }
-        else 
-        {
+        else {
             setError({ ...error, categoryError: "" })
             formisvalid = true
             for (let value of Object.values(trigger)) {
@@ -334,7 +337,7 @@ function PublishABook(props) {
                     "category": bookCategories.value,
                     "total_number_of_book": input.quantityInput,
                     "no_of_page": input.numOfPagesInput,
-                    "publisher" : user.user_id
+                    "publisher": user.user_id
 
                 }
                 const config = {
@@ -422,12 +425,12 @@ function PublishABook(props) {
                         </div>
                         <div className="col-12 d-flex justify-content-between">
                             <div className="col-6 me-2">
-                                <PublishInputComponent min = {0} labelFor="quantity" labelContent="Quantity"
+                                <PublishInputComponent min={0} labelFor="quantity" labelContent="Quantity"
                                     type="number" className={`mb-3 ${errorClass.quantityErrorClass}`} name="quantity"
                                     changeFunction={(e) => quantityValidation(e)} errorMess={error.quantityError}></PublishInputComponent>
                             </div>
                             <div className="col-6 ms-2">
-                                <PublishInputComponent min = {0} labelFor="numOfPages" labelContent="Number Of Pages"
+                                <PublishInputComponent min={0} labelFor="numOfPages" labelContent="Number Of Pages"
                                     type="number" className={`mb-3 ${errorClass.numOfPagesErrorClass}`} name="numOfPages"
                                     changeFunction={(e) => numOfPagesValidation(e)} errorMess={error.numOfPagesError}></PublishInputComponent>
                             </div>

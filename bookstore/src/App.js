@@ -11,6 +11,7 @@ import Login from "./Pages/Login/Login";
 import ClientSelectComponent from "./Pages/ClientSelect/ClientSelectComponent";
 import RegitserComponent from "./Pages/Register/RegisterComponent";
 import FilterBooks from "./Pages/FilterPage/FilterPage";
+import FilterPublisher from "./Pages/FilterPage/FilterPublisher";
 import FilterPrice from "./Pages/FilterPage/FilterPrice";
 import PublisherOrderList from "./Pages/PublisherOrder/PunlisherOrderList";
 import PublishABook from "./Pages/PublishABook/PublishABook";
@@ -47,6 +48,7 @@ const App = () => {
             <PrivateRoute path="/checkout" component={CheckoutPage} />
             <Route path="/viewbook/:id" component={ViewBook} />
             <Route exact path={"/filter"} component={FilterBooks} />
+            <Route exact path={"/filterPublisher"} component={FilterPublisher} />
             <Route exact path={"/filterPrice"} component={FilterPrice} />
             <PrivateRoute path="/cart" component={Cart} />
             <PrivateRoute path="/checkout" component={Checkout} />
