@@ -17,7 +17,7 @@ function PublisherAuthors(){
     }, [])
 return(
     <>
-    <div className="container">
+    <div className="container vh-100">
         <div className="row">
     {
         authors?.map((author) => {

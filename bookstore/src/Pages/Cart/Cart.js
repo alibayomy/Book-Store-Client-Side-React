@@ -42,7 +42,7 @@ function Cart() {
   };
 
   return (
-    <div className="border m-2 mb-4">
+    <div className="border m-2 mb-4 vh-100">
       <h2 className="m-3 ">Cart Page</h2>
 
       <table className="table shadow">
