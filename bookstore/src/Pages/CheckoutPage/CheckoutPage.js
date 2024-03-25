@@ -86,6 +86,19 @@ function CheckoutPage() {
       .catch((err) => console.log(err));
   };
   console.log(items);
+
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get(`http://127.0.0.1:8000/api-order/${current_user}/cart`)
+      .then((res) => {
+        setItems(res.data.cart.cart_items);
+        setTotalPrice(res.data.cart.total_price_cart);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="checkout-page">
       <div className="container py-4">
@@ -155,25 +168,12 @@ function CheckoutPage() {
                   <div className="order-summary">
                     <h6 className="mb-4">Your order</h6>
                     <div className="px-2">
-                      <div className="d-flex justify-content-between">
-                        <p>Product</p>
-                        <p>Subtotal</p>
-                      </div>
-                      <hr className="mt-0 mb-3"></hr>
-                      <div className="d-flex justify-content-between">
-                        <p>The Throned Mirror × 1</p>
-                        <p>EGP23.00</p>
-                      </div>
-                      <hr className="mt-0 mb-3"></hr>
-                      <div className="d-flex justify-content-between">
-                        <p>Subtotal</p>
-                        <p>EGP23.00</p>
-                      </div>
                       <hr className="mt-0 mb-3"></hr>
                       <div className="d-flex justify-content-between">
                         <p>Total</p>
-                        <p>EGP23.00</p>
+                        <p>EGP {totalPrice}</p>
                       </div>
+                      <hr className="mt-0 mb-3"></hr>
                     </div>
                     <button type="submit" className="outline-button w-100 mb-1">
                       Palce Order using Stripe

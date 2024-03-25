@@ -8,6 +8,7 @@ import { CartPage } from "../../Components/ShoppingCart/CartPage";
 
 function Cart() {
   const history = useHistory();
+  const api = useAxios();
   const current_user =
     useContext(AuthContext).user !== null
       ? useContext(AuthContext).user.user_id
