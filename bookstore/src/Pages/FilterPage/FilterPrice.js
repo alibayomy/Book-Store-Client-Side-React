@@ -6,11 +6,10 @@ import { CircleArrow as ScrollUpButton } from "react-scroll-up-button";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fromPrice } from "../../Store/Actions/CheckPriceAction";
+import Footer from "../../Components/Footer/Footer";
+import Filtering from "../../Components/ShoppingCart/testCard";
 
 function Books() {
-  const BaseMainUrl = "https://api.themoviedb.org/3/movie/popular";
-  const BaseAPI = "6883a4d02a15e877d54e507dbc703331";
-
   const history = useHistory();
 
   const [language, setLanguage] = useState("Popular");
@@ -18,15 +17,16 @@ function Books() {
   const [skipItem, setSkipItem] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
 
-  const [pages, setPages] = useState({
-    results: [],
-  });
-  const [page2, setPage2] = useState([]);
-
-  const [allData, setAllData] = useState([]);
+  const localhost = 'http://localhost:8000'
+  const [books, setBooks] = useState([])
 
   const fromPrice = useSelector((state) => state.fromPrice);
   const toPrice = useSelector((state) => state.toPrice);
+
+  const getMoviesToSort = [...books];
+  console.log(getMoviesToSort);
+  const priceBooks = getMoviesToSort.filter(
+    (a) => a.price >= fromPrice + 1 && a.price <= toPrice + 1);
 
   const dispatch = useDispatch();
 
@@ -41,28 +41,12 @@ function Books() {
   useEffect(() => {
     axios
       .get(
-        `https://api.themoviedb.org/3/movie/popular?language=eng&api_key=da4e0d3bd6b4f860b5788aa43ae24d86`
+        `${localhost}/list-book/`
       )
-      .then((res) =>
-        setPages({
-          results: res.data.results,
-        })
-      )
-      .catch((err) => console.log(err));
-
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/popular?language=eng&page=2&api_key=da4e0d3bd6b4f860b5788aa43ae24d86`
-      )
-      .then((res) => setPage2(res.data.results))
+      .then((res) => { console.log(res.data.results), setBooks(res.data.results), console.log(books) })
       .catch((err) => console.log(err));
   }, []);
 
-  const getMoviesToSort = [...pages.results];
-  console.log(getMoviesToSort);
-  const priceBooks = getMoviesToSort.filter(
-    (a) => a.vote_count > fromPrice && a.vote_count < toPrice
-  );
 
   const handelChangeLang = (e) => {
     setLanguage(e.target.value);
@@ -97,16 +81,17 @@ function Books() {
 
   return (
     <div className="">
-      <ol className="breadcrumb mt-5 p-1 bg-secondary ">
-        <li className="breadcrumb-item ms-3">
-          <Link className="text-muted text-decoration-none" to="/">
+
+      <ol className="breadcrumb mt-5 p-1 bg-body-tertiary shadow-sm">
+        <li className="breadcrumb-item ms-2">
+          <Link className="text-decoration-none text-dark" to="/">
             Home
           </Link>
         </li>
-        <i className="bi bi-chevron-right mx-2"></i>
-        <li className="breadcrumb-item active " aria-current="page">
-          <Link className="text-decoration-none text-light" to="/books">
-            Book
+        <i class="bi bi-chevron-right mx-2"></i>
+        <li className="breadcrumb-item active" aria-current="page">
+          <Link className=" text-decoration-none text-dark" to="/books">
+            Books
           </Link>
         </li>
       </ol>
@@ -594,7 +579,7 @@ function Books() {
                       </div>
                       <div className="text-center">
                         <button
-                          className="form-check-label btn btn-outline-success mt-3"
+                          className="btn filled-button  mt-3"
                           for="flexRadioDefault13"
                           onClick={() => history.push("/filterPrice")}
                         >
@@ -608,22 +593,28 @@ function Books() {
             </div>
           </div>
 
-          <div className="col py-3">
+          <div class="col py-3 ms-3">
             <h2 className="section-heading mb-4">Your Filters</h2>
             <div className="row">
-              {priceBooks.map((book) => {
-                return (
-                  <MyAllCards
-                    key={book.id}
-                    imageUrl={`https://image.tmdb.org/t/p/w500/${book.poster_path}`}
-                    title={book.title}
-                    category="action"
-                    path={`viewbook/${book.id}`}
-                    rating={book.vote_average.toFixed(2) - 3}
-                    price={book.vote_count.toFixed(0)}
-                  />
-                );
-              })}
+              <Filtering
+                item={priceBooks}
+              />
+
+              {/* {priceBooks.map((book) => (
+                <MyAllCards
+                  key={book.id}
+                  imageUrl={book.front_img}
+                  title={book.name}
+                  category={book.category_name}
+                  path={`viewbook/${book.id}`}
+                  rating="3"
+                  price={book.price}
+                  publisher={book.publisher}
+                  quantity={book.total_number_of_book}
+                  book_id={book.id}
+
+                />
+              ))} */}
             </div>
           </div>
         </div>
@@ -638,7 +629,7 @@ function Books() {
           <li className="page-item">
             <button
               onClick={() => previousPage(pageNumber)}
-              className="page-link"
+              className="page-link "
             >
               Previous
             </button>
@@ -672,6 +663,7 @@ function Books() {
           </li>
         )}
       </ul>
+      <Footer />
     </div>
   );
 }

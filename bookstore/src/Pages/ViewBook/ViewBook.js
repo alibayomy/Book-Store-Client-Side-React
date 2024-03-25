@@ -10,13 +10,13 @@ import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import useAxios from "../../Network/AxiosInstance";
 
 function ViewBook() {
-  const [book_id,setBookId]=useState(1);
-  const [book,setBook]=useState({})
-  const [price,setPrice] = useState(0);
+  const [book_id, setBookId] = useState(1);
+  const [book, setBook] = useState({})
+  const [price, setPrice] = useState(0);
   const [amount, setAmount] = useState(1);
   const [noOfReviews, setNoOfReviews] = useState(0);
-  const book_name=useParams().id;
-  const localhost='http://localhost:8000'
+  const book_name = useParams().id;
+  const localhost = 'http://localhost:8000'
   // const getAllRates=(id,localhost='http://localhost:8000')=>{  
   //   axios.get(`${localhost}/rate/get-all-rates/${id}`)
   // .then((res) => (console.log(res.data.data),setReviews(res.data.data)))
@@ -26,24 +26,31 @@ function ViewBook() {
   // }
 
   let api = useAxios()
-  const getAllRates=(id,localhost='http://localhost:8000')=>{  
+  const getAllRates = (id, localhost = 'http://localhost:8000') => {
     api.get(`${localhost}/rate/get-all-rates/${id}`)
-  .then((res) => (console.log(res.data.data),setNoOfReviews(res.data.data.length)))
-  .catch((err) => console.log(err));}
+      .then((res) => (console.log(res.data.data), setNoOfReviews(res.data.data.length)))
+      .catch((err) => console.log(err));
+  }
   useEffect(() => {
     api
       .get(
         `${localhost}/${book_name}-book/details`
       )
-      .then((res) =>(setBook(res.data.book)))
-      .catch((err) => console.log(err)); 
+      .then((res) => (setBook(res.data.book)))
+      .catch((err) => console.log(err));
   }, []);
   console.log(noOfReviews)
   console.log(book)
   return (
     <div>
-      <ProductDetails book={book}/>
-      <DescriptionReview book_id={book?.id} disc={book?.description}/>
+      <ProductDetails
+        book={book}
+        price={book.price}
+        publisher={book.publisher}
+        quantity={book.total_number_of_book}
+        book_id={book.id}
+      />
+      <DescriptionReview book_id={book?.id} disc={book?.description} />
       <RelatedProducts />
       <Footer />
     </div>

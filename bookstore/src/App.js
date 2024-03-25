@@ -11,6 +11,7 @@ import Login from "./Pages/Login/Login";
 import ClientSelectComponent from "./Pages/ClientSelect/ClientSelectComponent";
 import RegitserComponent from "./Pages/Register/RegisterComponent";
 import FilterBooks from "./Pages/FilterPage/FilterPage";
+import FilterPublisher from "./Pages/FilterPage/FilterPublisher";
 import FilterPrice from "./Pages/FilterPage/FilterPrice";
 import PublisherOrderList from "./Pages/PublisherOrder/PunlisherOrderList";
 import PublishABook from "./Pages/PublishABook/PublishABook";
@@ -51,6 +52,7 @@ const App = () => {
             <Route path="/checkout" component={CheckoutPage} />
             <Route path="/viewbook/:id" component={ViewBook} />
             <Route exact path={"/filter"} component={FilterBooks} />
+            <Route exact path={"/filterPublisher"} component={FilterPublisher} />
             <Route exact path={"/filterPrice"} component={FilterPrice} />
             <Route path="/cart" component={Cart} />
             <Route path="/checkout" component={Checkout} />
@@ -88,14 +90,14 @@ const App = () => {
               component={PublisherBooks}
             />
             <PublisherPrivateRoute
-            exact
-            path={"/publisher/authors"}
-            component={PublisherAuthors}
+              exact
+              path={"/publisher/authors"}
+              component={PublisherAuthors}
             />
             <PublisherPrivateRoute
-            exact
-            path={"/publisher/updateauthor/:id"}
-            component={PublisherAuthorDetails}
+              exact
+              path={"/publisher/updateauthor/:id"}
+              component={PublisherAuthorDetails}
             />
             <Route exact path="/test" component={test}></Route>
           </Switch>

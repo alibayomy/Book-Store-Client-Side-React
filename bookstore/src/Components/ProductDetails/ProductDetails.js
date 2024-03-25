@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import "./ProductDetails.css";
 import productImg from "../../images/author-book-store-book-cover-06.jpg";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIndent } from "@fortawesome/free-solid-svg-icons";
+import { useSelector, useDispatch } from "react-redux";
+import useAxios from "../../Network/AxiosInstance";
+import { AuthContext } from "../../Context/AuthContext";
 
 function ProductDetails(props) {
   const product = {
@@ -38,6 +41,31 @@ function ProductDetails(props) {
     setAmount(newValue);
     // console.log(newValue);
   };
+
+
+  const dispatch = useDispatch();
+  let api = useAxios();
+  const localhost = 'http://localhost:8000'
+  const [cart, setCart] = useState([])
+  const { user } = useContext(AuthContext);
+  const current_user = (useContext(AuthContext).user) !== null ? (useContext(AuthContext).user.user_id) : 0
+
+  const onAddClicked = (item_id, publisher_id, total_quantity) => {
+
+    api.post(`${localhost}/api-order/${current_user}/cart`, {
+      book_id: item_id,
+      CustomPublisher_id: publisher_id,
+      total_number_of_book: total_quantity,
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then((res) => {
+        console.log(res.data.cart.cart_items), setCart(res.data.cart.cart_items),
+          dispatch({ type: "CART_COUNTER", payload: res.data.cart.cart_items.length })
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <div>
@@ -91,9 +119,9 @@ function ProductDetails(props) {
                   min="1"
                   onChange={handleAmountChange}
                 />
-                <Link to="/" className="outline-button mb-3">
-                  Add To Cart
-                </Link>
+                <button className="outline-button"
+                  onClick={() => onAddClicked(props.book_id, props.publisher, 1)}>
+                  Add To Cart</button>
               </div>
               <hr />
               <div>

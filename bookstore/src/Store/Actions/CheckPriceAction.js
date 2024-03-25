@@ -20,6 +20,20 @@ export const cartNumber = (payload) => {
   };
 };
 
+export const categoryFilter = (payload) => {
+  return {
+    type: 'CATEGORY_FILTER',
+    payload
+  };
+};
+
+export const publisherFilter = (payload) => {
+  return {
+    type: 'PUBLISHER_FILTER',
+    payload
+  };
+};
+
 export const search = (payload) => {
   return {
     type: "setSearch",
