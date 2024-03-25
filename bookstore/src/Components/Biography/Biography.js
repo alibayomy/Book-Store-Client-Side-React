@@ -16,9 +16,9 @@ function Biography() {
               <h6 className="mb-3 cool-text">NEW RELEASE</h6>
               <h1 className="display-4 fw-bolder">John Roberts</h1>
               <p className="lead">
-                Vulputate vulputate eget cursus nam ultricies mauris, malesuada
-                elementum lacus arcu, sit dolor ipsum, ac felis, egestas vel
-                tortor eget aenean nam.
+                ‍We believe local bookstores are essential community hubs that
+                foster culture, curiosity, and a love of reading, and we're
+                committed to helping them thrive.
               </p>
               <Link to="/books" className="outline-button">
                 View Books

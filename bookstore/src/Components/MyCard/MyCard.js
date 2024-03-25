@@ -6,7 +6,7 @@ function MyCard(props) {
   return (
     <div key={props.id} className="col-lg-3 col-md-6 mt-3 mb-4">
       <div className="card my-card bg-body-tertiary h-100 rounded-0 border-0">
-        <Link to="/viewbook">
+        <Link to={props.path}>
           <img
             src={props.imageUrl}
             alt={props.title}

@@ -9,17 +9,19 @@ import PublishImgCard from "../../Components/PublishImgCard/PublishImgCard";
 import useAxios from "../../Network/AxiosInstance";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { AuthContext } from "../../Context/AuthContext";
+import { Regex } from "react-bootstrap-icons";
 
 
 
 
 function PublishABook(props) {
 
-    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’‘—“”…\-–`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
+    const discriptionRegex = new RegExp(/^[\s\w\d\?><;,.()'*\\/":~’‘—“”…\-–•`\{\}\[\]\-_\+=!@\#\$%^&\*\|\']*$/i)
     const priceRegex = new RegExp(/^((\d+)((,\d+|\d+)*)(\s*|\.(\d{2}))$)/)
     var options = { day: 'numeric', month: 'numeric', year: 'numeric' };
     const quantityRegex = new RegExp(/^[0-9]*$/)
-    let { user } = useContext(AuthContext)
+    const IsbnRegex = new RegExp(/ISBN/)
+    let {user} = useContext(AuthContext)
     const history = useHistory()
 
     let api = useAxios()
@@ -350,9 +352,9 @@ function PublishABook(props) {
                     history.push('/dashboard')
                 })
                     .catch((err) => {
-                        console.log(err)
+                        console.log(IsbnRegex.test(err.response.request.responseText))
                         setSubmitError(<div className="alert alert-danger" role="alert">
-                            {err.response.request.responseText}
+                            Book with this Regex already exists
                         </div>)
                     })
 

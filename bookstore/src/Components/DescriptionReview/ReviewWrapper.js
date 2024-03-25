@@ -11,6 +11,7 @@ function ReviewWrapper(props) {
   const [reviews, setReviews] = useState([]);
   const localhost='http://localhost:8000'
   const current_user=(useContext(AuthContext).user)!==null?(useContext(AuthContext).user.user_id):0
+  const is_publisher=current_user? useContext(AuthContext).user.is_publisher?true:false:false
   const [rate, setRate] = useState(null);
   const getAllRates=(id,localhost='http://localhost:8000')=>{  
     axios.get(`${localhost}/rate/get-all-rates/${id}`)
@@ -96,7 +97,7 @@ function ReviewWrapper(props) {
   },[])
   return (
     <div>
-      {id?<ReviewForm addReview={addReview} editReview={editReview} id={id} coming_rate={rate} coming_comment={comment}/>:<ReviewForm addReview={addReview} editReview={editReview} id={0} coming_rate={0} coming_comment={""}/>}
+      {!is_publisher?id?<ReviewForm addReview={addReview} editReview={editReview} id={id} coming_rate={rate} coming_comment={comment}/>:<ReviewForm addReview={addReview} editReview={editReview} id={0} coming_rate={0} coming_comment={""}/>:<></>}
       <div className="mb-3 fs-3">Reviews</div>
       {reviews.map((review, index) => (
         <Review

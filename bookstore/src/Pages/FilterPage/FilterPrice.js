@@ -24,9 +24,9 @@ function Books() {
   const toPrice = useSelector((state) => state.toPrice);
 
   const getMoviesToSort = [...books];
-  console.log(getMoviesToSort);
   const priceBooks = getMoviesToSort.filter(
     (a) => a.price >= fromPrice + 1 && a.price <= toPrice + 1);
+  console.log(priceBooks);
 
   const dispatch = useDispatch();
 

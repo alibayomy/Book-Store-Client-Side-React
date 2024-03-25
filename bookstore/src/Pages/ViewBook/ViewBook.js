@@ -18,6 +18,7 @@ function ViewBook() {
   const book_name = useParams().id;
   const localhost = 'http://localhost:8000'
   // const getAllRates=(id,localhost='http://localhost:8000')=>{  
+  // const getAllRates=(id,localhost='http://localhost:8000')=>{
   //   axios.get(`${localhost}/rate/get-all-rates/${id}`)
   // .then((res) => (console.log(res.data.data),setReviews(res.data.data)))
   // .catch((err) => console.log(err));}
@@ -33,14 +34,20 @@ function ViewBook() {
   }
   useEffect(() => {
     api
-      .get(
-        `${localhost}/${book_name}-book/details`
+      .get(`${localhost}/rate/get-all-rates/${id}`)
+      .then(
+        (res) => (
+          console.log(res.data.data), setNoOfReviews(res.data.data.length)
+        )
       )
-      .then((res) => (setBook(res.data.book)))
+      .catch((err) => console.log(err));
+    axios
+      .get(`${localhost}/${book_name}-book/details`)
+      .then((res) => setBook(res.data.book))
       .catch((err) => console.log(err));
   }, []);
-  console.log(noOfReviews)
-  console.log(book)
+  console.log(noOfReviews);
+  console.log(book);
   return (
     <div>
       <ProductDetails
@@ -52,7 +59,6 @@ function ViewBook() {
       />
       <DescriptionReview book_id={book?.id} disc={book?.description} />
       <RelatedProducts />
-      <Footer />
     </div>
   );
 }

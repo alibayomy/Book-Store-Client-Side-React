@@ -14,7 +14,7 @@ import Filtering from "../../Components/ShoppingCart/testCard";
 
 function Books() {
 
-  const localhost = 'http://localhost:8000'
+  const localhost = "http://localhost:8000";
   const history = useHistory();
 
   const [language, setLanguage] = useState("en");
@@ -47,10 +47,12 @@ function Books() {
       })
 
     axios
-      .get(
-        `${localhost}/list-book/`
-      )
-      .then((res) => { console.log(res.data.results), setBooks(res.data.results), console.log(books) })
+      .get(`${localhost}/list-book/`)
+      .then((res) => {
+        console.log(res.data.results),
+          setBooks(res.data.results),
+          console.log(books);
+      })
       .catch((err) => console.log(err));
   }, [pageNumber, skipItem, language]);
 
@@ -435,7 +437,7 @@ function Books() {
                         <button
                           class=" btn filled-button mt-3"
                           for="flexRadioDefault13"
-                          onClick={() => PriceFilter()}
+                          onClick={() => history.push("/filterPrice")}
                         >
                           check
                         </button>
@@ -476,7 +478,6 @@ function Books() {
                   publisher={book.publisher}
                   quantity={book.total_number_of_book}
                   book_id={book.id}
-
                 />
               ))} */}
             </div>
