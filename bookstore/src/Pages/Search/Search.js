@@ -100,7 +100,7 @@ function Search() {
     return (
       <div>
           {/* dir={language === "ar" ? "rtl" : "ltr"} */}
-          <div className="container-fluid vh-100" >
+          <div className="container-fluid" >
             <div className="row flex-nowrap">
   
               <div class="col py-3">
@@ -128,13 +128,7 @@ function Search() {
                 <ScrollUpButton />
               </div>
   
-              <ul className="pagination  justify-content-center m-3">
-                {pageNumber > 1 ? <li className="page-item"><button onClick={() => previousPage(pageNumber)} className='page-link'>Previous</button></li>
-                  : <li className="page-item"><button onClick={() => previousPage(pageNumber)} className='page-link disabled'>Previous</button></li>}
-                {pageNumber >= 1 && pageNumber <= 3 ? <li className="page-item"> <button onClick={() => nextPage(pageNumber)} className='page-link'>Next</button></li>
-                  : <li className="page-item"> <button onClick={() => nextPage(pageNumber)} className='page-link disabled'>Next</button></li>}
-  
-              </ul>
+         
       </div>
     );
   }

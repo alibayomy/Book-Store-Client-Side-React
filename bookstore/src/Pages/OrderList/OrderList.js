@@ -24,7 +24,7 @@ function OrderList() {
   },[])
   console.log(orders)
   return (
-    <div className=" border m-2 mb-4 vh-100">
+    <div className=" border m-2 mb-4">
       <h2 className="m-3">Order List</h2>
       <div className="table-responsive">
           {orders.map((order)=>{

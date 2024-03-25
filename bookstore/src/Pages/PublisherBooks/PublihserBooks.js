@@ -24,7 +24,7 @@ function PublisherBooks() {
     return (
         <>
 
-            <div className="row vh-100">
+            <div className="row ">
                 {books.map((book) => (
                     <PublisherBooksCards
                         id= {book.id}
