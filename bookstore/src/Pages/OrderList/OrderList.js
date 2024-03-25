@@ -29,7 +29,7 @@ function OrderList() {
           {orders.map((order)=>{
             return(
               <>
-                            <p>{`order date :${order.ordered_date}`}</p>
+              <h5 className="text-center fw-bolder">{`Order Date :${order.ordered_date}`}</h5>
                <table className="table bg-white">
           <thead>
             <tr className="text-center">
