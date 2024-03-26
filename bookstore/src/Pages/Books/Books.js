@@ -20,6 +20,7 @@ function Books() {
 
   const [skipItem, setSkipItem] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
+  const [next,setNext]=useState(true)
 
 
   const [books, setBooks] = useState([])
@@ -45,10 +46,11 @@ function Books() {
         setAuthors(transformedAuthors);
       })
 
-    axios.get(`${localhost}/list-book/`)
+    axios.get(`${localhost}/list-book/?page=${pageNumber}`)
       .then((res) => {
         console.log(res.data.results),
           setBooks(res.data.results),
+          setNext(res.data.next),
           console.log(books);
       })
       .catch((err) => console.log(err));
@@ -86,29 +88,10 @@ function Books() {
 
   const previousPage = (pagNum) => {
     setPageNumber(--pagNum);
-    if (pagNum == 1) {
-      setSkipItem(0);
-    } else if (pagNum == 2) {
-      setSkipItem(25);
-    } else if (pagNum == 3) {
-      setSkipItem(50);
-    } else if (pagNum == 4) {
-      setSkipItem(75);
-    }
   };
 
   const nextPage = (pagNum) => {
     setPageNumber(++pagNum);
-    if (pagNum == 1) {
-      setSkipItem(0);
-    } else if (pagNum == 2) {
-      console.log("yes in page 2");
-      setSkipItem(25);
-    } else if (pagNum == 3) {
-      setSkipItem(50);
-    } else if (pagNum == 4) {
-      setSkipItem(75);
-    }
   };
 
   return (
@@ -395,7 +378,7 @@ function Books() {
             </button>
           </li>
         )}
-        {pageNumber >= 1 && pageNumber <= 3 ? (
+        {next? (
           <li className="page-item">
             {" "}
             <button onClick={() => nextPage(pageNumber)} className="page-link">

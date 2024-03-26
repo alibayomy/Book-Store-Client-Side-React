@@ -27,11 +27,6 @@ function ViewBook() {
   // }
 
   let api = useAxios()
-  const getAllRates = (id, localhost = 'http://localhost:8000') => {
-    api.get(`${localhost}/rate/get-all-rates/${id}`)
-      .then((res) => (console.log(res.data.data), setNoOfReviews(res.data.data.length)))
-      .catch((err) => console.log(err));
-  }
   useEffect(() => {
     api
       .get(`${localhost}/rate/get-all-rates/${book_name}`)
