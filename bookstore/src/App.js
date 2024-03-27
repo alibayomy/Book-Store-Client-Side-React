@@ -39,7 +39,7 @@ const App = () => {
     <AuthProvider>
       <Router>
         <NavBar />
-        <div className="container mt-4">
+        <div className="container mt-4 mb-4">
           <Switch>
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile/:user_id" exact component={Profile} />
@@ -101,7 +101,9 @@ const App = () => {
             />
           </Switch>
         </div>
-        <Footer />
+        <div style={{height:"25rem"}} >
+          <Footer />
+        </div>
       </Router>
     </AuthProvider>
   );

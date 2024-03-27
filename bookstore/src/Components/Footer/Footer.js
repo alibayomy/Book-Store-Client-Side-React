@@ -10,7 +10,7 @@ import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 function Footer() {
   return (
     <div>
-      <footer className="footer-section mt-5 bg-dark text-light p-5 position-sticky bottom-0">
+      <footer className="footer-section mt-5 bg-dark text-light p-5 position-fixed bottom-0 w-100 ">
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-2 col-md-12 text-sm-center mb-4 mb-lg-0">
