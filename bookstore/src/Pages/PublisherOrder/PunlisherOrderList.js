@@ -1,26 +1,26 @@
-import React, { useEffect, useState ,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import useAxios from '../../Network/AxiosInstance';
 import './PublisherOrderList.css';
 import { AuthContext } from '../../Context/AuthContext';
 
 function PublisherOrderList() {
   const [orders, setOrders] = useState([]);
-  console.log(useContext(AuthContext).user)
+  console.log(useContext(AuthContext).user);
 
   const api = useAxios();
-  const publisherId = (useContext(AuthContext).user) !== null ? (useContext(AuthContext).user.user_id) : 0
+  const publisherId =
+    useContext(AuthContext).user !== null
+      ? useContext(AuthContext).user.user_id
+      : 0;
   useEffect(() => {
-   
+    api
+      .get(`http://127.0.0.1:8000/api-order/orders/publisher/${publisherId}/`)
 
-    api.get(`http://127.0.0.1:8000/api-order/orders/publisher/${publisherId}/`)
-    
-   
-      .then((res) =>  
-      {
-       setOrders(res.data.orders)
-      console.log(res.data)
+      .then((res) => {
+        setOrders(res.data.orders);
+        console.log(res.data);
       })
-     
+
       .catch((err) => console.log(err));
   }, []);
 
@@ -50,31 +50,39 @@ function PublisherOrderList() {
             Search
           </button>
         </div>
-  
+
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-12">
               <table className="table table-striped table-bordered bg-white">
                 <thead className="text-center">
                   <tr>
-                  <th> User ID</th>
-                    <th>Order ID</th>
-                    <th></th>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total Price</th>
-                    <th>Order Date</th>
-                    <th>Status</th>
+                    <th rowSpan="2">User ID</th>
+                    <th rowSpan="2">Order ID</th>
+                    <th rowSpan="2"></th>
+                    <th rowSpan="2">Product</th>
+                    <th rowSpan="2">Price</th>
+                    <th rowSpan="2">Quantity</th>
+                    <th rowSpan="2">Total Price</th>
+                    <th rowSpan="2">Order Date</th>
+                    <th rowSpan="2">Status</th>
                     {/* <th>Actions</th> */}
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {orders.map((order) =>
-                    order.orderitems.map((orderItem) => (
+                  {orders.map((order) => (
+                    order.orderitems.map((orderItem, index) => (
                       <tr key={orderItem.id}>
-                         <td>{order.user}</td>
-                        <td>{order.id}</td>
+                        {index === 0 && (
+                          <>
+                            <td rowSpan={order.orderitems.length}>
+                              {order.user}
+                            </td>
+                            <td rowSpan={order.orderitems.length}>
+                              {order.id}
+                            </td>
+                          </>
+                        )}
                         <td>
                           <img
                             src={`http://127.0.0.1:8000${orderItem.book.front_img}`}
@@ -100,19 +108,15 @@ function PublisherOrderList() {
                         </td> */}
                       </tr>
                     ))
-                  )}
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
         </div>
       </div>
-
-     
     </>
   );
 }
 
 export default PublisherOrderList;
-
-

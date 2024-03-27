@@ -354,7 +354,7 @@ function PublishABook(props) {
                     .catch((err) => {
                         console.log(IsbnRegex.test(err.response.request.responseText))
                         setSubmitError(<div className="alert alert-danger" role="alert">
-                            Book with this Regex already exists
+                            Book with this ISBN already exists
                         </div>)
                     })
 
