@@ -1,26 +1,28 @@
-import React, { useEffect, useState ,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import useAxios from '../../Network/AxiosInstance';
 import './PublisherOrderList.css';
 import { AuthContext } from '../../Context/AuthContext';
 
 function PublisherOrderList() {
   const [orders, setOrders] = useState([]);
-  console.log(useContext(AuthContext).user)
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 4;
+
+  console.log(useContext(AuthContext).user);
 
   const api = useAxios();
-  const publisherId = (useContext(AuthContext).user) !== null ? (useContext(AuthContext).user.user_id) : 0
-  useEffect(() => {
-   
+  const publisherId =
+    useContext(AuthContext).user !== null
+      ? useContext(AuthContext).user.user_id
+      : 0;
 
-    api.get(`http://127.0.0.1:8000/api-order/orders/publisher/${publisherId}/`)
-    
-   
-      .then((res) =>  
-      {
-       setOrders(res.data.orders)
-      console.log(res.data)
+  useEffect(() => {
+    api
+      .get(`http://127.0.0.1:8000/api-order/orders/publisher/${publisherId}/`)
+      .then((res) => {
+        setOrders(res.data.orders);
+        console.log(res.data);
       })
-     
       .catch((err) => console.log(err));
   }, []);
 
@@ -34,6 +36,13 @@ function PublisherOrderList() {
     }
     return '';
   };
+
+  // Pagination logic
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -50,14 +59,14 @@ function PublisherOrderList() {
             Search
           </button>
         </div>
-  
+
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-12">
               <table className="table table-striped table-bordered bg-white">
                 <thead className="text-center">
                   <tr>
-                  <th> User ID</th>
+                    <th>User ID</th>
                     <th>Order ID</th>
                     <th></th>
                     <th>Product</th>
@@ -66,15 +75,22 @@ function PublisherOrderList() {
                     <th>Total Price</th>
                     <th>Order Date</th>
                     <th>Status</th>
-                    {/* <th>Actions</th> */}
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {orders.map((order) =>
-                    order.orderitems.map((orderItem) => (
+                  {currentOrders.map((order) =>
+                    order.orderitems.map((orderItem, index) => (
                       <tr key={orderItem.id}>
-                         <td>{order.user}</td>
-                        <td>{order.id}</td>
+                        {index === 0 && (
+                          <>
+                            <td rowSpan={order.orderitems.length}>
+                              {order.user}
+                            </td>
+                            <td rowSpan={order.orderitems.length}>
+                              {order.id}
+                            </td>
+                          </>
+                        )}
                         <td>
                           <img
                             src={`http://127.0.0.1:8000${orderItem.book.front_img}`}
@@ -90,29 +106,27 @@ function PublisherOrderList() {
                         <td className={getStatusClass(order.status)}>
                           {order.status}
                         </td>
-                        {/* <td>
-                          <button className="approve-button filled-button">
-                            Approve {orderItem.id}
-                          </button>
-                          <button className="disapprove-button">
-                            Disapprove {orderItem.id}
-                          </button>
-                        </td> */}
                       </tr>
                     ))
                   )}
                 </tbody>
               </table>
+              {/* Pagination */}
+              <ul className="pagination justify-content-center ">
+                {Array.from({ length: Math.ceil(orders.length / ordersPerPage) }).map((_, index) => (
+                  <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                    <button onClick={() => paginate(index + 1)} className=" page-link ">
+                      {index + 1}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
       </div>
-
-     
     </>
   );
 }
 
 export default PublisherOrderList;
-
-
