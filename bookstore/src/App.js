@@ -101,9 +101,6 @@ const App = () => {
             />
           </Switch>
         </div>
-        <div style={{height:"25rem"}} >
-          <Footer />
-        </div>
       </Router>
     </AuthProvider>
   );

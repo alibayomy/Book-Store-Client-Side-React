@@ -75,8 +75,8 @@ function MyAllCards(props) {
                   <h5 className="card-title">{props.title}</h5>
                   {/* Rating */}
                   <div className="d-flex align-items-center">
-                    <span className="ms-1 fs-5 me-1">Rating:</span>
-                    {renderRatingStars()}
+                    <span className="ms-1 fs-5 me-1">Publisher:</span>
+                    {props.publisher_name}
                   </div>
                   <div className="d-flex justify-content-between">
                     {/* Price */}
@@ -104,23 +104,17 @@ function MyAllCards(props) {
 
                 {/* Rating */}
                 <div className="d-flex align-items-center">
-                  <span className="ms-1 fs-5 me-1">Rating:</span>
-                  {renderRatingStars()}
+                <span className="ms-1 fs-5 me-1">Publisher:</span>
+                    {props.publisher_name}
                 </div>
                 <div className="d-flex justify-content-between">
                   {/* Price */}
                   <span className="ms-1 mt-3 fs-5">EGP: {props.price}</span>
 
                   {/* Add to Cart Button */}
-                  {
-                    props.publisher === user.user_id ?
-                      <p>Remaining Quantity: <span> {props.quantity}</span></p>
-                      :
-                      <button className="filled-button"
-                      onClick={() => onAddClicked(props.book_id, props.publisher, 1)}>
-                      Add to Cart</button>
-                  }
-                 
+                  <button className="filled-button"
+                    onClick={() => onAddClicked(props.book_id, props.publisher, 1)}>
+                    Add to Cart</button>
                 </div>
               </div>
             </div>

@@ -5,6 +5,7 @@ import useAxios from "../../Network/AxiosInstance";
 import { jwtDecode } from "jwt-decode";
 import { AuthContext } from "../../Context/AuthContext";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import Footer from "../../Components/Footer/Footer";
 
 function CheckoutPage() {
   const api = useAxios();
@@ -185,6 +186,8 @@ function CheckoutPage() {
           </form>
         </div>
       </div>
+      <Footer />
+
     </div>
   );
 }

@@ -15,6 +15,7 @@ function Home() {
       <Biography />
       <BestBooks />
       <BestSellingBooks />
+      <Footer />
     </div>
   );
 }
