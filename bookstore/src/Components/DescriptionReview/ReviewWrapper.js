@@ -5,6 +5,7 @@ import Review from "./Review";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
+import useAxios from "../../Network/AxiosInstance";
 // import React, { useContext } from "react";
 
 function ReviewWrapper(props) {
@@ -13,8 +14,9 @@ function ReviewWrapper(props) {
   const current_user=(useContext(AuthContext).user)!==null?(useContext(AuthContext).user.user_id):0
   const is_publisher=current_user? useContext(AuthContext).user.is_publisher?true:false:false
   const [rate, setRate] = useState(null);
+  let api=useAxios()
   const getAllRates=(id,localhost='http://localhost:8000')=>{  
-    axios.get(`${localhost}/rate/get-all-rates/${id}`)
+    api.get(`${localhost}/rate/get-all-rates/${id}`)
   .then((res) => (console.log(res.data.data),setReviews(res.data.data),props.getNumOfReviews(res.data.data.length)))
   .catch((err) => console.log(err));}
   const [comment, setComment] = useState("");
@@ -39,10 +41,9 @@ function ReviewWrapper(props) {
     console.log("rate: ",rate," comment: ",comment,"book id: ",props.book_id)
     const currentDate = new Date().toLocaleDateString();
     console.log(props.book_id)
-    axios.post(`${localhost}/rate/create-rate/`, {
+    api.post(`${localhost}/rate/create-rate/`, {
       review :comment,
       rate :rate,
-      user:current_user,
       book:props.book_id},
       {
         headers: {
@@ -67,7 +68,7 @@ function ReviewWrapper(props) {
   const deleteReview = (id) => {
     // http://127.0.0.1:8000/rate/delete-rate/7
     // setReviews(reviews.filter((review) => review.id !== id));
-    axios.delete(`${localhost}/rate/delete-rate/${id}`)
+    api.delete(`${localhost}/rate/delete-rate/${id}`)
     .then((res) => (console.log(`${id} review has been deleted successfuly`),getAllRates(props.book_id)))
     .catch((err) => console.log(err));
   };
@@ -75,10 +76,9 @@ function ReviewWrapper(props) {
   const editReview = (id,rate, comment) => {
     // edit review function
     console.log(`Editing review with id ${id}`);
-    axios.patch(`${localhost}/rate/update-rate/${id}`, {
+    api.patch(`${localhost}/rate/update-rate/${id}`, {
       review :comment,
       rate :rate,
-      user:current_user,
       book:props.book_id})
       .then((res) => (console.log(`${id} review has been updated successfuly`),getAllRates(props.book_id)))
       .catch((err) => console.log(err));
