@@ -5,6 +5,9 @@ import { AuthContext } from '../../Context/AuthContext';
 
 function PublisherOrderList() {
   const [orders, setOrders] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 4;
+
   console.log(useContext(AuthContext).user);
 
   const api = useAxios();
@@ -12,15 +15,14 @@ function PublisherOrderList() {
     useContext(AuthContext).user !== null
       ? useContext(AuthContext).user.user_id
       : 0;
+
   useEffect(() => {
     api
       .get(`http://127.0.0.1:8000/api-order/orders/publisher/${publisherId}/`)
-
       .then((res) => {
         setOrders(res.data.orders);
         console.log(res.data);
       })
-
       .catch((err) => console.log(err));
   }, []);
 
@@ -34,6 +36,13 @@ function PublisherOrderList() {
     }
     return '';
   };
+
+  // Pagination logic
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -57,20 +66,19 @@ function PublisherOrderList() {
               <table className="table table-striped table-bordered bg-white">
                 <thead className="text-center">
                   <tr>
-                    <th rowSpan="2">User ID</th>
-                    <th rowSpan="2">Order ID</th>
-                    <th rowSpan="2"></th>
-                    <th rowSpan="2">Product</th>
-                    <th rowSpan="2">Price</th>
-                    <th rowSpan="2">Quantity</th>
-                    <th rowSpan="2">Total Price</th>
-                    <th rowSpan="2">Order Date</th>
-                    <th rowSpan="2">Status</th>
-                    {/* <th>Actions</th> */}
+                    <th>User ID</th>
+                    <th>Order ID</th>
+                    <th></th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
                 <tbody className="text-center">
-                  {orders.map((order) => (
+                  {currentOrders.map((order) =>
                     order.orderitems.map((orderItem, index) => (
                       <tr key={orderItem.id}>
                         {index === 0 && (
@@ -98,19 +106,21 @@ function PublisherOrderList() {
                         <td className={getStatusClass(order.status)}>
                           {order.status}
                         </td>
-                        {/* <td>
-                          <button className="approve-button filled-button">
-                            Approve {orderItem.id}
-                          </button>
-                          <button className="disapprove-button">
-                            Disapprove {orderItem.id}
-                          </button>
-                        </td> */}
                       </tr>
                     ))
-                  ))}
+                  )}
                 </tbody>
               </table>
+              {/* Pagination */}
+              <ul className="pagination justify-content-center ">
+                {Array.from({ length: Math.ceil(orders.length / ordersPerPage) }).map((_, index) => (
+                  <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                    <button onClick={() => paginate(index + 1)} className=" page-link ">
+                      {index + 1}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
