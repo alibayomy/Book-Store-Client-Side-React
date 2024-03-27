@@ -111,18 +111,24 @@ function ProductDetails(props) {
                 </h3>
                 <p className="mb-0">{movie.overview}</p>
               </div>
-              <div>
-                <input
-                  className="viewbook-input me-3 p-2"
-                  type="number"
-                  value={amount}
-                  min="1"
-                  onChange={handleAmountChange}
-                />
-                <button className="outline-button"
-                  onClick={() => onAddClicked(props.book_id, props.publisher, 1)}>
-                  Add To Cart</button>
-              </div>
+
+              {
+                props.book.publisher === user.user_id ?
+                  <p>Quantity Remaining: {props.quantity}</p>
+                  :
+                  <div>
+                    <input
+                      className="viewbook-input me-3 p-2"
+                      type="number"
+                      value={amount}
+                      min="1"
+                      onChange={handleAmountChange}
+                    />
+                    <button className="outline-button"
+                      onClick={() => onAddClicked(props.book_id, props.publisher, 1)}>
+                      Add To Cart</button>
+                  </div>
+              }
               <hr />
               <div>
                 <span>Category: {props.book.category_name}</span>

@@ -112,9 +112,15 @@ function MyAllCards(props) {
                   <span className="ms-1 mt-3 fs-5">EGP: {props.price}</span>
 
                   {/* Add to Cart Button */}
-                  <button className="filled-button"
-                    onClick={() => onAddClicked(props.book_id, props.publisher, 1)}>
-                    Add to Cart</button>
+                  {
+                    props.publisher === user.user_id ?
+                      <p>Remaining Quantity: <span> {props.quantity}</span></p>
+                      :
+                      <button className="filled-button"
+                      onClick={() => onAddClicked(props.book_id, props.publisher, 1)}>
+                      Add to Cart</button>
+                  }
+                 
                 </div>
               </div>
             </div>
