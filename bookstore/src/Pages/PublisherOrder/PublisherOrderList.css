@@ -11,27 +11,6 @@
   margin-right: 10px;
 }
 
-.approve-button,
-.disapprove-button {
-  display: inline-block;
-  margin: 10px 5px;
-  padding: 10px 30px;
-  border-radius: 30px;
-  text-decoration: none;
-  border: 2px solid transparent;
-}
-
-.disapprove-button {
-  background-color: rgb(168, 168, 168);
-  color: #fff;
-}
-
-.approve-button:hover,
-.disapprove-button:hover {
-  background-color: transparent;
-  border-color: var(--primary);
-  color: var(--primary);
-}
 
 
 

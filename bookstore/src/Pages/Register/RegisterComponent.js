@@ -18,9 +18,13 @@ function RegitserComponent(props) {
     // certificate : ""
   });
   const [certificate, setcertificate] = useState({
-    certificate : ""
+    certificate: ""
   });
 
+  const [RegisterErrorResponse, setRegisterErrorResponse] = useState(
+
+    ""
+  )
   const [registerFormErrors, setRegisterFormErrors] = useState({
     firstNameError: "",
     lastNameError: "",
@@ -35,9 +39,9 @@ function RegitserComponent(props) {
   const [passwordType, setPasswordType] = useState("password");
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
   //   const [submitAttempted, setSubmitAttempted] = useState(false);
-  const history = useHistory(); 
+  const history = useHistory();
   const userType = useParams();
-  console.log('userType---- ',userType.userType)
+  console.log('userType---- ', userType.userType)
 
   const changeFormData = (e) => {
     if (e.target.name === "firstName") {
@@ -86,7 +90,7 @@ function RegitserComponent(props) {
       });
       let passwordMessage;
       const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+[{\]};:'",<.>/?\\|~`])[\w!@#$%^&*()\-_=+[{\]};:'",<.>/?\\|~`]{8,}$/;
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+[{\]};:'",<.>/?\\|~`])[\w!@#$%^&*()\-_=+[{\]};:'",<.>/?\\|~`]{8,}$/;
 
       if (e.target.value.length === 0) {
         passwordMessage = "Password Field is requird";
@@ -110,8 +114,8 @@ function RegitserComponent(props) {
             ? "password don't match"
             : null,
       });
-    }else if (e.target.name === "certificate"){
-      const file = e.target.files[0]; 
+    } else if (e.target.name === "certificate") {
+      const file = e.target.files[0];
       setcertificate({
         ...certificate,
         certificate: file,
@@ -132,7 +136,7 @@ function RegitserComponent(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     let formIsValid = true;
     // Check if any field is empty
     Object.values(registerFormData).forEach((value) => {
@@ -141,7 +145,7 @@ function RegitserComponent(props) {
         console.log("when check all field is empty", formIsValid);
       }
     });
-  
+
     if (!formIsValid) {
       setRegisterFormErrors({
         firstNameError:
@@ -165,47 +169,52 @@ function RegitserComponent(props) {
             ? "Password Field Is Required"
             : null,
       });
-  
+
       console.log("after showing error ", formIsValid);
       console.log(registerFormErrors.passwordError1);
       console.log(registerFormErrors.passwordError2);
     } else {
-      try {
-        if (userType.userType === "publisher") {
+      if (!registerFormErrors.firstNameError && !registerFormErrors.lastNameError && !registerFormErrors.emailError && !registerFormErrors.passwordError1 && !registerFormErrors.passwordError2 && !registerFormErrors.certificateError &&  !registerFormErrors.userNameError) {
+        try {
+          if (userType.userType === "publisher") {
             const formData = new FormData();
             formData.append('first_name', registerFormData.firstName);
             formData.append('last_name', registerFormData.lastName);
             formData.append('email', registerFormData.email);
             formData.append('password', registerFormData.password);
-            formData.append('certificate', certificate.certificate)  
+            formData.append('certificate', certificate.certificate)
             const response = await axios.post('http://127.0.0.1:8000/users/create-publisher/', formData);
             console.log('Publisher registration successful:', response.data);
             history.push('/login', { from: 'register' });
-        } else {
-          const formData = new FormData();
+
+          } else {
+            const formData = new FormData();
             formData.append('first_name', registerFormData.firstName);
             formData.append('last_name', registerFormData.lastName);
             formData.append('email', registerFormData.email);
             formData.append('password', registerFormData.password);
-          const response = await axios.post('http://127.0.0.1:8000/users/create/', formData);
-          console.log('User registration successful:', response.data);
-          history.push('/login', { from: 'register' });
+            const response = await axios.post('http://127.0.0.1:8000/users/create/', formData);
+            console.log('User registration successful:', response.data);
+            history.push('/login', { from: 'register' });
 
-        }      
-      } catch (error) {
-        // console.log(typeof certificate.certificate)
-        console.error('Registration failed:', error.response.data);
+          }
+        }
+        catch (error) {
+          // console.log(typeof certificate.certificate)
+          console.error('Registration failed:', error.response.data);
+          setRegisterErrorResponse(error.response.data)
+        }
       }
     }
   };
-  
-  
+
+
   return (
     <div>
       {/* <div className="mt-4 mb-5 mx-auto"  style={{"width":"150px"}}>
       <img src={book1} style={{"width":"100%","height":"150px"}} className="d-block"/>
     </div> */}
-    <div className="mt-2 mb-3 mx-auto" style={{ width: "150px" }}>
+      <div className="mt-2 mb-3 mx-auto" style={{ width: "150px" }}>
         <img
           src={book1}
           style={{ width: "100%", height: "150px" }}
@@ -213,7 +222,7 @@ function RegitserComponent(props) {
           alt="books"
         />
       </div>
-      {userType.userType ==='client'? <h1 className="text-center loginTitle">Client</h1> : <h1 className="text-center loginTitle">Hello Publisher</h1>}
+      {userType.userType === 'client' ? <h1 className="text-center loginTitle">Client</h1> : <h1 className="text-center loginTitle">Hello Publisher</h1>}
 
       <div className="container mb-5">
         <div className="col-lg-6 col-md-10 col-sm-10 p-4 mt-2 mx-auto border bg-white rounded shadow">
@@ -373,6 +382,13 @@ function RegitserComponent(props) {
                 />
               </div>
             )}
+            {
+              RegisterErrorResponse && <p className="text-danger">
+                {
+                  RegisterErrorResponse.email
+                }
+              </p>
+            }
             <button type="submit" className="filled-button w-100 btn-form">
               Register
             </button>

@@ -97,7 +97,7 @@ function Login() {
         })
         .catch((err) => {
           console.log(err, err.status);
-          setSuccessMessage("Invalid username or password");
+          setSuccessMessage("Invalid email or password");
         });
     }
   };
