@@ -397,7 +397,7 @@ function Books() {
           </li>
         )}
       </ul>
-    <Footer />
+    {/* <Footer /> */}
     </div>
 
   );
