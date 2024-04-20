@@ -6,7 +6,7 @@ import { AuthContext } from '../../Context/AuthContext';
 function PublisherOrderList() {
   const [orders, setOrders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 4;
+  const ordersPerPage = 1;
 
   console.log(useContext(AuthContext).user);
 
@@ -43,6 +43,8 @@ function PublisherOrderList() {
   const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const nextPage = () => setCurrentPage(currentPage + 1);
+  const prevPage = () => setCurrentPage(currentPage - 1);
 
   return (
     <>
@@ -112,15 +114,25 @@ function PublisherOrderList() {
                 </tbody>
               </table>
               {/* Pagination */}
-              <ul className="pagination justify-content-center ">
-                {Array.from({ length: Math.ceil(orders.length / ordersPerPage) }).map((_, index) => (
-                  <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
-                    <button onClick={() => paginate(index + 1)} className=" page-link ">
-                      {index + 1}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              <ul className="pagination justify-content-center">
+  <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+    <button onClick={prevPage} className="page-link" style={{ backgroundColor: '#4d3bc6', color: '#ffffff' }}>
+      Previous
+    </button>
+  </li>
+  {Array.from({ length: Math.ceil(orders.length / ordersPerPage) }).map((_, index) => (
+    <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+      <button onClick={() => paginate(index + 1)} className="page-link" style={{ backgroundColor: '#4d3bc6', color: '#ffffff' }}>
+        {index + 1}
+      </button>
+    </li>
+  ))}
+  <li className={`page-item ${currentPage === Math.ceil(orders.length / ordersPerPage) ? 'disabled' : ''}`}>
+    <button onClick={nextPage} className="page-link" style={{ backgroundColor: '#4d3bc6', color: '#ffffff' }}>
+      Next
+    </button>
+  </li>
+</ul>
             </div>
           </div>
         </div>
