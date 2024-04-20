@@ -75,8 +75,8 @@ function MyAllCards(props) {
                   <h5 className="card-title">{props.title}</h5>
                   {/* Rating */}
                   <div className="d-flex align-items-center">
-                    <span className="ms-1 fs-5 me-1">Rating:</span>
-                    {renderRatingStars()}
+                    <span className="ms-1 fs-5 me-1">Publisher:</span>
+                    {props.publisher_name}
                   </div>
                   <div className="d-flex justify-content-between">
                     {/* Price */}
@@ -104,8 +104,8 @@ function MyAllCards(props) {
 
                 {/* Rating */}
                 <div className="d-flex align-items-center">
-                  <span className="ms-1 fs-5 me-1">Rating:</span>
-                  {renderRatingStars()}
+                <span className="ms-1 fs-5 me-1">Publisher:</span>
+                    {props.publisher_name}
                 </div>
                 <div className="d-flex justify-content-between">
                   {/* Price */}

@@ -16,6 +16,7 @@ const Filtering = ({ item }) => {
                                 path={`viewbook/${book.id}`}
                                 price={book.price}
                                 publisher={book.publisher}
+                                publisher_name = {book.publisher_name}
                                 quantity={book.total_number_of_book}
                                 book_id={book.id}
                             />

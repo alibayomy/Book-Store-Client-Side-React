@@ -39,7 +39,7 @@ const App = () => {
     <AuthProvider>
       <Router>
         <NavBar />
-        <div className="container mt-4">
+        <div className="container mt-4 mb-4 " style={{minHeight: '46vh',}}>
           <Switch>
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile/:user_id" exact component={Profile} />
@@ -101,7 +101,7 @@ const App = () => {
             />
           </Switch>
         </div>
-        <Footer />
+        {window.location.pathname !== '/login'&&window.location.pathname !== '/register'? <Footer />:<></> }
       </Router>
     </AuthProvider>
   );

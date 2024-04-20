@@ -15,6 +15,9 @@ function Home() {
       <Biography />
       <BestBooks />
       <BestSellingBooks />
+      {/* <div className="container-fluid">
+        <Footer/>
+      </div> */}
     </div>
   );
 }

@@ -322,12 +322,12 @@ function Books() {
           <div class="col py-3 ms-3">
             <div className="d-flex justify-content-between">
               <h2 className="section-heading mb-4">All Books</h2>
-              <select className="books-sorting">
+              {/* <select className="books-sorting">
                 <option value="">Default Sorting</option>
                 <option value="">Sort by price</option>
                 <option value="">sort by rating</option>
                 <option value="">sort by sale</option>
-              </select>
+              </select> */}
             </div>
 
             <div className="row">
@@ -397,7 +397,9 @@ function Books() {
           </li>
         )}
       </ul>
+    {/* <Footer /> */}
     </div>
+
   );
 }
 

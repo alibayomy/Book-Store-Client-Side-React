@@ -10,7 +10,7 @@ import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 function Footer() {
   return (
     <div>
-      <footer className="footer-section mt-5 bg-dark text-light p-5 position-sticky bottom-0">
+      <footer className="footer-section mt-5 bg-dark text-light p-5 position-sticky bottom-0 w-100 ">
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-2 col-md-12 text-sm-center mb-4 mb-lg-0">
@@ -53,24 +53,24 @@ function Footer() {
             <div className="d-flex col-lg-2 col-md-12 justify-content-sm-center mb-4 mb-lg-0">
               <ul className="d-flex list-unstyled">
                 <li className="nav-item me-3">
-                  <Link className="nav-link" to="https://www.instagram.com/">
+                  <a className="nav-link" href="https://www.instagram.com/" target="_blank">
                     <FontAwesomeIcon icon={faInstagram} />
-                  </Link>
+                  </a>
                 </li>
                 <li className="nav-item me-3">
-                  <Link className="nav-link" to="https://web.facebook.com/">
+                  <a className="nav-link" href="https://web.facebook.com/" target="_blank">
                     <FontAwesomeIcon icon={faFacebook} />
-                  </Link>
+                  </a>
                 </li>
                 <li className="nav-item me-3">
-                  <Link className="nav-link" to="https://www.youtube.com/">
+                  <a className="nav-link" href="https://www.youtube.com/" target="_blank">
                     <FontAwesomeIcon icon={faYoutube} />
-                  </Link>
+                  </a>
                 </li>
                 <li className="nav-item me-3">
-                  <Link className="nav-link" to="https://twitter.com/">
+                  <a className="nav-link" href="https://twitter.com/" target="_blank">
                     <FontAwesomeIcon icon={faTwitter} />
-                  </Link>
+                  </a>
                 </li>
               </ul>
             </div>
