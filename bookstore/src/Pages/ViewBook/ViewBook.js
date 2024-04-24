@@ -55,7 +55,7 @@ function ViewBook() {
       />
       <DescriptionReview book_id={book?.id} disc={book?.description} />
       <RelatedProducts book_id={book.id} />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

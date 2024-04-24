@@ -20,7 +20,7 @@ function PublisherOrderList() {
     api
       .get(`http://127.0.0.1:8000/api-order/orders/publisher/${publisherId}/`)
       .then((res) => {
-        setOrders(res.data.orders);
+        setOrders(res.data.orders.reverse());
         console.log(res.data);
       })
       .catch((err) => console.log(err));
