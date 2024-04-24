@@ -21,7 +21,7 @@ function Dashboard() {
 
     const [books, setBooks] = useState([])
     const [authors, setAuthors] = useState([])
-    const [orders, setOrders] = useState([])
+    const [ordersLen, setOrdersLen] = useState(0)
     const { user } = useContext(AuthContext)
 
     const [modalOpen, setModalOpen] = useState(false)
@@ -40,10 +40,10 @@ function Dashboard() {
                     setAuthors(res.data.results)
                     setModalOpen(false)
                 }).catch((err) => console.log("Auth error", err)))
-            .then((api.get(`api-order/orders/publisher/${user.user_id}/`))
+            .then((api.get(`api-order/orders/publisher/${user.user_id}/1/`))
                 .then((res) => {
                     console.log("Orders data", res)
-                    setOrders(res.data.orders)
+                    setOrdersLen(res.data.count)
                 }).catch((err) => {
                     console.log("orders, erro", err)
                 }))
@@ -54,8 +54,6 @@ function Dashboard() {
 
     const booksCount = books.length
     const authorsCount = authors.length
-    console.log(orders)
-    const ordersCount = orders?.length
     const getBooksToSort = [...books]
     const latestThreeBooks = getBooksToSort.slice(-3)
     const getAuthorsToSort = [...authors]
@@ -277,7 +275,7 @@ function Dashboard() {
                                     <div className='p-3  col-lg-3 sol-md-3 col-sm-3'>
                                         <i class="bi bi-basket3 align-self-end fs-1 col-lg-3 sol-md-3 col-sm-3" style={{ "color": "#5f4ecb" }}></i>
                                     </div>
-                                    <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>{ordersCount}</h1>
+                                    <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>{ordersLen}</h1>
                                 </div>
                                 <div className='d-flex justify-content-around'>
                                     <p className='fs-4 text-dark text-start p-0 m-0'>Orders</p>
