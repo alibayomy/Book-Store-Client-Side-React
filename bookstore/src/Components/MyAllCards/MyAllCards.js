@@ -78,10 +78,10 @@ function MyAllCards(props) {
                     <span className="ms-1 fs-5 me-1">Publisher:</span>
                     {props.publisher_name}
                   </div>
+                   {/* Price */}
                   <div className="d-flex justify-content-between">
-                    {/* Price */}
                     <span className="ms-1 mt-3 fs-5">EGP: {props.price}</span>
-                    <button type="button" class="filled-button btn-lg" disabled>Add to Cart</button>
+                   
                   </div>
                 </div>
               </div>
