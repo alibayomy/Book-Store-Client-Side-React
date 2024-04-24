@@ -19,7 +19,7 @@ function OrderList() {
       : 0;
   useEffect(()=>{
     api.get(`${localhost}/api-order/orders/customer/${current_user}/`)
-    .then((res) => (console.log(res.data.orders[0].orderitems),setOrders(res.data.orders),setRes()))
+    .then((res) => (console.log(res.data.orders[0].orderitems),setOrders(res.data.orders.reverse()),setRes()))
     .catch((err) => console.log(err))
   },[])
   console.log(orders)
@@ -30,7 +30,7 @@ function OrderList() {
           {orders.map((order)=>{
             return(
               <>
-              <h5 className="text-center fw-bolder">{`Order Date :${order.ordered_date}`}</h5>
+              <h5 className="text-center fw-bolder"> Order Date :&nbsp;{`${order.ordered_date}`}<br/>Order Time :&nbsp;{`${order.ordered_time}`}</h5>
                <table className="table bg-white">
           <thead>
             <tr className="text-center">
