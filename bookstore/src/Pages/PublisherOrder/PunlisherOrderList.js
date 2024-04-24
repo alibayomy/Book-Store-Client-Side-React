@@ -6,7 +6,13 @@ import { AuthContext } from '../../Context/AuthContext';
 function PublisherOrderList() {
   const [orders, setOrders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 4;
+  const [next,setNext]=useState(null);
+  const nextPage = (pagNum) => {
+    setCurrentPage(++pagNum);
+  };
+  const previousPage = (pagNum) => {
+    setCurrentPage(--pagNum);
+  };
 
   console.log(useContext(AuthContext).user);
 
@@ -18,13 +24,25 @@ function PublisherOrderList() {
 
   useEffect(() => {
     api
-      .get(`http://127.0.0.1:8000/api-order/orders/publisher/${publisherId}/`)
+      .get(`http://127.0.0.1:8000/api-order/orders/publisher/${publisherId}/1/`)
       .then((res) => {
         setOrders(res.data.orders.reverse());
+        setNext(res.data.next)
         console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    api
+      .get(`http://127.0.0.1:8000/api-order/orders/publisher/${publisherId}/${currentPage}/`)
+      .then((res) => {
+        setOrders(res.data.orders.reverse());
+        setNext(res.data.next)
+        console.log(res.data.next);
+      })
+      .catch((err) => console.log(err));
+  }, [currentPage]);
 
   const getStatusClass = (status) => {
     if (status === 'pending') {
@@ -38,11 +56,7 @@ function PublisherOrderList() {
   };
 
   // Pagination logic
-  const indexOfLastOrder = currentPage * ordersPerPage;
-  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
-  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const currentOrders = orders;
 
   return (
     <>
@@ -112,15 +126,45 @@ function PublisherOrderList() {
                 </tbody>
               </table>
               {/* Pagination */}
-              <ul className="pagination justify-content-center ">
-                {Array.from({ length: Math.ceil(orders.length / ordersPerPage) }).map((_, index) => (
-                  <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
-                    <button onClick={() => paginate(index + 1)} className=" page-link ">
-                      {index + 1}
-                    </button>
-                  </li>
-                ))}
-              </ul>
+              <ul className="pagination  justify-content-center m-3">
+        {currentPage > 1 ? (
+          <li className="page-item">
+            <button
+              onClick={() => previousPage(currentPage)}
+              className="page-link "
+            >
+              Previous
+            </button>
+          </li>
+        ) : (
+          <li className="page-item">
+            <button
+              onClick={() => previousPage(currentPage)}
+              className="page-link disabled"
+            >
+              Previous
+            </button>
+          </li>
+        )}
+        {next? (
+          <li className="page-item">
+            {" "}
+            <button onClick={() => nextPage(currentPage)} className="page-link">
+              Next
+            </button>
+          </li>
+        ) : (
+          <li className="page-item">
+            {" "}
+            <button
+              onClick={() => nextPage(currentPage)}
+              className="page-link disabled"
+            >
+              Next
+            </button>
+          </li>
+        )}
+      </ul>
             </div>
           </div>
         </div>
