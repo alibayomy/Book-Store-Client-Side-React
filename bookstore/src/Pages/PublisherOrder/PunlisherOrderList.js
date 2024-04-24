@@ -6,7 +6,7 @@ import { AuthContext } from '../../Context/AuthContext';
 function PublisherOrderList() {
   const [orders, setOrders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const ordersPerPage = 5;
+  const ordersPerPage = 3;
 
   console.log(useContext(AuthContext).user);
 

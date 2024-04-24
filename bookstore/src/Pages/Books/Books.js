@@ -113,11 +113,12 @@ function Books() {
       {/* dir={language === "ar" ? "rtl" : "ltr"} */}
       <div class="container-fluid">
         <div class="row flex-nowrap">
-          <div class="col-auto col-md-2 col-xl-2 px-sm-1 px-0 bg-dark myNav mt-4 m-1 rounded">
-            <div class=" align-items-center align-items-sm-start px-2 pt-2 text-white min-vh-100">
+        
+        <div className="col-md-2 col-xl-2 px-sm-1 px-0 mt-3 m-1 rounded" style={{backgroundColor:'#f5f5f5', height: '400px' , boxShadow: '0 0 7px rgba(0, 0, 0, 0.1)'}}>
+            <div class=" align-items-center align-items-sm-start px-2 pt-2 text-dark min-vh-100">
               <Link
                 to="/books"
-                class="d-flex align-items-center  mb-md-0 me-md-auto text-white text-decoration-none"
+                class="d-flex align-items-center  mb-md-0 me-md-auto text-dark text-decoration-none"
               >
                 <span
                   class="fs-5 d-none d-sm-inline"
@@ -205,9 +206,9 @@ function Books() {
                     data-bs-toggle="collapse"
                     class="nav-link px-0 align-middle"
                   >
-                    <i class="fs-5 bi-tags-fill text-white"></i>{" "}
+                    <i class="fs-5 bi-tags-fill text-dark"></i>{" "}
                     <span
-                      class="ms-1 d-none d-sm-inline text-white"
+                      class="ms-1 d-none d-sm-inline text-dark"
                       onClick={() => history.push("/filter")}
                     >
                       Categories
@@ -243,9 +244,9 @@ function Books() {
                     data-bs-toggle="collapse"
                     class="nav-link px-0 align-middle"
                   >
-                    <i class="fs-5 bi-pencil-square text-white"></i>{" "}
+                    <i class="fs-5 bi-pencil-square text-dark"></i>{" "}
                     <span
-                      class="ms-1 d-none d-sm-inline text-white"
+                      class="ms-1 d-none d-sm-inline text-dark"
                       onClick={() => history.push("/filterPublisher")}
                     >
                       Publishers
@@ -270,8 +271,8 @@ function Books() {
                     data-bs-toggle="collapse"
                     class="nav-link px-0 align-middle"
                   >
-                    <span class="text-white">(EGP)</span>{" "}
-                    <span class="ms-1 d-none d-sm-inline text-white">
+                    <span class="text-dark">(EGP)</span>{" "}
+                    <span class="ms-1 d-none d-sm-inline text-dark">
                       {" "}
                       Price
                     </span>{" "}
