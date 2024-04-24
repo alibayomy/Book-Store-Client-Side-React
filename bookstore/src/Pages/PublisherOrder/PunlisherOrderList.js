@@ -65,7 +65,7 @@ function PublisherOrderList() {
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-12">
-              <table className="table table table-bordered bg-white">
+              <table className="table table-striped table-bordered bg-white">
                 <thead className="text-center">
                   <tr>
                     <th>User ID</th>
@@ -114,7 +114,7 @@ function PublisherOrderList() {
                 </tbody>
               </table>
               {/* Pagination */}
-              <ul className="pagination justify-content-center">
+              <ul className="pagination justify-content-center mt-5">
   <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
     <button onClick={prevPage} className="page-link" style={{ backgroundColor: '#4d3bc6', color: '#ffffff' }}>
       Previous
