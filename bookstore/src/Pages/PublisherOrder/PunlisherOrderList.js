@@ -65,7 +65,7 @@ function PublisherOrderList() {
         <div className="container-fluid">
           <div className="row">
             <div className="col-lg-12">
-              <table className="table table-striped table-bordered bg-white">
+              <table className="table table table-bordered bg-white">
                 <thead className="text-center">
                   <tr>
                     <th>User ID</th>
@@ -122,13 +122,13 @@ function PublisherOrderList() {
   </li>
   {Array.from({ length: Math.ceil(orders.length / ordersPerPage) }).map((_, index) => (
     <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
-      <button onClick={() => paginate(index + 1)} className="page-link" style={{ backgroundColor: '#4d3bc6', color: '#ffffff' }}>
+      <button onClick={() => paginate(index + 1)} className="page-link" style={{ backgroundColor: '#4d3bc6', color: '#ffffff' ,marginLeft:'10px'}}>
         {index + 1}
       </button>
     </li>
   ))}
   <li className={`page-item ${currentPage === Math.ceil(orders.length / ordersPerPage) ? 'disabled' : ''}`}>
-    <button onClick={nextPage} className="page-link" style={{ backgroundColor: '#4d3bc6', color: '#ffffff' }}>
+    <button onClick={nextPage} className="page-link" style={{ backgroundColor: '#4d3bc6', color: '#ffffff' ,marginLeft:'10px'}}>
       Next
     </button>
   </li>
@@ -136,8 +136,15 @@ function PublisherOrderList() {
             </div>
           </div>
         </div>
+
+  
       </div>
+
+
+   
+
     </>
+   
   );
 }
 

@@ -113,8 +113,7 @@ function Books() {
       {/* dir={language === "ar" ? "rtl" : "ltr"} */}
       <div class="container-fluid">
         <div class="row flex-nowrap">
-        
-        <div className="col-md-2 col-xl-2 px-sm-1 px-0 mt-3 m-1 rounded" style={{backgroundColor:'#f5f5f5', height: '400px' , boxShadow: '0 0 7px rgba(0, 0, 0, 0.1)'}}>
+           <div className="col-auto col-md-2 col-xl-2 px-sm-1 px-0  myNav mt-4 m-1 rounded" style={{backgroundColor:'#f5f5f5', height: '400px' , boxShadow: '0 0 7px rgba(0, 0, 0, 0.1)'}}>
             <div class=" align-items-center align-items-sm-start px-2 pt-2 text-dark min-vh-100">
               <Link
                 to="/books"
