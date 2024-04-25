@@ -34,7 +34,7 @@ function OrderList() {
 
   useEffect(() => {
     api
-      .get(`http://127.0.0.1:8000/api-order/orders/publisher/${current_user}/${currentPage}/`)
+      .get(`http://127.0.0.1:8000/api-order/orders/customer/${current_user}/${currentPage}/`)
       .then((res) => {
         setOrders(res.data.orders.reverse());
         setNext(res.data.next)
