@@ -186,7 +186,7 @@ function CheckoutPage() {
           </form>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
 
     </div>
   );

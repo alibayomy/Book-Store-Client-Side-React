@@ -98,7 +98,7 @@ function PublisherOrderList() {
           {orderByDate(currentOrders).map((group) => (
             <div key={group.date}>
               <h2 className="mb-3 mt-3 text-center">
-                <span className="badge bg-gradient  px-4 py-3 text-dark " style={{ backgroundColor: '#eee'}}>{`Order Date: ${group.date}`}</span>
+                <span className="badge bg-gradient filled-button px-4 py-3 text-dark"style={{ backgroundColor: '#eee',}}>{`Order Date: ${group.date}`}</span>
               </h2>
               <div className="row">
                 <div className="col-lg-12">
