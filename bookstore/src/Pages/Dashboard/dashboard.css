@@ -1,0 +1,34 @@
+.book-img {
+    position: relative;
+}
+
+
+.book-img::after {
+    content: "$45";
+    position: absolute;
+    top: 12.5%;
+    right: -2px;
+    color: #5f4ecb;
+    background-color: #ffffff;
+    padding: 2px;
+    width: 25%;
+    border-radius: 17px;
+    text-align: start;
+    font-size: 1.1rem;
+    transform: rotate(90%);
+}
+
+.book-dashboard-detail {
+    list-style-type: none;
+}
+
+.book-arrow {
+    right: 5px;
+    top: 40%;
+    cursor: pointer;
+}
+
+
+ul {
+    list-style: none;
+}
