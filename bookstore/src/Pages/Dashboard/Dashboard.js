@@ -21,7 +21,7 @@ function Dashboard() {
 
     const [books, setBooks] = useState([])
     const [authors, setAuthors] = useState([])
-    const [ordersLen, setOrdersLen] = useState(0)
+    const [orders, setOrders] = useState([])
     const { user } = useContext(AuthContext)
 
     const [modalOpen, setModalOpen] = useState(false)
@@ -40,14 +40,13 @@ function Dashboard() {
                     setAuthors(res.data.results)
                     setModalOpen(false)
                 }).catch((err) => console.log("Auth error", err)))
-            .then((api.get(`api-order/orders/publisher/${user.user_id}/1/`))
+            .then((api.get(`api-order/orders/publisher/${user.user_id}/`))
                 .then((res) => {
                     console.log("Orders data", res)
-                    setOrdersLen(res.data.count)
+                    setOrders(res.data.orders)
                 }).catch((err) => {
                     console.log("orders, erro", err)
                 }))
-            .catch((err) => console.log(err))
 
 
     }, [modalOpen])
@@ -55,6 +54,8 @@ function Dashboard() {
     const booksCount = books.length
     const authorsCount = authors.length
     const getBooksToSort = [...books]
+    console.log(orders)
+    const ordersCount = orders?.length
     const latestThreeBooks = getBooksToSort.slice(-3)
     const getAuthorsToSort = [...authors]
     const lastFourAuthors = getAuthorsToSort.slice(-4);
@@ -137,11 +138,11 @@ function Dashboard() {
 
             }).catch((err) => console.log(err))
             setModalOpen(true)
-        
+
         }
         else {
             setSubmitError(<div className="alert alert-danger mt-1" role="alert">
-                Error input please make sure you fill at least the First Name and the 
+                Error input please make sure you fill at least the First Name and the
                 Last Name
             </div>)
         }
@@ -232,9 +233,9 @@ function Dashboard() {
                             </div>
                         </div>
 
-                
 
-                       
+
+
 
                     </div>
                     {/* end Books section */}
@@ -246,7 +247,7 @@ function Dashboard() {
                             <div class="card-header bg-light p-1">
                                 <div className='d-flex justify-content-start'>
                                     <div className='p-3  col-lg-3 sol-md-3 col-sm-3'>
-                                        <i class="fa-solid fa-book align-self-end fs-1" style={{ "color": "#5f4ecb" }}></i>
+                                        <i class="fa fa-book align-self-end fs-1" style={{ "color": "#5f4ecb" }}></i>
                                     </div>
                                     <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>{booksCount}</h1>
 
@@ -275,7 +276,7 @@ function Dashboard() {
                                     <div className='p-3  col-lg-3 sol-md-3 col-sm-3'>
                                         <i class="bi bi-basket3 align-self-end fs-1 col-lg-3 sol-md-3 col-sm-3" style={{ "color": "#5f4ecb" }}></i>
                                     </div>
-                                    <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>{ordersLen}</h1>
+                                    <h1 className='text-start align-self-center col-lg-9 sol-md-9 col-sm-9 mb-0'>{ordersCount}</h1>
                                 </div>
                                 <div className='d-flex justify-content-around'>
                                     <p className='fs-4 text-dark text-start p-0 m-0'>Orders</p>
@@ -333,7 +334,7 @@ function Dashboard() {
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success"  onClick={(e) => { addAuhtor(e) }}>Add</button>
+                            <button type="button" class="btn btn-success" onClick={(e) => { addAuhtor(e) }}>Add</button>
                         </div>
                     </div>
                 </div>

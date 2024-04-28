@@ -33,7 +33,7 @@ function PublisherBooks() {
                         title={book.name}
                         category={book.category_name}
                         path={`/viewbook/${book.id}`}
-                        rating="3"
+                        rating={book.rate}
                         price={book.price}
                     />
                 ))}
