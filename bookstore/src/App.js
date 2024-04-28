@@ -39,7 +39,7 @@ const App = () => {
     <AuthProvider>
       <Router>
         <NavBar />
-        <div className="container mt-4 mb-4 " style={{minHeight: '46vh',}}>
+        <div className="container mt-4 mb-4 " style={{minHeight: '100%',}}>
           <Switch>
             <Route path="/" exact component={Home} />
             <PrivateRoute path="/profile/:user_id" exact component={Profile} />

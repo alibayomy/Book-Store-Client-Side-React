@@ -113,7 +113,9 @@ function Search() {
                         title={book.name}
                         category={book.category_name}
                         path={`viewbook/${book.id}`}
-                        rating={5}
+                        rating={book.rate}
+                        quantity={book.total_number_of_book}
+                        publisher_name={book.publisher_name}
                         price={book.price}
                       />
                     ))

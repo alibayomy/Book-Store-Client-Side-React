@@ -49,11 +49,11 @@ function PublisherBooksCards(props) {
           <p className="card-text m-1 opacity-50">{props.category}</p>
           <h5 className="card-title">{props.title}</h5>
 
-          {/* Rating */}
+          {/* Rating 
           <div className="d-flex align-items-center">
             <span className="ms-1 fs-5 me-1">Rating:</span>
             {renderRatingStars()}
-          </div>
+          </div>*/}
           <div className="d-flex justify-content-between">
             {/* Price */}
             <span className="ms-1 mt-3 fs-5">EGP: {props.price}</span>
